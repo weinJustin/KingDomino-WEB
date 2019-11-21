@@ -1,7 +1,7 @@
 function trowId(balise){
   var arrayBrut = balise.id.split("");
-  var result = {'x':arrayBrut[4],'y':arrayBrut[5]};
-  console.log(result);
+  var result = {'x':arrayBrut[4],'y':arrayBrut[5],'o':0,'id':1};
+  socket.emit('');
   return result;
 }
 

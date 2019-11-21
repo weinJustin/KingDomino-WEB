@@ -12,8 +12,12 @@ app.get('/', function(req, res) {
 });
 
 app.get('/jeu', function(req, res) {
-    res.render(__dirname+'/template/jeu.html.twig'); 
+    res.render(__dirname+'/template/jeu.html.twig');
 });
+
+io.sockets.on('connection', function (socket) {
+  
+}
 
 
 
