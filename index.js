@@ -16,8 +16,8 @@ app.get('/jeu', function(req, res) {
 });
 
 io.sockets.on('connection', function (socket) {
-  
-}
+
+});
 
 
 
