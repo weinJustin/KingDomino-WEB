@@ -1,8 +1,14 @@
+var monTour = false;
+var dernierCoupEnvoyer = -1;
+
 function trowId(balise){
   var arrayBrut = balise.id.split("");
   var result = {'x':arrayBrut[4],'y':arrayBrut[5],'o':0,'id':1};
-  socket.emit('');
-  return result;
+  socket.emit('jouer',result);
+}
+
+function choisir(){
+  
 }
 
 function lumiereOn(balise){
@@ -21,7 +27,7 @@ $( document ).ready(function(){
     for (var j = 0; j <5; j++){
       var id = 'case'+i+j;
       var div = "<div class='case' id='"+id+"' onclick='trowId(this)' onmouseover='lumiereOn(this)' onmouseleave='lumiereOff(this)'><div>";
-      $("div.plateau").append(div);
+      $("div.plateauJoueur").append(div);
       $("#"+id).css({"left":i*20+"%","top":j*20+"%"});
     }
   }
