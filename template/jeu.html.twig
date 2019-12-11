@@ -9,12 +9,17 @@
         var socket = io.connect('localhost:8080');
     </script>
     <script src="../controleurs/jquery-3.4.1.js"></script>
+    <script src="../controleurs/variables.js"></script>
     <script src="../controleurs/affichage.js"></script>
     <script src="../controleurs/casePlateau.js"></script>
+    <script src="../controleurs/ecoute.js"></script>
   </head>
   <body>
     <div class="plateau plateauJoueur" id="adv1"></div>
     <button onclick="placement(1,2,0,25,'adv1')">test</button>
+    <button onclick="placement(1,2,3,25,'adv2')">test</button>
+    <div class=col id="domCol1"></div>
+    <div class=col id="domCol2"></div>
     <div class="plateau plateauAdversaire" id="adv2"></div>
     <div class="plateau plateauAdversaire" id="adv3"></div>
     <div class="plateau plateauAdversaire" id="adv4"></div>

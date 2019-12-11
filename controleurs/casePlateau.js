@@ -1,14 +1,22 @@
-var monTour = false;
-var dernierCoupEnvoyer = -1;
-
 function trowId(balise){
-  var arrayBrut = balise.id.split("");
-  var result = {'x':arrayBrut[4],'y':arrayBrut[5],'o':0,'id':1};
-  socket.emit('jouer',result);
+  if(monTour){
+    var arrayBrut = balise.id.split("");
+    //format normalisé : {x,y,orientation,id domino,nom joueur}
+    var result = {'x':arrayBrut[4],'y':arrayBrut[5],'o':0,'id':choix,'joueur':nomJoueur[0]};
+    placement(arrayBrut[4],arrayBrut[5],0,choix);
+    dernierCoupEnvoyer = choix;
+    monTour = false;
+    socket.emit('jouer',result);
+  }
 }
 
-function choisir(){
-  
+function choisir(balise){
+  if(faireChoix){
+    var tmp = balise.id.substr(7);
+    choix = [tmp,balise.id];
+    socket.emit('choisir',choix[0]);
+    faireChoix =false;
+  }
 }
 
 function lumiereOn(balise){
@@ -19,9 +27,6 @@ function lumiereOff(balise){
     $(balise).css({'background-color':'#0039e6'});
 }
 
-
-
-
 $( document ).ready(function(){
   for (var i = 0; i <5; i++){
     for (var j = 0; j <5; j++){
@@ -29,6 +34,18 @@ $( document ).ready(function(){
       var div = "<div class='case' id='"+id+"' onclick='trowId(this)' onmouseover='lumiereOn(this)' onmouseleave='lumiereOff(this)'><div>";
       $("div.plateauJoueur").append(div);
       $("#"+id).css({"left":i*20+"%","top":j*20+"%"});
+    }
+  }
+
+  //NE PAS CHANGER LA TAILLE DES MOTS
+  tab = ["domPris","domChoi"];
+  for (var i = 0; i < 2; i++) {
+    for (var j = 0; j < 5; j++) {
+      var id = tab[i]+(j+1);
+      var div = "<div class='domino' id='"+id+"' onclick='choisir(this)'>";
+      $("#domCol"+(i+1)).append(div);
+      $("#"+id).css({"top":j*33+"%"});
+
     }
   }
 });

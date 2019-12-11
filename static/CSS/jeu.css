@@ -2,6 +2,8 @@ body{
   /* background-color: black; */
   padding: 0px;
   margin: 0px;
+
+  background-color: #cccccc;
 }
 
 .case{
@@ -9,6 +11,24 @@ body{
   height:20%;
   position: absolute;
   background-color: #0039e6;
+}
+
+.col{
+  position: absolute;
+  background-color: blue;
+  top : 5vh;
+  left: 40vw;
+  width: 20vh;
+  height:30vh;
+
+}
+
+.col>.domino{
+  width: 100%;
+  height: auto;
+  position: absolute;
+
+
 }
 
 .domino{
@@ -45,3 +65,4 @@ body{
 
 #adv3{margin-left:30vw;}
 #adv4{margin-left:60vw;}
+#domCol2{margin-left:30vw;}
