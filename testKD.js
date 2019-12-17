@@ -143,7 +143,7 @@ io.sockets.on('connection', function (socket) {
         	if(verif==true){
         		console.log('Placement ok !');
         		socket.emit('valide',true);
-        		socket.broadcast.emit('joueAutreJoueur',x,y,rotation,idDomino,jou);
+        		socket.broadcast.emit('joueAutreJoueur',infos);
         	}
         	else{
         		socket.emit('valide',false);
@@ -174,7 +174,8 @@ io.sockets.on('connection', function (socket) {
 	        socket.broadcast.emit('tonTour',joueurs[quiJoue]);
         }   
     });
-	function tallyBoardScore(board) {
+
+	/*function tallyBoardScore(board) {
 	            let total = 0;
 	            for (let i = 0; i < 5; i++) {
 	                for (let j = 0; j < 5; j++) {
@@ -222,7 +223,7 @@ io.sockets.on('connection', function (socket) {
 	                      		checkPiece(num,num2+1);
 	                    	}
 	                    }
-	}
+	}*/
 	}
     function envoiDesNouveauxDominos(){
     	var nouveauxDominos = [];
