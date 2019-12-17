@@ -147,10 +147,10 @@ io.sockets.on('connection', function (socket) {
         	else{
         		socket.emit('valide',false);
         	}
-        	socket.dominoPick = 0;
         	verifPlac = false;
         }
         if(verif==true){
+        	socket.dominoPick = 0;
         	quiJoue++;
 	        if(quiJoue>3){
 				quiJoue = 0;
