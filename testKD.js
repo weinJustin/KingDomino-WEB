@@ -129,17 +129,23 @@ io.sockets.on('connection', function (socket) {
     	
     });
 
-	socket.on('jouer', function(x,y,rotation,idDomino) {
+	socket.on('jouer', function(infos) {
+		var x = infos.x;
+		var y = infos.y;
+		var rotation = infos.o;
+		var idDomino = infos.id;
         var verif = true;
-        console.log('Je place le domino');
+        console.log('Je passe dans jouer');
         if(socket.dominoPick!=0){
         	verif = verifPlacement(x,y,rotation,idDomino);
         	if(verif==true){
+        		console.log('Placement ok !');
         		socket.emit('valide',true);
-        		socket.broadcast.emit('placageAutres',x,y,rotation,idDomino);
+        		socket.broadcast.emit('joueAutreJoueur',x,y,rotation,idDomino);
         	}
         	else{
         		socket.emit('valide',false);
+        		verif = false;
         	}
         	socket.dominoPick = 0;
         }
@@ -192,10 +198,19 @@ io.sockets.on('connection', function (socket) {
 	}
 
 	function verifPlacement(x,y,rotation,idDomino){
+		console.log('Je passe dans verifPlacement');
+		console.log('-------------');
+		console.log(x);
+		console.log(y);
+		console.log(rotation);
+		console.log(idDomino);
+		console.log('-------------');
 		if((x>0)&&(y>0)&&(x<5)&&(y<5)){
-			fs.readFileSync('Dominos.json','utf8');
-			var case1 = JSON.parse(stockDomino['domino'+idDomino]['case1']);
-			var case2 = JSON.parse(stockDomino['domino'+idDomino]['case2']);
+			var stockDomino = fs.readFileSync('Dominos.json');
+			var textDomino = 'domino'+idDomino;
+			var dominosParses = JSON.parse(stockDomino);
+			var case1 = dominosParses[textDomino]['case1'];
+			var case2 = dominosParses[textDomino]['case2'];
 			console.log(case1);
 			console.log(case2);
 			if(verifCases(x,y,case1)==true){
@@ -246,24 +261,45 @@ io.sockets.on('connection', function (socket) {
 	}
 
 	function verifCases(x,y,caseVerif){
-		if(socket.zone[x][y]==-1){
-			if((y-1)>0){
-				if(socket.zone[x][y-1].biome==caseVerif.biome||socket.zone[x][y-1].biome==0){
+		console.log('Je passe dans verifCases');
+		if(socket.zone[x][y].biome==-1){
+			/*console.log('Le premier test de verifCases est OK.');
+			console.log(x);
+			console.log(y);
+			console.log(caseVerif.biome);
+			for(var i=0;i<5;i++){
+				for(var j=0;j<5;j++){
+					console.log(i+" "+j+" : ");
+					console.log(socket.zone[i][j]);
+				}
+			}
+			console.log((Number(x)+1));
+			console.log((Number(y)+1));
+			console.log(socket.zone[x][Number(y)-1].biome);
+			console.log(socket.zone[Number(x)+1][y].biome);
+			console.log(socket.zone[x][Number(y)+1].biome);
+			console.log(socket.zone[Number(x)-1][y].biome);*/
+			if((Number(y)-1)>0){
+				if(socket.zone[x][Number(y)-1].biome==caseVerif.biome||socket.zone[x][Number(y)-1].biome==0){
+					console.log('Cas 1 True');
 					return true;
 				}
 			}
-			if((x+1)<5){
-				if(socket.zone[x+1][y].biome==caseVerif.biome||socket.zone[x+1][y].biome==0){
+			if((Number(x)+1)<5){
+				if(socket.zone[Number(x)+1][y].biome==caseVerif.biome||socket.zone[Number(x)+1][y].biome==0){
+					console.log('Cas 2 True');
 					return true;
 				}
 			}
-			if((y+1)<5){
-				if(socket.zone[x][y+1].biome==caseVerif.biome||socket.zone[x][y+1].biome==0){
+			if((Number(y)+1)<5){
+				if(socket.zone[x][Number(y)+1].biome==caseVerif.biome||socket.zone[x][Number(y)+1].biome==0){
+					console.log('Cas 3 True');
 					return true;
 				}
 			}
-			if((x-1)>0){
-				if(socket.zone[x-1][y].biome==caseVerif.biome||socket.zone[x-1][y].biome==0){
+			if((Number(x)-1)>0){
+				if(socket.zone[Number(x)-1][y].biome===caseVerif.biome||socket.zone[Number(x)-1][y].biome==0){
+					console.log('Cas 4 True');
 					return true;
 				}
 			}
