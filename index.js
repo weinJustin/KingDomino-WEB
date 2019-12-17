@@ -22,6 +22,7 @@ io.sockets.on('connection', function (socket) {
     socket.emit('envoyerNouveauxDominos',[5,6,7,8]);
     socket.broadcast.emit('joueurPresent',joueur);
     socket.emit('joueurPresent',joueur)
+    socket.emit('joueAutreJoueur',{'x':2,'y':3,'o':2,'id':1,'joueur':"Samael"})
   });
 
 

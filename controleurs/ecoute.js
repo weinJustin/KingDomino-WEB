@@ -1,5 +1,6 @@
 socket.on('joueAutreJoueur',function(domino){
-  placement(domino['x'],domino['y'],domino['o'],domino['id'],caseJoueur+domino['joueur']);
+  console.log(domino);
+  placement(domino['x'],domino['y'],domino['o'],domino['id'],"caseJoueur"+domino['joueur']);
 });
 
 socket.on('tonTour',function(moi){
