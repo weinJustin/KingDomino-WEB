@@ -14,11 +14,14 @@ app.get('/', function(req, res) {
 app.get('/jeu', function(req, res) {
     res.render(__dirname+'/template/jeu.html.twig');
 });
-
+joueur = ["koda","Samael","Amenadiel"]
 io.sockets.on('connection', function (socket) {
   socket.emit('envoyerNouveauxDominos',[1,2,3,4]);
-  socket.on('connectionJoueur',function(){
+  socket.on('connectionJoueur',function(nom){
+    joueur.push(nom);
     socket.emit('envoyerNouveauxDominos',[5,6,7,8]);
+    socket.broadcast.emit('joueurPresent',joueur);
+    socket.emit('joueurPresent',joueur)
   });
 
 

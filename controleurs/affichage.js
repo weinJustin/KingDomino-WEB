@@ -5,6 +5,7 @@ function removeElement(id) {
 
 function placement(x,y,rot,id,place,fonctionSup=""){
   //on cherche la présence d'un domino de même id pour le suprimer si il existe
+  // console.log("x: "+x+"\ny: "+y+"\nrot: "+rot+"\nid: "+id+"\nplace: "+place);
   var tmp = arborecence["domino"+id];
   if (!tmp){
     arborecence["domino"+id]=place;

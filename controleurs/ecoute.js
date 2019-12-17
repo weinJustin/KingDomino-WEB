@@ -1,5 +1,5 @@
 socket.on('joueAutreJoueur',function(domino){
-  placement(domino['x'],domino['y'],domino['o'],domino['id'],domino['joueur']);
+  placement(domino['x'],domino['y'],domino['o'],domino['id'],caseJoueur+domino['joueur']);
 });
 
 socket.on('tonTour',function(moi){
@@ -13,6 +13,17 @@ socket.on('tonTour',function(moi){
     }
   }else{
       changerFeedBack("C'est le tour de "+moi);
+  }
+});
+
+socket.on('joueurPresent',function(nomJoueur){
+  console.log('on entre');
+  for (var i = 0; i < nomJoueur.length; i++) {
+    var tmp = 2;
+    if (nomJoueur[i] != nom){
+      $("#adv"+(i+2)).attr("id","caseJoueur"+nomJoueur[i]);
+      tmp++;
+    }
   }
 });
 
@@ -36,9 +47,9 @@ socket.on("choixInvalide",function() {
 socket.on('envoyerNouveauxDominos',function(dominos){
   for (var j = 0; j < 4; j++) {
     //on recupere les elements dans chaque emplacement pour les décaler
-    console.log(document.getElementById("domChoi"+(j+1)));
+
     var tmp = document.getElementById("domChoi"+(j+1)).firstChild;
-    console.log(tmp);
+    // console.log(tmp);
 
 
     if(tmp != null){
