@@ -58,11 +58,11 @@ function choisir(balise){
 }
 
 function lumiereOn(balise){
-    $(balise).css({'background-color':'#1a53ff'});
+    $(balise).css({'background-color':'#d7bea8'});
 }
 
 function lumiereOff(balise){
-    $(balise).css({'background-color':'#0039e6'});
+    $(balise).css({'background-color':'#e7d8cb'});
 }
 
 $( document ).ready(function(){
@@ -78,11 +78,11 @@ $( document ).ready(function(){
   //NE PAS CHANGER LA TAILLE DES MOTS
   tab = ["domPris","domChoi"];
   for (var i = 0; i < 2; i++) {
-    for (var j = 0; j < 5; j++) {
+    for (var j = 0; j < 4; j++) {
       var id = tab[i]+(j+1);
       var div = "<div class='domino' id='"+id+"' onclick='choisir(this.firstChild)'>";
       $("#domCol"+(i+1)).append(div);
-      $("#"+id).css({"top":j*33+"%"});
+      $("#"+id).css({"top":j*45+"%"});
 
     }
   }

@@ -3,19 +3,23 @@ body{
   padding: 0px;
   margin: 0px;
 
-  background-color: #cccccc;
+  /*background-color: #3f522c /*#3d2c1c*/;
+  background-image: url(../texture.jpg);
+}
+
+div{
+  background-color:#e7d8cb;
 }
 
 .case{
   width:20%;
   height:20%;
   position: absolute;
-  background-color: #0039e6;
 }
 
 .col{
+  visibility: hidden;
   position: absolute;
-  background-color: blue;
   top : 5vh;
   left: 40vw;
   width: 20vh;
@@ -24,6 +28,7 @@ body{
 }
 
 .col>.domino{
+  visibility: visible;
   width: 100%;
   height: 30%;
   position: absolute;
@@ -51,17 +56,15 @@ body{
 }
 
 .feedback{
-  background-color: #0039e6;
-  bottom: 0px;
+  bottom: 2vh;
   height:5vh;
-  left: 5vh;
+  left: 5vw;
   position: absolute;
   width: 50vw;
 }
 
 .plateau{
-  position: relative;
-  background-color: blue;
+  position: absolute;
   top : 5vh;
   left: 5vw;
   width: 30vh;
@@ -74,7 +77,7 @@ body{
 }
 
 .plateauAdversaire{
-  top : 60vh;
+  top : 59vh;
   position: absolute;
 }
 
