@@ -109,7 +109,7 @@ io.sockets.on('connection', function (socket) {
     		socket.emit('selectionDomino',idDomino);
 	    	socket.broadcast.emit('selectionDomino',idDomino);
 	    	socket.dominoPick = idDomino;
-	    	for(var i=0;i<4;i++){q
+	    	for(var i=0;i<4;i++){
 	    		if(socket.pseudo==joueurs[i]){
 	    			dominosPick[i] = idDomino;
 	    		}
@@ -120,6 +120,7 @@ io.sockets.on('connection', function (socket) {
 				if(quiJoue>3){
 					quiJoue = 0;
 					envoiDesNouveauxDominos();
+					changementDeTour();
 				}
 				socket.emit('tonTour',joueurs[quiJoue]);
 				socket.broadcast.emit('tonTour',joueurs[quiJoue]);
