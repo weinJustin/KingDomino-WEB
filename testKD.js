@@ -223,8 +223,8 @@ io.sockets.on('connection', function (socket) {
 	                      		checkPiece(num,num2+1);
 	                    	}
 	                    }
-	}*/
 	}
+	}*/
     function envoiDesNouveauxDominos(){
     	var nouveauxDominos = [];
 		for(var i=0;i<4;i++){
