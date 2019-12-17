@@ -12,7 +12,7 @@ function trowId(balise){
 
 function choisir(balise){
   if(faireChoix){
-    var tmp = balise.id.substr(7);
+    var tmp = balise.id.substr(6);
     choix = [tmp,balise.id];
     socket.emit('choisir',choix[0]);
     faireChoix =false;
@@ -42,7 +42,7 @@ $( document ).ready(function(){
   for (var i = 0; i < 2; i++) {
     for (var j = 0; j < 5; j++) {
       var id = tab[i]+(j+1);
-      var div = "<div class='domino' id='"+id+"' onclick='choisir(this)'>";
+      var div = "<div class='domino' id='"+id+"' onclick='choisir(this.firstChild)'>";
       $("#domCol"+(i+1)).append(div);
       $("#"+id).css({"top":j*33+"%"});
 
