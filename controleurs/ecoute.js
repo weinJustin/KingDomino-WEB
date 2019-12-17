@@ -6,14 +6,13 @@ socket.on('tonTour',function(moi){
   if(moi== nom){
       changerFeedBack("C'est votre tour. Choisisez un domino");
       faireChoix =true;
-  
+
   }else{
       changerFeedBack("C'est le tour de "+moi);
   }
 });
 
 socket.on('joueurPresent',function(nomJoueur){
-  console.log('on entre');
   for (var i = 0; i < nomJoueur.length; i++) {
     var tmp = 2;
     if (nomJoueur[i] != nom){
@@ -26,11 +25,9 @@ socket.on('joueurPresent',function(nomJoueur){
 socket.on('valide',function(valide){
   if(valide){
     dernierCoupEnvoyer = -1;
-    changerFeedBack("C'est votre tour. Choisisez un domino");
-    faireChoix =true;
   }else{
-    placement(0,0,0,"domino"+dernierCoupEnvoyer[0],dernierCoupEnvoyer[1]);
     changerFeedBack("Placement invalide. Replacer votre domino");
+    choix.unshift(dernierCoupEnvoyer);
     monTour =true;
   }
 });
