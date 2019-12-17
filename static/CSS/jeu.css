@@ -50,6 +50,15 @@ body{
   position: absolute;
 }
 
+.feedback{
+  background-color: #0039e6;
+  bottom: 0px;
+  height:5vh;
+  left: 5vh;
+  position: absolute;
+  width: 50vw;
+}
+
 .plateau{
   position: relative;
   background-color: blue;

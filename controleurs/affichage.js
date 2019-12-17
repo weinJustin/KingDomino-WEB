@@ -31,3 +31,8 @@ function placement(x,y,rot,id,place,fonctionSup=""){
 
   $("#domino"+id).css({"left":xTemp*20+"%","top":yTemp*20+"%",'transform':"rotate("+angle+"deg)"});
 }
+
+function changerFeedBack(message){
+  console.log(document.getElementById("feedback"));
+  document.getElementById("feedback").innerHTML = message;
+}

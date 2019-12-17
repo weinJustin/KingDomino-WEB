@@ -5,8 +5,10 @@ socket.on('joueAutreJoueur',function(domino){
 socket.on('tonTour',function(moi){
   if(moi== nom){
     if(choix==null){
+      changerFeedBack("C'est votre tour. Choisisez un domino");
       faireChoix =true;
     }else {
+      changerFeedBack("C'est votre tour. Placer votre domino");
       monTour =true;
     }
   }
@@ -15,14 +17,17 @@ socket.on('tonTour',function(moi){
 socket.on('valide',function(valide){
   if(valide){
     dernierCoupEnvoyer = -1;
+    changerFeedBack("C'est votre tour. Choisisez un domino");
     faireChoix =true;
   }else{
     placement(0,0,0,"domino"+dernierCoupEnvoyer[0],dernierCoupEnvoyer[1]);
+    changerFeedBack("Placement invalide. Replacer votre domino");
     monTour =true;
   }
 });
 
 socket.on("choixInvalide",function() {
+  changerFeedBack("Choix invalide. Choisissez un autre domino");
   faireChoix =true;
 })
 
