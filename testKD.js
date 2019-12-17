@@ -174,7 +174,56 @@ io.sockets.on('connection', function (socket) {
 	        socket.broadcast.emit('tonTour',joueurs[quiJoue]);
         }   
     });
+	function tallyBoardScore(board) {
+	            let total = 0;
+	            for (let i = 0; i < 5; i++) {
+	                for (let j = 0; j < 5; j++) {
+		                var count = 0;
+		                var nbCouronnes = 0;
+	                  	var actualBiome = board[i][j].biome;
+	                  	if (!board[i][j].isCounted && board[i][j].biome !== 0) checkPiece(i,j);
+	                  	console.log('A');
+	                	console.log('Count : ',count,', NbCouronnes : ', nbCouronnes);
+	                	total += (count * nbCouronnes);
+	                }
+	            }
+	            return total;
 
+	function checkPiece(num,num2) {
+	                 	board[num][num2].isCounted = true;
+	                  	count += 1;
+	                  	nbCouronnes += board[num][num2].nbCouronnes;
+	                  	console.log('Cas 10, Co :',num+1,num2+1);
+	                  	//Down
+	                    if (num+1<5 && !board[num+1][num2].isCounted) {
+	                    	if (board[num+1][num2].biome === board[num][num2].biome) {
+	                      		console.log('Cas 1, Co :',num+2,num2+1);
+	                      		checkPiece(num+1,num2);
+	                   		}
+	                    }
+	                  	//Up
+	                  	if (num-1>=0 && !board[num-1][num2].isCounted) {
+	                    	if (board[num-1][num2].biome === board[num][num2].biome) {
+	                    		console.log('Cas 2, Co :',num,num2+1);
+	                    	  	checkPiece(num-1,num2);
+	                    	}
+	                  	}
+	                    //Left
+	                    if (num2-1>=0 && !board[num][num2-1].isCounted) {
+	                    	if (board[num][num2-1].biome === board[num][num2].biome) {
+	                      		console.log('Cas 3, Co :',num+1,num2);
+	                      		checkPiece(num,num2-1);
+	                    	}
+	                  	}
+	                  	//Right
+	                  	if (num2+1<5 && !board[num][num2+1].isCounted) {
+	                    	if (board[num][num2+1].biome === board[num][num2].biome) {
+	                      		console.log('Cas 4, Co :',num+1,num2+2);
+	                      		checkPiece(num,num2+1);
+	                    	}
+	                    }
+	}
+	}
     function envoiDesNouveauxDominos(){
     	var nouveauxDominos = [];
 		for(var i=0;i<4;i++){
