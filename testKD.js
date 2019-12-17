@@ -137,7 +137,6 @@ io.sockets.on('connection', function (socket) {
 		var idDomino = infos.id;
 		var jou = infos.joueur;
         var verif = true;
-        console.log('Je passe dans jouer');
         if(socket.dominoPick!=0){
         	verif = verifPlacement(x,y,rotation,idDomino);
         	if(verif==true){
@@ -149,9 +148,9 @@ io.sockets.on('connection', function (socket) {
         		socket.emit('valide',false);
         	}
         	socket.dominoPick = 0;
+        	verifPlac = false;
         }
         if(verif==true){
-        	verifPlac = false;
         	quiJoue++;
 	        if(quiJoue>3){
 				quiJoue = 0;
@@ -272,6 +271,8 @@ io.sockets.on('connection', function (socket) {
 							if(verifCases(x,Number(y)-1,case2)!=-1){
 								socket.zone[x][y] = case1;
 								socket.zone[x][Number(y)-1] = case2;
+								afficherZone();
+								return true;
 							}
 						}
 						break;
@@ -281,6 +282,8 @@ io.sockets.on('connection', function (socket) {
 							if(verifCases(Number(x)+1,y,case2)!=-1){
 								socket.zone[x][y] = case1;
 								socket.zone[Number(x)+1][y] = case2;
+								afficherZone();
+								return true;
 							}
 						}
 						break;
@@ -290,6 +293,8 @@ io.sockets.on('connection', function (socket) {
 							if(verifCases(x,Number(y)+1,case2)!=-1){
 								socket.zone[x][y] = case1;
 								socket.zone[x][Number(y)+1] = case2;
+								afficherZone();
+								return true;
 							}
 						}
 						break;
@@ -299,26 +304,23 @@ io.sockets.on('connection', function (socket) {
 							if(verifCases(Number(x)-1,y,case2)!=-1){
 								socket.zone[x][y] = case1;
 								socket.zone[Number(x)-1][y] = case2;
+								afficherZone();
+								return true;
 							}
 						}
 						break;
 				}
 			}
-			for(var i=0;i<5;i++){
-				for(var j=0;j<5;j++){
-					console.log(i+" "+j+" : ");
-					console.log(socket.zone[i][j]);
-				}
-			}
+			
 		}
 		return false;
 	}
 
 	function verifCases(x,y,caseVerif){
-		console.log('Je passe dans verifCases');
-		console.log(socket.zone[x][y].biome);
+		//console.log('Je passe dans verifCases');
+		//console.log(socket.zone[x][y].biome);
 		if(socket.zone[x][y].biome==-1){
-			console.log('I am a joke to you ?');
+			//console.log('I am a joke to you ?');
 			/*console.log('Le premier test de verifCases est OK.');
 			console.log(x);
 			console.log(y);
@@ -331,7 +333,8 @@ io.sockets.on('connection', function (socket) {
 			}
 			console.log((Number(x)+1));
 			console.log((Number(y)+1));
-			console.log(socket.zone[x][Number(y)-1].biome);
+			*/
+			/*console.log(socket.zone[x][Number(y)-1].biome);
 			console.log(socket.zone[Number(x)+1][y].biome);
 			console.log(socket.zone[x][Number(y)+1].biome);
 			console.log(socket.zone[Number(x)-1][y].biome);*/
@@ -343,33 +346,37 @@ io.sockets.on('connection', function (socket) {
 					if(socket.zone[x][Number(y)-1].biome==caseVerif.biome||socket.zone[x][Number(y)-1].biome==0){
 						console.log('Cas 1 True');
 						verifPlac = true;
-						return 2;
+						return 1;
 					}
 				}
 				if((Number(x)+1)<5){
 					if(socket.zone[Number(x)+1][y].biome==caseVerif.biome||socket.zone[Number(x)+1][y].biome==0){
 						console.log('Cas 2 True');
 						verifPlac = true;
-						return 2;
+						return 1;
 					}
 				}
 				if((Number(y)+1)<5){
 					if(socket.zone[x][Number(y)+1].biome==caseVerif.biome||socket.zone[x][Number(y)+1].biome==0){
 						console.log('Cas 3 True');
 						verifPlac = true;
-						return 2;
+						return 1;
 					}
 				}
 				if((Number(x)-1)>0){
 					if(socket.zone[Number(x)-1][y].biome===caseVerif.biome||socket.zone[Number(x)-1][y].biome==0){
 						console.log('Cas 4 True');
 						verifPlac = true;
-						return 2;
+						return 1;
 					}
 				}
-			}	
+			}
+			return 2;	
 		}
-		return -1;
+		else{
+			return -1;
+		}
+		
 	}
 
 	//Fonction de debug
@@ -377,6 +384,16 @@ io.sockets.on('connection', function (socket) {
 		for(var i=0;i<nbJoueurs;i++){
 	    	console.log(joueurs[i]);
 	    }
+	}
+
+	//Fonction de debug
+	function afficherZone(){
+		for(var i=0;i<5;i++){
+			for(var j=0;j<5;j++){
+				console.log(i+" "+j+" : ");
+				console.log(socket.zone[i][j]);
+			}
+		}
 	}
 });
 
