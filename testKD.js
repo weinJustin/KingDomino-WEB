@@ -140,7 +140,6 @@ io.sockets.on('connection', function (socket) {
         if(socket.dominoPick!=0){
         	verif = verifPlacement(x,y,rotation,idDomino);
         	if(verif==true){
-        		console.log('Placement ok !');
         		socket.emit('valide',true);
         		socket.broadcast.emit('joueAutreJoueur',infos);
         	}
@@ -256,7 +255,7 @@ io.sockets.on('connection', function (socket) {
 		console.log(rotation);
 		console.log(idDomino);
 		console.log('-------------');*/
-		if((x>0)&&(y>0)&&(x<5)&&(y<5)){
+		if((x>-1)&&(y>-1)&&(x<5)&&(y<5)){
 			var stockDomino = fs.readFileSync('Dominos.json');
 			var textDomino = 'domino'+idDomino;
 			var dominosParses = JSON.parse(stockDomino);
@@ -267,44 +266,44 @@ io.sockets.on('connection', function (socket) {
 			if(verifCases(x,y,case1)!=-1){
 				switch(rotation){
 					case 3:
-						if(((Number(y)-1)>0)&&((Number(y)-1)<5)){
+						if(((Number(y)-1)>-1)&&((Number(y)-1)<5)){
 							if(verifCases(x,Number(y)-1,case2)!=-1){
 								socket.zone[x][y] = case1;
 								socket.zone[x][Number(y)-1] = case2;
-								afficherZone();
+								//afficherZone();
 								return true;
 							}
 						}
 						break;
 
 					case 0:
-						if(((Number(x)+1)>0)&&((Number(x)+1)<5)){
+						if(((Number(x)+1)>-1)&&((Number(x)+1)<5)){
 							if(verifCases(Number(x)+1,y,case2)!=-1){
 								socket.zone[x][y] = case1;
 								socket.zone[Number(x)+1][y] = case2;
-								afficherZone();
+								//afficherZone();
 								return true;
 							}
 						}
 						break;
 
 					case 1:
-						if(((Number(y)+1)>0)&&((Number(y)+1)<5)){
+						if(((Number(y)+1)>-1)&&((Number(y)+1)<5)){
 							if(verifCases(x,Number(y)+1,case2)!=-1){
 								socket.zone[x][y] = case1;
 								socket.zone[x][Number(y)+1] = case2;
-								afficherZone();
+								//afficherZone();
 								return true;
 							}
 						}
 						break;
 
 					case 2:
-						if(((Number(x)-1)>0)&&((Number(x)-1)<5)){
+						if(((Number(x)-1)>-1)&&((Number(x)-1)<5)){
 							if(verifCases(Number(x)-1,y,case2)!=-1){
 								socket.zone[x][y] = case1;
 								socket.zone[Number(x)-1][y] = case2;
-								afficherZone();
+								//afficherZone();
 								return true;
 							}
 						}
