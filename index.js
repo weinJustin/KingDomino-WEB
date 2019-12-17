@@ -16,6 +16,11 @@ app.get('/jeu', function(req, res) {
 });
 
 io.sockets.on('connection', function (socket) {
+  socket.emit('envoyerNouveauxDominos',[1,2,3,4]);
+  socket.on('connectionJoueur',function(){
+    socket.emit('envoyerNouveauxDominos',[5,6,7,8]);
+  });
+
 
 });
 

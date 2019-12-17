@@ -29,16 +29,19 @@ socket.on('valide',function(valide){
 socket.on("choixInvalide",function() {
   changerFeedBack("Choix invalide. Choisissez un autre domino");
   faireChoix =true;
-})
+});
 
 socket.on('envoyerNouveauxDominos',function(dominos){
   for (var j = 0; j < 4; j++) {
     //on recupere les elements dans chaque emplacement pour les décaler
-    // console.log($("#domChoi"+(j+1)).children());
-    // var tmp = $("#domChoi"+(j+1)).children().id;
-    // if(tmp){
-    //   placement(0,0,0,tmp,"domPris"+(j+1));
-    // }
+    console.log(document.getElementById("domChoi"+(j+1)));
+    var tmp = document.getElementById("domChoi"+(j+1)).firstChild;
+    console.log(tmp);
+
+
+    if(tmp != null){
+      placement(0,0,0,tmp.id.substr(6),"domPris"+(j+1));
+    }
 
     //on place les nouveaux dominos
     placement(0,0,0,dominos[j],"domChoi"+(j+1),"onclick='choisir(this)'");
