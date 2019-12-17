@@ -11,6 +11,7 @@ var joueurs = [];
 var numTour = 1;
 var quiJoue = 0;
 var dominos = [];
+var dominosPick = [];
 
 /*
 var server = http.createServer(function(req, res) {
@@ -55,6 +56,7 @@ io.sockets.on('connection', function (socket) {
     	socket.pseudo = pseudo;
 	    joueurs.push(pseudo);
 	    socket.dominoPick = 0;
+	    dominosPick.push(socket.dominoPick);
 	    socket.zone = [];
 	    for(var i = 0;i<5;i++){
 	    	var tabTemp = [];
@@ -80,35 +82,58 @@ io.sockets.on('connection', function (socket) {
 	    	shuffle(joueurs);
 	        //afficherTousLesJoueurs();
 	        //---------- Début de partie ----------//
-  	    for(var i=0;i<48;i++){
-  				dominos[i] = i+1;
-  	    }
-  			shuffle(dominos);
-        console.log('on evoie les nouveau domino:');
-  			envoiDesNouveauxDominos();
-  	    socket.emit('actuTour',numTour);
-  			socket.broadcast.emit('actuTour',numTour);
-  			socket.emit('tonTour',joueurs[quiJoue]);
+	  	    for(var i=0;i<48;i++){
+	  				dominos[i] = i+1;
+	  	    }
+	  		shuffle(dominos);
+	  		envoiDesNouveauxDominos();
+	  	    socket.emit('actuTour',numTour);
+	  		socket.broadcast.emit('actuTour',numTour);
+	  		socket.emit('tonTour',joueurs[quiJoue]);
+	  		socket.broadcast.emit('tonTour',joueurs[quiJoue]);
 	    }
     });
 
     socket.on('choisir',function(idDomino) {
-    	socket.emit('selectionDomino',idDomino);
-    	socket.dominoPick = idDomino;
-    	socket.broadcast.emit('selectionDomino',idDomino);
-		//---------- Cas particulier du premier tour ----------//
-		if(numTour==1){
-			quiJoue++;
-			if(quiJoue>3){
-				quiJoue = 0;
+    	console.log(idDomino);
+    	var verif = true;
+    	for(var i=0;i<4;i++){
+    		//if(socket.pseudo!=joueurs[i]){
+    			if(idDomino == dominosPick[i]){
+    				console.log('Choix invalide');
+    				socket.emit('choixInvalide');
+    				verif = false;
+    			}
+    		//}
+    	}
+    	if(verif==true){
+    		console.log('Domino selectionné')
+    		socket.emit('selectionDomino',idDomino);
+	    	socket.broadcast.emit('selectionDomino',idDomino);
+	    	socket.dominoPick = idDomino;
+	    	for(var i=0;i<4;i++){
+	    		if(socket.pseudo==joueurs[i]){
+	    			dominosPick[i] = idDomino;
+	    		}
+	    	}
+			//---------- Cas particulier du premier tour ----------//
+			if(numTour==1){
+				quiJoue++;
+				if(quiJoue>3){
+					quiJoue = 0;
+				}
+				socket.emit('tonTour',joueurs[quiJoue]);
+				socket.broadcast.emit('tonTour',joueurs[quiJoue]);
 			}
-			socket.emit('tonTour',joueurs[quiJoue]);
-		}
+    	}
+    	
     });
 
 	socket.on('jouer', function(x,y,rotation,idDomino) {
+        var verif = true;
+        console.log('Je place le domino');
         if(socket.dominoPick!=0){
-        	var verif = verifPlacement(x,y,rotation,idDomino);
+        	verif = verifPlacement(x,y,rotation,idDomino);
         	if(verif==true){
         		socket.emit('valide',true);
         		socket.broadcast.emit('placageAutres',x,y,rotation,idDomino);
@@ -118,25 +143,28 @@ io.sockets.on('connection', function (socket) {
         	}
         	socket.dominoPick = 0;
         }
-        quiJoue++;
-        if(quiJoue>3){
-			quiJoue = 0;
-			envoiDesNouveauxDominos();
-			changementDeTour();
-			// ---------- Fin de partie ---------- //
-			if(numTour>12){
-				/*COMPTAGE DES POINTS
-				socket.emit('resultatFinal',?);
-				socket.broadcast.emit('resultatFinal',?);*/
-				nbJoueurs = 0;
-				joueurs = [];
-				numTour = 1;
+        if(verif==true){
+        	quiJoue++;
+	        if(quiJoue>3){
 				quiJoue = 0;
-				dominos = [];
-			}
-        }
-        socket.emit('tonTour',joueurs[quiJoue]);
-        socket.broadcast.emit('tonTour',joueurs[quiJoue]);
+				envoiDesNouveauxDominos();
+				changementDeTour();
+				// ---------- Fin de partie ---------- //
+				if(numTour>12){
+					/*COMPTAGE DES POINTS
+					socket.emit('resultatFinal',?);
+					socket.broadcast.emit('resultatFinal',?);*/
+					nbJoueurs = 0;
+					joueurs = [];
+					numTour = 1;
+					quiJoue = 0;
+					dominos = [];
+					dominosPick = [];
+				}
+	        }
+	        socket.emit('tonTour',joueurs[quiJoue]);
+	        socket.broadcast.emit('tonTour',joueurs[quiJoue]);
+        }   
     });
 
     function envoiDesNouveauxDominos(){
@@ -145,8 +173,7 @@ io.sockets.on('connection', function (socket) {
 			nouveauxDominos[i] = dominos.shift();
 		}
 		nouveauxDominos.sort();
-		//console.log(nouveauxDominos);
-      console.log(nouveauxDominos);
+		console.log(nouveauxDominos);
 	    socket.emit('envoyerNouveauxDominos',nouveauxDominos);
 	    socket.broadcast.emit('envoyerNouveauxDominos',nouveauxDominos);
     }
@@ -169,6 +196,8 @@ io.sockets.on('connection', function (socket) {
 			fs.readFileSync('Dominos.json','utf8');
 			var case1 = JSON.parse(stockDomino['domino'+idDomino]['case1']);
 			var case2 = JSON.parse(stockDomino['domino'+idDomino]['case2']);
+			console.log(case1);
+			console.log(case2);
 			if(verifCases(x,y,case1)==true){
 				switch(rotation){
 					case 0:
