@@ -1,5 +1,4 @@
 {
-	
 	"domino1":{
 		"val":1,
 		"case1":{
@@ -12,9 +11,8 @@
 			"biome":1,
 			"valeurDominoAttribue":1
 		}
-
 	}
-	"domino2":{
+	,"domino2":{
 		"val":2,
 		"case1":{
 			"nbCouronnes":0,
@@ -26,9 +24,8 @@
 			"biome":1,
 			"valeurDominoAttribue":2
 		}
-
 	}
-	"domino3":{
+	,"domino3":{
 		"val":3,
 		"case1":{
 			"nbCouronnes":0,
@@ -40,9 +37,8 @@
 			"biome":5,
 			"valeurDominoAttribue":3
 		}
-
 	}
-	"domino4":{
+	,"domino4":{
 		"val":4,
 		"case1":{
 			"nbCouronnes":0,
@@ -54,9 +50,8 @@
 			"biome":5,
 			"valeurDominoAttribue":4
 		}
-
 	}
-	"domino5":{
+	,"domino5":{
 		"val":5,
 		"case1":{
 			"nbCouronnes":0,
@@ -68,9 +63,8 @@
 			"biome":5,
 			"valeurDominoAttribue":5
 		}
-
 	}
-	"domino6":{
+	,"domino6":{
 		"val":6,
 		"case1":{
 			"nbCouronnes":0,
@@ -82,9 +76,8 @@
 			"biome":5,
 			"valeurDominoAttribue":6
 		}
-
 	}
-	"domino7":{
+	,"domino7":{
 		"val":7,
 		"case1":{
 			"nbCouronnes":0,
@@ -96,9 +89,8 @@
 			"biome":3,
 			"valeurDominoAttribue":7
 		}
-
 	}
-	"domino8":{
+	,"domino8":{
 		"val":8,
 		"case1":{
 			"nbCouronnes":0,
@@ -110,9 +102,8 @@
 			"biome":3,
 			"valeurDominoAttribue":8
 		}
-
 	}
-	"domino9":{
+	,"domino9":{
 		"val":9,
 		"case1":{
 			"nbCouronnes":0,
@@ -124,9 +115,8 @@
 			"biome":3,
 			"valeurDominoAttribue":9
 		}
-
 	}
-	"domino10":{
+	,"domino10":{
 		"val":10,
 		"case1":{
 			"nbCouronnes":0,
@@ -138,9 +128,8 @@
 			"biome":2,
 			"valeurDominoAttribue":10
 		}
-
 	}
-	"domino11":{
+	,"domino11":{
 		"val":11,
 		"case1":{
 			"nbCouronnes":0,
@@ -152,9 +141,8 @@
 			"biome":2,
 			"valeurDominoAttribue":11
 		}
-
 	}
-	"domino12":{
+	,"domino12":{
 		"val":12,
 		"case1":{
 			"nbCouronnes":0,
@@ -166,10 +154,8 @@
 			"biome":4,
 			"valeurDominoAttribue":12
 		}
-
-	}
-	
-	"domino13":{
+	}	
+	,"domino13":{
 		"val":13,
 		"case1":{
 			"nbCouronnes":0,
@@ -183,7 +169,7 @@
 		}
 
 	}
-	"domino14":{
+	,"domino14":{
 		"val":14,
 		"case1":{
 			"nbCouronnes":0,
@@ -195,9 +181,8 @@
 			"biome":3,
 			"valeurDominoAttribue":14
 		}
-
 	}
-	"domino15":{
+	,"domino15":{
 		"val":15,
 		"case1":{
 			"nbCouronnes":0,
@@ -209,9 +194,8 @@
 			"biome":2,
 			"valeurDominoAttribue":15
 		}
-
 	}
-	"domino16":{
+	,"domino16":{
 		"val":16,
 		"case1":{
 			"nbCouronnes":0,
@@ -223,9 +207,8 @@
 			"biome":4,
 			"valeurDominoAttribue":16
 		}
-
 	}
-	"domino17":{
+	,"domino17":{
 		"val":17,
 		"case1":{
 			"nbCouronnes":0,
@@ -237,9 +220,8 @@
 			"biome":3,
 			"valeurDominoAttribue":17
 		}
-
 	}
-	"domino18":{
+	,"domino18":{
 		"val":18,
 		"case1":{
 			"nbCouronnes":0,
@@ -251,9 +233,8 @@
 			"biome":2,
 			"valeurDominoAttribue":18
 		}
-
 	}
-	"domino19":{
+	,"domino19":{
 		"val":19,
 		"case1":{
 			"nbCouronnes":1,
@@ -265,9 +246,8 @@
 			"biome":5,
 			"valeurDominoAttribue":19
 		}
-
 	}
-	"domino20":{
+	,"domino20":{
 		"val":20,
 		"case1":{
 			"nbCouronnes":1,
@@ -279,9 +259,8 @@
 			"biome":3,
 			"valeurDominoAttribue":20
 		}
-
 	}
-	"domino21":{
+	,"domino21":{
 		"val":21,
 		"case1":{
 			"nbCouronnes":1,
@@ -293,9 +272,8 @@
 			"biome":2,
 			"valeurDominoAttribue":21
 		}
-
 	}
-	"domino22":{
+	,"domino22":{
 		"val":22,
 		"case1":{
 			"nbCouronnes":1,
@@ -307,9 +285,8 @@
 			"biome":4,
 			"valeurDominoAttribue":22
 		}
-
 	}
-	"domino23":{
+	,"domino23":{
 		"val":23,
 		"case1":{
 			"nbCouronnes":1,
@@ -321,10 +298,8 @@
 			"biome":6,
 			"valeurDominoAttribue":23
 		}
-
 	}
-	
-	"domino24":{
+	,"domino24":{
 		"val":24,
 		"case1":{
 			"nbCouronnes":1,
@@ -336,9 +311,8 @@
 			"biome":1,
 			"valeurDominoAttribue":24
 		}
-
 	}
-	"domino25":{
+	,"domino25":{
 		"val":25,
 		"case1":{
 			"nbCouronnes":1,
@@ -350,9 +324,8 @@
 			"biome":1,
 			"valeurDominoAttribue":25
 		}
-
 	}
-	"domino26":{
+	,"domino26":{
 		"val":26,
 		"case1":{
 			"nbCouronnes":1,
@@ -364,9 +337,8 @@
 			"biome":1,
 			"valeurDominoAttribue":26
 		}
-
 	}
-	"domino27":{
+	,"domino27":{
 		"val":27,
 		"case1":{
 			"nbCouronnes":1,
@@ -378,9 +350,8 @@
 			"biome":1,
 			"valeurDominoAttribue":27
 		}
-
 	}
-	"domino28":{
+	,"domino28":{
 		"val":28,
 		"case1":{
 			"nbCouronnes":1,
@@ -392,9 +363,8 @@
 			"biome":3,
 			"valeurDominoAttribue":28
 		}
-
 	}
-	"domino29":{
+	,"domino29":{
 		"val":29,
 		"case1":{
 			"nbCouronnes":1,
@@ -406,9 +376,8 @@
 			"biome":2,
 			"valeurDominoAttribue":29
 		}
-
 	}
-	"domino30":{
+	,"domino30":{
 		"val":30,
 		"case1":{
 			"nbCouronnes":1,
@@ -420,9 +389,8 @@
 			"biome":1,
 			"valeurDominoAttribue":30
 		}
-
 	}
-	"domino31":{
+	,"domino31":{
 		"val":31,
 		"case1":{
 			"nbCouronnes":1,
@@ -434,9 +402,8 @@
 			"biome":1,
 			"valeurDominoAttribue":31
 		}
-
 	}
-	"domino32":{
+	,"domino32":{
 		"val":32,
 		"case1":{
 			"nbCouronnes":1,
@@ -448,9 +415,8 @@
 			"biome":5,
 			"valeurDominoAttribue":32
 		}
-
 	}
-	"domino33":{
+	,"domino33":{
 		"val":33,
 		"case1":{
 			"nbCouronnes":1,
@@ -462,9 +428,8 @@
 			"biome":5,
 			"valeurDominoAttribue":33
 		}
-
 	}
-	"domino34":{
+	,"domino34":{
 		"val":34,
 		"case1":{
 			"nbCouronnes":1,
@@ -476,9 +441,8 @@
 			"biome":5,
 			"valeurDominoAttribue":34
 		}
-
 	}
-	"domino35":{
+	,"domino35":{
 		"val":35,
 		"case1":{
 			"nbCouronnes":1,
@@ -490,9 +454,8 @@
 			"biome":5,
 			"valeurDominoAttribue":35
 		}
-
 	}
-	"domino36":{
+	,"domino36":{
 		"val":36,
 		"case1":{
 			"nbCouronnes":0,
@@ -504,9 +467,8 @@
 			"biome":2,
 			"valeurDominoAttribue":36
 		}
-
 	}
-	"domino37":{
+	,"domino37":{
 		"val":37,
 		"case1":{
 			"nbCouronnes":0,
@@ -518,9 +480,8 @@
 			"biome":2,
 			"valeurDominoAttribue":37
 		}
-
 	}
-	"domino38":{
+	,"domino38":{
 		"val":38,
 		"case1":{
 			"nbCouronnes":0,
@@ -532,9 +493,8 @@
 			"biome":4,
 			"valeurDominoAttribue":38
 		}
-
 	}
-	"domino39":{
+	,"domino39":{
 		"val":39,
 		"case1":{
 			"nbCouronnes":0,
@@ -546,9 +506,8 @@
 			"biome":4,
 			"valeurDominoAttribue":39
 		}
-
 	}
-	"domino40":{
+	,"domino40":{
 		"val":40,
 		"case1":{
 			"nbCouronnes":1,
@@ -560,9 +519,8 @@
 			"biome":1,
 			"valeurDominoAttribue":40
 		}
-
 	}
-	"domino41":{
+	,"domino41":{
 		"val":41,
 		"case1":{
 			"nbCouronnes":0,
@@ -574,9 +532,8 @@
 			"biome":2,
 			"valeurDominoAttribue":41
 		}
-
 	}
-	"domino42":{
+	,"domino42":{
 		"val":42,
 		"case1":{
 			"nbCouronnes":0,
@@ -588,9 +545,8 @@
 			"biome":2,
 			"valeurDominoAttribue":42
 		}
-
 	}
-	"domino43":{
+	,"domino43":{
 		"val":43,
 		"case1":{
 			"nbCouronnes":0,
@@ -602,9 +558,8 @@
 			"biome":4,
 			"valeurDominoAttribue":43
 		}
-
 	}
-	"domino44":{
+	,"domino44":{
 		"val":44,
 		"case1":{
 			"nbCouronnes":0,
@@ -616,9 +571,8 @@
 			"biome":4,
 			"valeurDominoAttribue":44
 		}
-
 	}
-	"domino45":{
+	,"domino45":{
 		"val":45,
 		"case1":{
 			"nbCouronnes":2,
@@ -630,9 +584,8 @@
 			"biome":1,
 			"valeurDominoAttribue":45
 		}
-
 	}
-	"domino46":{
+	,"domino46":{
 		"val":46,
 		"case1":{
 			"nbCouronnes":0,
@@ -644,9 +597,8 @@
 			"biome":6,
 			"valeurDominoAttribue":46
 		}
-
 	}
-	"domino47":{
+	,"domino47":{
 		"val":47,
 		"case1":{
 			"nbCouronnes":0,
@@ -658,9 +610,8 @@
 			"biome":6,
 			"valeurDominoAttribue":47
 		}
-
 	}
-	"domino48":{
+	,"domino48":{
 		"val":48,
 		"case1":{
 			"nbCouronnes":0,
@@ -672,6 +623,5 @@
 			"biome":6,
 			"valeurDominoAttribue":48
 		}
-
 	}
 }
