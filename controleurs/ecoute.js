@@ -4,13 +4,9 @@ socket.on('joueAutreJoueur',function(domino){
 
 socket.on('tonTour',function(moi){
   if(moi== nom){
-    if(choix==null){
       changerFeedBack("C'est votre tour. Choisisez un domino");
       faireChoix =true;
-    }else {
-      changerFeedBack("C'est votre tour. Placer votre domino");
-      monTour =true;
-    }
+  
   }else{
       changerFeedBack("C'est le tour de "+moi);
   }

@@ -5,6 +5,7 @@ function trowId(){
     //format normalisé : {x,y,orientation,id domino,nom joueur}
     var result = {'x':Number(arrayBrut[4]),'y':Number(arrayBrut[5]),'o':Number(orientation),'id':Number(choix[0]),'joueur':nom};
     dernierCoupEnvoyer = choix;
+
     socket.emit('jouer',result);
   }
 }
@@ -41,10 +42,16 @@ function rotation(direction){
 
 function choisir(balise){
   if(faireChoix){
+    faireChoix =false;
     var tmp = balise.id.substr(6);
     choix = [tmp,balise.firstParent];
     socket.emit('choisir',choix[0]);
-    faireChoix =false;
+    if(!premiertour){
+      monTour = true;
+      changerFeedBack("C'est votre tour. Placer votre domino");
+    }else{
+      premiertour = false;
+    }
   }
 }
 

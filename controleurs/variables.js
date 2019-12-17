@@ -6,3 +6,4 @@ var faireChoix = false;
 var arborecence ={};
 var nom = null;
 var orientation = 0;
+var premiertour = true;
