@@ -11,6 +11,8 @@ socket.on('tonTour',function(moi){
       changerFeedBack("C'est votre tour. Placer votre domino");
       monTour =true;
     }
+  }else{
+      changerFeedBack("C'est le tour de "+moi);
   }
 });
 
