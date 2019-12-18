@@ -14,11 +14,19 @@ socket.on('tonTour',function(moi){
 });
 
 socket.on('joueurPresent',function(nomJoueur){
+  var test = 2;
   for (var i = 0; i < nomJoueur.length; i++) {
-    var tmp = 2;
+    console.log(nomJoueur[i]);
     if (nomJoueur[i] != nom){
-      $("#adv"+(i+2)).attr("id","caseJoueur"+nomJoueur[i]);
-      tmp++;
+      console.log("#adv"+(test));
+      $("#adv"+(test)).css({'background-color':couleur[i][0]});
+      $("#adv"+(test)).attr("id","caseJoueur"+nomJoueur[i]);
+      test+=1;
+      console.log(test);
+    }else {
+      $(".case").css({'background-color':couleur[i][0]});
+      maCouleur = couleur[i][0];
+      maCouleurClaire = couleur[i][1];
     }
   }
 });
