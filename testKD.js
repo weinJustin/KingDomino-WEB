@@ -84,7 +84,7 @@ io.sockets.on('connection', function (socket) {
 	        //afficherTousLesJoueurs();
 	        //---------- Début de partie ----------//
 	  	    for(var i=0;i<48;i++){
-	  				dominos[i] = i+1;
+	  				dominos[i] = Number(i)+1;
 	  	    }
 	  		shuffle(dominos);
 	  		envoiDesNouveauxDominos();
@@ -223,12 +223,17 @@ io.sockets.on('connection', function (socket) {
 	                    }
 	}
 	}*/
+
+	function compare(x, y) {
+    	return x - y;
+	}
+
     function envoiDesNouveauxDominos(){
     	var nouveauxDominos = [];
 		for(var i=0;i<4;i++){
 			nouveauxDominos[i] = dominos.shift();
 		}
-		nouveauxDominos.sort();
+		nouveauxDominos.sort(compare);
 		console.log(nouveauxDominos);
 	    socket.emit('envoyerNouveauxDominos',nouveauxDominos);
 	    socket.broadcast.emit('envoyerNouveauxDominos',nouveauxDominos);
