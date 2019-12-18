@@ -7,3 +7,6 @@ var arborecence ={};
 var nom = null;
 var orientation = 0;
 var premiertour = true;
+var couleur = [["#e6e600","#ffff66"],["#99e699","#c1f0c1"],["#ff6666","#ff9999"],["#4d79ff","#809fff"]]
+var maCouleur = '#e7d8cb';
+var maCouleurClaire = '#d7bea8' ;

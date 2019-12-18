@@ -58,11 +58,11 @@ function choisir(balise){
 }
 
 function lumiereOn(balise){
-    $(balise).css({'background-color':'#d7bea8'});
+    $(balise).css({'background-color':maCouleurClaire});
 }
 
 function lumiereOff(balise){
-    $(balise).css({'background-color':'#e7d8cb'});
+    $(balise).css({'background-color':maCouleur});
 }
 
 $( document ).ready(function(){

@@ -81,6 +81,8 @@ io.sockets.on('connection', function (socket) {
 	    //console.log(socket.zone);
 	    if(nbJoueurs>3){
 	    	shuffle(joueurs);
+        socket.emit('joueurPresent',joueurs);
+        socket.broadcast.emit('joueurPresent',joueurs);
 	        //afficherTousLesJoueurs();
 	        //---------- Début de partie ----------//
 	  	    for(var i=0;i<48;i++){
@@ -127,7 +129,7 @@ io.sockets.on('connection', function (socket) {
 				socket.broadcast.emit('tonTour',joueurs[quiJoue]);
 			}
     	}
-    	
+
     });
 
 	socket.on('jouer', function(infos) {
@@ -170,7 +172,7 @@ io.sockets.on('connection', function (socket) {
 	        }
 	        socket.emit('tonTour',joueurs[quiJoue]);
 	        socket.broadcast.emit('tonTour',joueurs[quiJoue]);
-        }   
+        }
     });
 
 	/*function tallyBoardScore(board) {
@@ -324,7 +326,7 @@ io.sockets.on('connection', function (socket) {
 						break;
 				}
 			}
-			
+
 		}
 		return false;
 	}
@@ -384,12 +386,12 @@ io.sockets.on('connection', function (socket) {
 					}
 				}
 			}
-			return 2;	
+			return 2;
 		}
 		else{
 			return -1;
 		}
-		
+
 	}
 
 	//Fonction de debug
