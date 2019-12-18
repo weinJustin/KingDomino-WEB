@@ -261,50 +261,64 @@ io.sockets.on('connection', function (socket) {
 			var dominosParses = JSON.parse(stockDomino);
 			var case1 = dominosParses[textDomino]['case1'];
 			var case2 = dominosParses[textDomino]['case2'];
+			var tabVerif = [];
 			console.log(case1);
 			console.log(case2);
-			if(verifCases(x,y,case1)!=-1){
+			tabVerif.push(verifCases(x,y,case1));
+			if(tabVerif[0]!=-1){
 				switch(rotation){
 					case 3:
 						if(((Number(y)-1)>-1)&&((Number(y)-1)<5)){
-							if(verifCases(x,Number(y)-1,case2)!=-1){
-								socket.zone[x][y] = case1;
-								socket.zone[x][Number(y)-1] = case2;
-								//afficherZone();
-								return true;
+							tabVerif.push(verifCases(x,Number(y)-1,case2));
+							if(tabVerif[1]!=-1){
+								if(tabVerif[0]==1||tabVerif[1]==1){
+									socket.zone[x][y] = case1;
+									socket.zone[x][Number(y)-1] = case2;
+									//afficherZone();
+									return true;
+								}
 							}
 						}
 						break;
 
 					case 0:
 						if(((Number(x)+1)>-1)&&((Number(x)+1)<5)){
-							if(verifCases(Number(x)+1,y,case2)!=-1){
-								socket.zone[x][y] = case1;
-								socket.zone[Number(x)+1][y] = case2;
-								//afficherZone();
-								return true;
+							tabVerif.push(verifCases(Number(x)+1,y,case2));
+							if(tabVerif[1]!=-1){
+								if(tabVerif[0]==1||tabVerif[1]==1){
+									socket.zone[x][y] = case1;
+									socket.zone[Number(x)+1][y] = case2;
+									//afficherZone();
+									return true;
+								}
 							}
 						}
 						break;
 
 					case 1:
 						if(((Number(y)+1)>-1)&&((Number(y)+1)<5)){
-							if(verifCases(x,Number(y)+1,case2)!=-1){
-								socket.zone[x][y] = case1;
-								socket.zone[x][Number(y)+1] = case2;
-								//afficherZone();
-								return true;
+							tabVerif.push(verifCases(x,Number(y)+1,case2));
+							if(tabVerif[1]!=-1){
+								if(tabVerif[0]==1||tabVerif[1]==1){
+									socket.zone[x][y] = case1;
+									socket.zone[x][Number(y)+1] = case2;
+									//afficherZone();
+									return true;
+								}
 							}
 						}
 						break;
 
 					case 2:
 						if(((Number(x)-1)>-1)&&((Number(x)-1)<5)){
-							if(verifCases(Number(x)-1,y,case2)!=-1){
-								socket.zone[x][y] = case1;
-								socket.zone[Number(x)-1][y] = case2;
-								//afficherZone();
-								return true;
+							tabVerif.push(verifCases(Number(x)-1,y,case2));
+							if(tabVerif[1]!=-1){
+								if(tabVerif[0]==1||tabVerif[1]==1){
+									socket.zone[x][y] = case1;
+									socket.zone[Number(x)-1][y] = case2;
+									//afficherZone();
+									return true;
+								}
 							}
 						}
 						break;
