@@ -13,6 +13,8 @@ var quiJoue = 0;
 var dominos = [];
 var dominosPick = [];
 var verifPlac = false;
+var zones = [];
+var points = []; 
 
 /*
 var server = http.createServer(function(req, res) {
@@ -33,7 +35,7 @@ var server = http.createServer(function(req, res) {
 
 app.use(express.static(__dirname));
 app.get('/', function(req, res) {
-    res.render(__dirname+'/template/index.html.twig',{message : "hello world"}); //moteur de rendu twig
+    res.render(__dirname+'/template/index.html.twig',{message : "Hello world"}); //moteur de rendu twig
 });
 
 app.get('/jeu', function(req, res) {
@@ -64,7 +66,8 @@ io.sockets.on('connection', function (socket) {
 	    		var caseDeBase = {
 		    		nbCouronnes: 0,
 		    		biome: -1,
-		    		valeurDominoAttribue: 0
+		    		valeurDominoAttribue: 0,
+		    		isCounted: false
 		    	};
 	    		tabTemp.push(caseDeBase);
 	    	}
@@ -73,7 +76,8 @@ io.sockets.on('connection', function (socket) {
 	    var caseDepart ={
 	    	nbCouronnes: 0,
 	    	biome: 0,
-	    	valeurDominoAttribue: 0
+	    	valeurDominoAttribue: 0,
+	    	isCounted: false
 	    };
 	    socket.zone[2][2] = caseDepart;
 	    //console.log(socket.zone);
@@ -88,7 +92,7 @@ io.sockets.on('connection', function (socket) {
 	  	    }
 	  		shuffle(dominos);
 	  		envoiDesNouveauxDominos();
-	  	  socket.emit('actuTour',numTour);
+	  	    socket.emit('actuTour',numTour);
 	  		socket.broadcast.emit('actuTour',numTour);
 	  		socket.emit('tonTour',joueurs[quiJoue]);
 	  		socket.broadcast.emit('tonTour',joueurs[quiJoue]);
@@ -120,7 +124,7 @@ io.sockets.on('connection', function (socket) {
 				quiJoue++;
 				if(quiJoue>3){
 					quiJoue = 0;
-					//remaniementDesJoueurs();
+					remaniementDesJoueurs();
 					envoiDesNouveauxDominos();
 					changementDeTour();
 				}
@@ -128,7 +132,7 @@ io.sockets.on('connection', function (socket) {
 				socket.broadcast.emit('tonTour',joueurs[quiJoue]);
 			}
     	}
-
+    	
     });
 
 	socket.on('jouer', function(infos) {
@@ -136,7 +140,6 @@ io.sockets.on('connection', function (socket) {
 		var y = infos.y;
 		var rotation = infos.o;
 		var idDomino = infos.id;
-		var jou = infos.joueur;
         var verif = true;
         if(socket.dominoPick!=0){
         	verif = verifPlacement(x,y,rotation,idDomino);
@@ -150,17 +153,22 @@ io.sockets.on('connection', function (socket) {
         	verifPlac = false;
         }
         if(verif==true){
-        	/*for(var i=0;i<4;i++){
-        		if(joueurs[i]==socket.pseudo){
-        			dominoPick[i] = socket.dominoPick
-        		}
-        	}*/
+        	if(numTour==12){
+        		zones.push(socket.zone);
+        	}
         	socket.dominoPick = 0;
         	quiJoue++;
 	        if(quiJoue>3){
 	        	quiJoue = 0;
 				// ---------- Fin de partie ---------- //
-				if(numTour>12){
+				if(numTour==11){
+					remaniementDesJoueurs();
+					changementDeTour();
+				}
+				else if(numTour==12){
+					for(var i=0;i<4;i++){
+						points.push(totallyBoardScore(board));
+					}
 					/*COMPTAGE DES POINTS
 					socket.emit('resultatFinal',?);
 					socket.broadcast.emit('resultatFinal',?);*/
@@ -171,18 +179,18 @@ io.sockets.on('connection', function (socket) {
 					dominos = [];
 					dominosPick = [];
 				}
-				else{
-					//remaniementDesJoueurs();
+				else{		
+					remaniementDesJoueurs();
 					envoiDesNouveauxDominos();
 					changementDeTour();
 				}
 	        }
 	        socket.emit('tonTour',joueurs[quiJoue]);
 	        socket.broadcast.emit('tonTour',joueurs[quiJoue]);
-        }
+        }   
     });
 
-	/*function tallyBoardScore(board) {
+	function totallyBoardScore(board) {
 	    let total = 0;
 	    for (let i = 0; i < 5; i++) {
 	        for (let j = 0; j < 5; j++) {
@@ -225,13 +233,13 @@ io.sockets.on('connection', function (socket) {
 	        }
 	    }
 	    //Right
-	        if (num2+1<5 && !board[num][num2+1].isCounted) {
-	            if (board[num][num2+1].biome === board[num][num2].biome) {
-	                console.log('Cas 4, Co :',num+1,num2+2);
-	                checkPiece(num,num2+1);
+	    if (num2+1<5 && !board[num][num2+1].isCounted) {
+	        if (board[num][num2+1].biome === board[num][num2].biome) {
+	            console.log('Cas 4, Co :',num+1,num2+2);
+	            checkPiece(num,num2+1);
 	        }
 	    }
-	}*/
+	}
 
 	function compare(x, y) {
     	return x - y;
@@ -354,7 +362,6 @@ io.sockets.on('connection', function (socket) {
 						break;
 				}
 			}
-
 		}
 		return false;
 	}
@@ -394,12 +401,12 @@ io.sockets.on('connection', function (socket) {
 					}
 				}
 			}
-			return 2;
+			return 2;	
 		}
 		else{
 			return -1;
 		}
-
+		
 	}
 
 	//Fonction de debug
