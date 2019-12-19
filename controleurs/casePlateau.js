@@ -40,6 +40,11 @@ function rotation(direction){
 
 }
 
+function finDePartie() {
+  socket.emit('finDePartie');
+
+}
+
 function choisir(balise){
   if(faireChoix){
     faireChoix =false;
@@ -80,7 +85,7 @@ $( document ).ready(function(){
   for (var i = 0; i < 2; i++) {
     for (var j = 0; j < 4; j++) {
       var id = tab[i]+(j+1);
-      var div = "<div class='domino' id='"+id+"' onclick='choisir(this.firstChild)'>";
+      var div = "<div class='domino' id='"+id+"' '>";
       $("#domCol"+(i+1)).append(div);
       $("#"+id).css({"top":j*45+"%"});
 

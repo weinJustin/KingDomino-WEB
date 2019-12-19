@@ -36,6 +36,12 @@ div{
 
 }
 
+.defausse{
+  bottom: 2vh;
+  right: 5vw;
+  position: absolute;
+}
+
 .domino>.domino{
   width: 100%;
   height: 100%;

@@ -13,7 +13,7 @@ socket.on('tonTour',function(moi){
   }
 });
 
-socket.on('joueurPresent',function(nomJoueur){
+socket.on('dcjoueurPresent',function(nomJoueur){
   var test = 2;
   for (var i = 0; i < nomJoueur.length; i++) {
     console.log(nomJoueur[i]);

@@ -88,7 +88,7 @@ io.sockets.on('connection', function (socket) {
 	  	    }
 	  		shuffle(dominos);
 	  		envoiDesNouveauxDominos();
-	  	    socket.emit('actuTour',numTour);
+	  	  socket.emit('actuTour',numTour);
 	  		socket.broadcast.emit('actuTour',numTour);
 	  		socket.emit('tonTour',joueurs[quiJoue]);
 	  		socket.broadcast.emit('tonTour',joueurs[quiJoue]);
@@ -127,7 +127,7 @@ io.sockets.on('connection', function (socket) {
 				socket.broadcast.emit('tonTour',joueurs[quiJoue]);
 			}
     	}
-    	
+
     });
 
 	socket.on('jouer', function(infos) {
@@ -170,7 +170,7 @@ io.sockets.on('connection', function (socket) {
 	        }
 	        socket.emit('tonTour',joueurs[quiJoue]);
 	        socket.broadcast.emit('tonTour',joueurs[quiJoue]);
-        }   
+        }
     });
 
 	/*function tallyBoardScore(board) {
@@ -329,7 +329,7 @@ io.sockets.on('connection', function (socket) {
 						break;
 				}
 			}
-			
+
 		}
 		return false;
 	}
@@ -389,12 +389,12 @@ io.sockets.on('connection', function (socket) {
 					}
 				}
 			}
-			return 2;	
+			return 2;
 		}
 		else{
 			return -1;
 		}
-		
+
 	}
 
 	//Fonction de debug
