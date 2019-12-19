@@ -51,9 +51,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('connectionJoueur',function(pseudo) {
 
-    	//console.log("Connexion detectée");
     	nbJoueurs++;
-    	//console.log(nbJoueurs);
     	socket.pseudo = pseudo;
 	    joueurs.push(pseudo);
 	    socket.dominoPick = 0;
@@ -81,6 +79,8 @@ io.sockets.on('connection', function (socket) {
 	    //console.log(socket.zone);
 	    if(nbJoueurs>3){
 	    	shuffle(joueurs);
+	    	socket.emit('joueurPresent',joueurs);
+	    	socket.broadcast.emit('joueurPresent',joueurs);
 	        //afficherTousLesJoueurs();
 	        //---------- Début de partie ----------//
 	  	    for(var i=0;i<48;i++){
@@ -120,6 +120,7 @@ io.sockets.on('connection', function (socket) {
 				quiJoue++;
 				if(quiJoue>3){
 					quiJoue = 0;
+					//remaniementDesJoueurs();
 					envoiDesNouveauxDominos();
 					changementDeTour();
 				}
@@ -149,12 +150,15 @@ io.sockets.on('connection', function (socket) {
         	verifPlac = false;
         }
         if(verif==true){
+        	/*for(var i=0;i<4;i++){
+        		if(joueurs[i]==socket.pseudo){
+        			dominoPick[i] = socket.dominoPick
+        		}
+        	}*/
         	socket.dominoPick = 0;
         	quiJoue++;
 	        if(quiJoue>3){
-				quiJoue = 0;
-				envoiDesNouveauxDominos();
-				changementDeTour();
+	        	quiJoue = 0;
 				// ---------- Fin de partie ---------- //
 				if(numTour>12){
 					/*COMPTAGE DES POINTS
@@ -167,6 +171,11 @@ io.sockets.on('connection', function (socket) {
 					dominos = [];
 					dominosPick = [];
 				}
+				else{
+					//remaniementDesJoueurs();
+					envoiDesNouveauxDominos();
+					changementDeTour();
+				}
 	        }
 	        socket.emit('tonTour',joueurs[quiJoue]);
 	        socket.broadcast.emit('tonTour',joueurs[quiJoue]);
@@ -174,54 +183,54 @@ io.sockets.on('connection', function (socket) {
     });
 
 	/*function tallyBoardScore(board) {
-	            let total = 0;
-	            for (let i = 0; i < 5; i++) {
-	                for (let j = 0; j < 5; j++) {
-		                var count = 0;
-		                var nbCouronnes = 0;
-	                  	var actualBiome = board[i][j].biome;
-	                  	if (!board[i][j].isCounted && board[i][j].biome !== 0) checkPiece(i,j);
-	                  	console.log('A');
-	                	console.log('Count : ',count,', NbCouronnes : ', nbCouronnes);
-	                	total += (count * nbCouronnes);
-	                }
-	            }
-	            return total;
+	    let total = 0;
+	    for (let i = 0; i < 5; i++) {
+	        for (let j = 0; j < 5; j++) {
+		        var count = 0;
+		        var nbCouronnes = 0;
+	            var actualBiome = board[i][j].biome;
+	            if (!board[i][j].isCounted && board[i][j].biome !== 0) checkPiece(i,j);
+	            console.log('A');
+	            console.log('Count : ',count,', NbCouronnes : ', nbCouronnes);
+	            total += (count * nbCouronnes);
+	        }
+	    }
+	    return total;
+	}
 
 	function checkPiece(num,num2) {
-	                 	board[num][num2].isCounted = true;
-	                  	count += 1;
-	                  	nbCouronnes += board[num][num2].nbCouronnes;
-	                  	console.log('Cas 10, Co :',num+1,num2+1);
-	                  	//Down
-	                    if (num+1<5 && !board[num+1][num2].isCounted) {
-	                    	if (board[num+1][num2].biome === board[num][num2].biome) {
-	                      		console.log('Cas 1, Co :',num+2,num2+1);
-	                      		checkPiece(num+1,num2);
-	                   		}
-	                    }
-	                  	//Up
-	                  	if (num-1>=0 && !board[num-1][num2].isCounted) {
-	                    	if (board[num-1][num2].biome === board[num][num2].biome) {
-	                    		console.log('Cas 2, Co :',num,num2+1);
-	                    	  	checkPiece(num-1,num2);
-	                    	}
-	                  	}
-	                    //Left
-	                    if (num2-1>=0 && !board[num][num2-1].isCounted) {
-	                    	if (board[num][num2-1].biome === board[num][num2].biome) {
-	                      		console.log('Cas 3, Co :',num+1,num2);
-	                      		checkPiece(num,num2-1);
-	                    	}
-	                  	}
-	                  	//Right
-	                  	if (num2+1<5 && !board[num][num2+1].isCounted) {
-	                    	if (board[num][num2+1].biome === board[num][num2].biome) {
-	                      		console.log('Cas 4, Co :',num+1,num2+2);
-	                      		checkPiece(num,num2+1);
-	                    	}
-	                    }
-	}
+	    board[num][num2].isCounted = true;
+	    count += 1;
+	    nbCouronnes += board[num][num2].nbCouronnes;
+	    console.log('Cas 10, Co :',num+1,num2+1);
+	    //Down
+	    if (num+1<5 && !board[num+1][num2].isCounted) {
+	        if (board[num+1][num2].biome === board[num][num2].biome) {
+	            console.log('Cas 1, Co :',num+2,num2+1);
+	            checkPiece(num+1,num2);
+	        }
+	    }
+	    //Up
+	    if (num-1>=0 && !board[num-1][num2].isCounted) {
+	        if (board[num-1][num2].biome === board[num][num2].biome) {
+	            console.log('Cas 2, Co :',num,num2+1);
+	            checkPiece(num-1,num2);
+	        }
+	    }
+	    //Left
+	    if (num2-1>=0 && !board[num][num2-1].isCounted) {
+	        if (board[num][num2-1].biome === board[num][num2].biome) {
+	            console.log('Cas 3, Co :',num+1,num2);
+	            checkPiece(num,num2-1);
+	        }
+	    }
+	    //Right
+	        if (num2+1<5 && !board[num][num2+1].isCounted) {
+	            if (board[num][num2+1].biome === board[num][num2].biome) {
+	                console.log('Cas 4, Co :',num+1,num2+2);
+	                checkPiece(num,num2+1);
+	        }
+	    }
 	}*/
 
 	function compare(x, y) {
@@ -252,14 +261,30 @@ io.sockets.on('connection', function (socket) {
 	  }
 	}
 
+	function remaniementDesJoueurs(){
+		var nouvelOrdre = [];
+		for(var i=0;i<4;i++){
+			var vMin = 999;
+			for(var j=0;j<4;j++){
+				if(dominosPick!=undefined){
+					if(dominosPick[j]<vMin){
+						vMin = dominosPick[j];
+					}
+				}
+			}
+			for(var k=0;k<4;k++){
+				if(dominosPick[k]==vMin){
+					nouvelOrdre.push(joueurs[k]);
+					delete dominosPick[k];
+				}
+			}
+		}
+		for(var i=0;i<4;i++){
+			joueurs[i] = nouvelOrdre[i];
+		}
+	}
+
 	function verifPlacement(x,y,rotation,idDomino){
-		/*console.log('Je passe dans verifPlacement');
-		console.log('-------------');
-		console.log(x);
-		console.log(y);
-		console.log(rotation);
-		console.log(idDomino);
-		console.log('-------------');*/
 		if((x>-1)&&(y>-1)&&(x<5)&&(y<5)){
 			var stockDomino = fs.readFileSync('Dominos.json');
 			var textDomino = 'domino'+idDomino;
@@ -335,27 +360,7 @@ io.sockets.on('connection', function (socket) {
 	}
 
 	function verifCases(x,y,caseVerif){
-		//console.log('Je passe dans verifCases');
-		//console.log(socket.zone[x][y].biome);
 		if(socket.zone[x][y].biome==-1){
-			//console.log('I am a joke to you ?');
-			/*console.log('Le premier test de verifCases est OK.');
-			console.log(x);
-			console.log(y);
-			console.log(caseVerif.biome);
-			for(var i=0;i<5;i++){
-				for(var j=0;j<5;j++){
-					console.log(i+" "+j+" : ");
-					console.log(socket.zone[i][j]);
-				}
-			}
-			console.log((Number(x)+1));
-			console.log((Number(y)+1));
-			*/
-			/*console.log(socket.zone[x][Number(y)-1].biome);
-			console.log(socket.zone[Number(x)+1][y].biome);
-			console.log(socket.zone[x][Number(y)+1].biome);
-			console.log(socket.zone[Number(x)-1][y].biome);*/
 			if(verifPlac==true){
 				return 1;
 			}
