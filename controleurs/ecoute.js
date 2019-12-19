@@ -20,11 +20,13 @@ socket.on('joueurPresent',function(nomJoueur){
     if (nomJoueur[i] != nom){
       console.log("#adv"+(test));
       $("#adv"+(test)).css({'background-color':couleur[i][0]});
+      placement(2,2,0,"Depart"+couleur[i][2],"adv"+(test))
       $("#adv"+(test)).attr("id","caseJoueur"+nomJoueur[i]);
       test+=1;
       console.log(test);
     }else {
       $(".case").css({'background-color':couleur[i][0]});
+      placement(2,2,0,"Depart"+couleur[i][2],"adv1");
       maCouleur = couleur[i][0];
       maCouleurClaire = couleur[i][1];
     }
