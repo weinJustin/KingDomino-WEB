@@ -4,12 +4,14 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":1
+			"valeurDominoAttribue":1,
+			"isCounted":false
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":1
+			"valeurDominoAttribue":1,
+			"isCounted":false
 		}
 	}
 	,"domino2":{
@@ -17,12 +19,14 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":2
+			"valeurDominoAttribue":2,
+			"isCounted":false
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":2
+			"valeurDominoAttribue":2,
+			"isCounted":false
 		}
 	}
 	,"domino3":{
@@ -30,12 +34,15 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":5,
-			"valeurDominoAttribue":3
+			"valeurDominoAttribue":3,
+			"isCounted":false
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
 			"valeurDominoAttribue":3
+,
+"isCounted":false
 		}
 	}
 	,"domino4":{
@@ -44,11 +51,15 @@
 			"nbCouronnes":0,
 			"biome":5,
 			"valeurDominoAttribue":4
+,
+"isCounted":false
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
 			"valeurDominoAttribue":4
+,
+"isCounted":false
 		}
 	}
 	,"domino5":{
@@ -57,11 +68,15 @@
 			"nbCouronnes":0,
 			"biome":5,
 			"valeurDominoAttribue":5
+,
+"isCounted":false
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
 			"valeurDominoAttribue":5
+,
+"isCounted":false
 		}
 	}
 	,"domino6":{
@@ -70,11 +85,15 @@
 			"nbCouronnes":0,
 			"biome":5,
 			"valeurDominoAttribue":6
+,
+"isCounted":false
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
 			"valeurDominoAttribue":6
+,
+"isCounted":false
 		}
 	}
 	,"domino7":{
@@ -83,11 +102,15 @@
 			"nbCouronnes":0,
 			"biome":3,
 			"valeurDominoAttribue":7
+,
+"isCounted":false
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":3,
 			"valeurDominoAttribue":7
+,
+"isCounted":false
 		}
 	}
 	,"domino8":{
@@ -96,11 +119,15 @@
 			"nbCouronnes":0,
 			"biome":3,
 			"valeurDominoAttribue":8
+,
+"isCounted":false
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":3,
 			"valeurDominoAttribue":8
+,
+"isCounted":false
 		}
 	}
 	,"domino9":{
@@ -109,11 +136,15 @@
 			"nbCouronnes":0,
 			"biome":3,
 			"valeurDominoAttribue":9
+,
+"isCounted":false
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":3,
 			"valeurDominoAttribue":9
+,
+"isCounted":false
 		}
 	}
 	,"domino10":{
@@ -121,12 +152,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":10
+			"valeurDominoAttribue":10,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":10
+			"valeurDominoAttribue":10,
+			"isCounted":false
+
 		}
 	}
 	,"domino11":{
@@ -134,12 +169,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":11
+			"valeurDominoAttribue":11,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":11
+			"valeurDominoAttribue":11,
+			"isCounted":false
+
 		}
 	}
 	,"domino12":{
@@ -147,12 +186,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":4,
-			"valeurDominoAttribue":12
+			"valeurDominoAttribue":12,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":4,
-			"valeurDominoAttribue":12
+			"valeurDominoAttribue":12,
+			"isCounted":false
+
 		}
 	}	
 	,"domino13":{
@@ -160,12 +203,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":13
+			"valeurDominoAttribue":13,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
-			"valeurDominoAttribue":13
+			"valeurDominoAttribue":13,
+			"isCounted":false
+
 		}
 
 	}
@@ -174,12 +221,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":14
+			"valeurDominoAttribue":14,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":3,
-			"valeurDominoAttribue":14
+			"valeurDominoAttribue":14,
+			"isCounted":false
+
 		}
 	}
 	,"domino15":{
@@ -187,12 +238,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":15
+			"valeurDominoAttribue":15,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":15
+			"valeurDominoAttribue":15,
+			"isCounted":false
+
 		}
 	}
 	,"domino16":{
@@ -200,12 +255,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":16
+			"valeurDominoAttribue":16,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":4,
-			"valeurDominoAttribue":16
+			"valeurDominoAttribue":16,
+			"isCounted":false
+
 		}
 	}
 	,"domino17":{
@@ -213,12 +272,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":5,
-			"valeurDominoAttribue":17
+			"valeurDominoAttribue":17,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":3,
-			"valeurDominoAttribue":17
+			"valeurDominoAttribue":17,
+			"isCounted":false
+
 		}
 	}
 	,"domino18":{
@@ -226,12 +289,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":5,
-			"valeurDominoAttribue":18
+			"valeurDominoAttribue":18,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":18
+			"valeurDominoAttribue":18,
+			"isCounted":false
+
 		}
 	}
 	,"domino19":{
@@ -239,12 +306,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":1,
-			"valeurDominoAttribue":19
+			"valeurDominoAttribue":19,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
-			"valeurDominoAttribue":19
+			"valeurDominoAttribue":19,
+			"isCounted":false
+
 		}
 	}
 	,"domino20":{
@@ -252,12 +323,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":1,
-			"valeurDominoAttribue":20
+			"valeurDominoAttribue":20,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":3,
-			"valeurDominoAttribue":20
+			"valeurDominoAttribue":20,
+			"isCounted":false
+
 		}
 	}
 	,"domino21":{
@@ -265,12 +340,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":1,
-			"valeurDominoAttribue":21
+			"valeurDominoAttribue":21,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":21
+			"valeurDominoAttribue":21,
+			"isCounted":false
+
 		}
 	}
 	,"domino22":{
@@ -278,12 +357,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":1,
-			"valeurDominoAttribue":22
+			"valeurDominoAttribue":22,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":4,
-			"valeurDominoAttribue":22
+			"valeurDominoAttribue":22,
+			"isCounted":false
+
 		}
 	}
 	,"domino23":{
@@ -291,12 +374,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":1,
-			"valeurDominoAttribue":23
+			"valeurDominoAttribue":23,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":6,
-			"valeurDominoAttribue":23
+			"valeurDominoAttribue":23,
+			"isCounted":false
+
 		}
 	}
 	,"domino24":{
@@ -304,12 +391,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":5,
-			"valeurDominoAttribue":24
+			"valeurDominoAttribue":24,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":24
+			"valeurDominoAttribue":24,
+			"isCounted":false
+
 		}
 	}
 	,"domino25":{
@@ -317,12 +408,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":5,
-			"valeurDominoAttribue":25
+			"valeurDominoAttribue":25,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":25
+			"valeurDominoAttribue":25,
+			"isCounted":false
+
 		}
 	}
 	,"domino26":{
@@ -330,12 +425,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":5,
-			"valeurDominoAttribue":26
+			"valeurDominoAttribue":26,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":26
+			"valeurDominoAttribue":26,
+			"isCounted":false
+
 		}
 	}
 	,"domino27":{
@@ -343,12 +442,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":5,
-			"valeurDominoAttribue":27
+			"valeurDominoAttribue":27,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":27
+			"valeurDominoAttribue":27,
+			"isCounted":false
+
 		}
 	}
 	,"domino28":{
@@ -356,12 +459,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":5,
-			"valeurDominoAttribue":28
+			"valeurDominoAttribue":28,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":3,
-			"valeurDominoAttribue":28
+			"valeurDominoAttribue":28,
+			"isCounted":false
+
 		}
 	}
 	,"domino29":{
@@ -369,12 +476,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":5,
-			"valeurDominoAttribue":29
+			"valeurDominoAttribue":29,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":29
+			"valeurDominoAttribue":29,
+			"isCounted":false
+
 		}
 	}
 	,"domino30":{
@@ -382,12 +493,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":3,
-			"valeurDominoAttribue":30
+			"valeurDominoAttribue":30,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":30
+			"valeurDominoAttribue":30,
+			"isCounted":false
+
 		}
 	}
 	,"domino31":{
@@ -395,12 +510,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":3,
-			"valeurDominoAttribue":31
+			"valeurDominoAttribue":31,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":31
+			"valeurDominoAttribue":31,
+			"isCounted":false
+
 		}
 	}
 	,"domino32":{
@@ -408,12 +527,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":3,
-			"valeurDominoAttribue":32
+			"valeurDominoAttribue":32,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
-			"valeurDominoAttribue":32
+			"valeurDominoAttribue":32,
+			"isCounted":false
+
 		}
 	}
 	,"domino33":{
@@ -421,12 +544,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":3,
-			"valeurDominoAttribue":33
+			"valeurDominoAttribue":33,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
-			"valeurDominoAttribue":33
+			"valeurDominoAttribue":33,
+			"isCounted":false
+
 		}
 	}
 	,"domino34":{
@@ -434,12 +561,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":3,
-			"valeurDominoAttribue":34
+			"valeurDominoAttribue":34,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
-			"valeurDominoAttribue":34
+			"valeurDominoAttribue":34,
+			"isCounted":false
+
 		}
 	}
 	,"domino35":{
@@ -447,12 +578,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":3,
-			"valeurDominoAttribue":35
+			"valeurDominoAttribue":35,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":5,
-			"valeurDominoAttribue":35
+			"valeurDominoAttribue":35,
+			"isCounted":false
+
 		}
 	}
 	,"domino36":{
@@ -460,12 +595,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":36
+			"valeurDominoAttribue":36,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":1,
 			"biome":2,
-			"valeurDominoAttribue":36
+			"valeurDominoAttribue":36,
+			"isCounted":false
+
 		}
 	}
 	,"domino37":{
@@ -473,12 +612,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":3,
-			"valeurDominoAttribue":37
+			"valeurDominoAttribue":37,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":1,
 			"biome":2,
-			"valeurDominoAttribue":37
+			"valeurDominoAttribue":37,
+			"isCounted":false
+
 		}
 	}
 	,"domino38":{
@@ -486,12 +629,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":38
+			"valeurDominoAttribue":38,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":1,
 			"biome":4,
-			"valeurDominoAttribue":38
+			"valeurDominoAttribue":38,
+			"isCounted":false
+
 		}
 	}
 	,"domino39":{
@@ -499,12 +646,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":39
+			"valeurDominoAttribue":39,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":1,
 			"biome":4,
-			"valeurDominoAttribue":39
+			"valeurDominoAttribue":39,
+			"isCounted":false
+
 		}
 	}
 	,"domino40":{
@@ -512,12 +663,16 @@
 		"case1":{
 			"nbCouronnes":1,
 			"biome":6,
-			"valeurDominoAttribue":40
+			"valeurDominoAttribue":40,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":40
+			"valeurDominoAttribue":40,
+			"isCounted":false
+
 		}
 	}
 	,"domino41":{
@@ -525,12 +680,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":41
+			"valeurDominoAttribue":41,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":2,
 			"biome":2,
-			"valeurDominoAttribue":41
+			"valeurDominoAttribue":41,
+			"isCounted":false
+
 		}
 	}
 	,"domino42":{
@@ -538,12 +697,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":3,
-			"valeurDominoAttribue":42
+			"valeurDominoAttribue":42,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":2,
 			"biome":2,
-			"valeurDominoAttribue":42
+			"valeurDominoAttribue":42,
+			"isCounted":false
+
 		}
 	}
 	,"domino43":{
@@ -551,12 +714,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":43
+			"valeurDominoAttribue":43,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":2,
 			"biome":4,
-			"valeurDominoAttribue":43
+			"valeurDominoAttribue":43,
+			"isCounted":false
+
 		}
 	}
 	,"domino44":{
@@ -564,12 +731,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":2,
-			"valeurDominoAttribue":44
+			"valeurDominoAttribue":44,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":2,
 			"biome":4,
-			"valeurDominoAttribue":44
+			"valeurDominoAttribue":44,
+			"isCounted":false
+
 		}
 	}
 	,"domino45":{
@@ -577,12 +748,16 @@
 		"case1":{
 			"nbCouronnes":2,
 			"biome":6,
-			"valeurDominoAttribue":45
+			"valeurDominoAttribue":45,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":45
+			"valeurDominoAttribue":45,
+			"isCounted":false
+
 		}
 	}
 	,"domino46":{
@@ -590,12 +765,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":4,
-			"valeurDominoAttribue":46
+			"valeurDominoAttribue":46,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":2,
 			"biome":6,
-			"valeurDominoAttribue":46
+			"valeurDominoAttribue":46,
+			"isCounted":false
+
 		}
 	}
 	,"domino47":{
@@ -603,12 +782,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":4,
-			"valeurDominoAttribue":47
+			"valeurDominoAttribue":47,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":2,
 			"biome":6,
-			"valeurDominoAttribue":47
+			"valeurDominoAttribue":47,
+			"isCounted":false
+
 		}
 	}
 	,"domino48":{
@@ -616,12 +799,16 @@
 		"case1":{
 			"nbCouronnes":0,
 			"biome":1,
-			"valeurDominoAttribue":48
+			"valeurDominoAttribue":48,
+			"isCounted":false
+
 		},
 		"case2":{
 			"nbCouronnes":3,
 			"biome":6,
-			"valeurDominoAttribue":48
+			"valeurDominoAttribue":48,
+			"isCounted":false
+
 		}
 	}
 }
