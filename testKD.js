@@ -67,24 +67,25 @@ io.sockets.on('connection', function (socket) {
 	    for(var i = 0;i<5;i++){
 	    	var tabTemp = [];
 	    	for(var j = 0;j<5;j++){
-	    		var he = 5;
 	    		var caseDeBase = {
 		    		nbCouronnes: 0,
 		    		biome: -1,
 		    		valeurDominoAttribue: 0,
 		    		isCounted: false
 		    	};
-	    		tabTemp.push(caseDeBase);
+	    		tabTemp[j] = caseDeBase;
 	    	}
 	    	socket.zone.push(tabTemp);
 	    }
-	    var caseDepart ={
+	    var caseDepart = {
 	    	nbCouronnes: 0,
 	    	biome: 0,
 	    	valeurDominoAttribue: 0,
 	    	isCounted: false
 	    };
 	    socket.zone[2][2] = caseDepart;
+	    zones.push(socket.zone);
+	    afficherZone(socket.zone);
 	    //----- Fin de l'initialisation de la zone -----//
 	    //console.log(socket.zone);
 	    if(nbJoueurs>3){
@@ -108,18 +109,18 @@ io.sockets.on('connection', function (socket) {
 
 	//Gère la sélection du domino
     socket.on('choisir',function(idDomino) {
-    	console.log(idDomino);
+    	//console.log(idDomino);
     	var verif = true;
     	//On vérifie si le domino selectionné n'a pas déjà été choisi par un autre joueur
     	for(var i=0;i<4;i++){
     		if(idDomino == dominosPick[i]){
-    			console.log('Choix invalide');
+    			//console.log('Choix invalide');
     			socket.emit('choixInvalide');
     			verif = false;
     		}
     	}
     	if(verif==true){
-    		console.log('Domino selectionné')
+    		//console.log('Domino selectionné')
     		socket.emit('selectionDomino',idDomino);
 	    	socket.broadcast.emit('selectionDomino',idDomino);
 	    	socket.dominoPick = idDomino;
@@ -166,16 +167,13 @@ io.sockets.on('connection', function (socket) {
         	verifPlac = false;
         }
         if(verif==true){
-        	//Si c'est le dernier tour,chauque joueur stocke sa zone dans le tableau, qui sera utilisé pour le comptage des points
-        	if(numTour==12){
-        		//console.log(socket.zone);
-        		zones.push(socket.zone);
-        	}
-        	/*if(fin==true){
+        	if(fin==true){
         		//TEMPORAIRE
-        		zones.push(socket.zone);
+        		for(var i=0;i<4;i++){
+        			afficherZone(zones[i]);
+        		}
         		finDePartie();
-        	}*/
+        	}
         	socket.dominoPick = 0;
         	quiJoue++;
 	        if(quiJoue>3){
@@ -271,7 +269,7 @@ io.sockets.on('connection', function (socket) {
 			nouveauxDominos[i] = dominos.shift();
 		}
 		nouveauxDominos.sort(compare); //Trie les domino par ordre croissant
-		console.log(nouveauxDominos);
+		//console.log(nouveauxDominos);
 	    socket.emit('envoyerNouveauxDominos',nouveauxDominos);
 	    socket.broadcast.emit('envoyerNouveauxDominos',nouveauxDominos);
     }
@@ -294,6 +292,7 @@ io.sockets.on('connection', function (socket) {
 	//Le joueur ayant choisi le domino le plus faible choisit son prochain domino en premier, et ainsi de suite
 	function remaniementDesJoueurs(){
 		var nouvelOrdre = [];
+		var nouvelOrdreZones = [];
 		for(var i=0;i<4;i++){
 			var vMin = 999;
 			for(var j=0;j<4;j++){
@@ -306,12 +305,17 @@ io.sockets.on('connection', function (socket) {
 			for(var k=0;k<4;k++){
 				if(dominosPick[k]==vMin){
 					nouvelOrdre.push(joueurs[k]);
+					nouvelOrdreZones.push(zones[k]);
 					delete dominosPick[k];
 				}
 			}
 		}
 		for(var i=0;i<4;i++){
 			joueurs[i] = nouvelOrdre[i];
+			zones[k] = nouvelOrdreZones[i];
+		}
+		for(var i=0;i<4;i++){
+			afficherZone(zones[i]);
 		}
 	}
 
@@ -326,8 +330,8 @@ io.sockets.on('connection', function (socket) {
 			var case2 = dominosParses[textDomino]['case2'];
 			//----- Fin de la lecture des dominos danss le fichier Dominos.json -----//
 			var tabVerif = [];
-			console.log(case1);
-			console.log(case2);
+			//console.log(case1);
+			//console.log(case2);
 			tabVerif.push(verifCases(x,y,case1));
 			//Si la premiere case ne chevauche pas une autre case non-vide, on continue
 			if(tabVerif[0]!=-1){
@@ -340,7 +344,7 @@ io.sockets.on('connection', function (socket) {
 							if(tabVerif[1]!=-1){
 								//Si un des deux dominos est adjacent à un autre domino valide (ou à la case de départ), on continue
 								if(tabVerif[0]==1||tabVerif[1]==1){
-									//SI CETTTE DERNIERE CONDITION EST VALIDE, LE PLACEMENT DU DOMINO EST VALIDE AUSSI
+									//SI CETTE DERNIERE CONDITION EST VALIDE, LE PLACEMENT DU DOMINO EST VALIDE AUSSI
 									//"Prise en note" des modification effectuées sur la zone du joueur en plaçant le nouveau domino
 									socket.zone[x][y] = case1;
 									socket.zone[x][Number(y)-1] = case2;
@@ -447,6 +451,7 @@ io.sockets.on('connection', function (socket) {
 			points.push(totallyBoardScore(zones[i]));
 		}
 		var ordreGagnant = [];
+		var ordrePoints = [];
 		for(var i=0;i<4;i++){
 			var vMax = -1;
 			for(var j=0;j<4;j++){
@@ -459,13 +464,14 @@ io.sockets.on('connection', function (socket) {
 			for(var k=0;k<4;k++){
 				if(points[k]==vMax){
 					ordreGagnant.push(joueurs[k]);
+					ordrePoints.push(points[k])
 					delete points[k];
 				}
 			}
 		}
 		console.log("-w-w-w-w-w-w-w-w-");
 		for(var i=0;i<4;i++){
-			console.log(ordreGagnant[i]);
+			console.log(ordreGagnant[i]+" : "+ordrePoints[i]+"pts.");
 		}
 		console.log("Partie Terminée")
 	}
@@ -478,11 +484,11 @@ io.sockets.on('connection', function (socket) {
 	}
 
 	//Fonction de debug
-	function afficherZone(){
-		for(var i=0;i<5;i++){
+	function afficherZone(zone){
+		console.log("*--------------*");
+		for(var i=0;i<1;i++){
 			for(var j=0;j<5;j++){
-				console.log(i+" "+j+" : ");
-				console.log(socket.zone[i][j]);
+				console.log(zone[i][j].biome+""+""+zone[i+1][j].biome+""+""+zone[i+2][j].biome+""+""+zone[i+3][j].biome+""+""+zone[i+4][j].biome);
 			}
 		}
 	}
