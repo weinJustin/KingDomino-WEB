@@ -45,6 +45,7 @@ socket.on('valide',function(valide){
 
 socket.on("choixInvalide",function() {
   changerFeedBack("Choix invalide. Choisissez un autre domino");
+  choix.pop();
   faireChoix =true;
 });
 
