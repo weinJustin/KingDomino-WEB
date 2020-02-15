@@ -49,9 +49,11 @@ function choisir(balise){
   if(faireChoix){
     faireChoix =false;
     var tmp = Number(balise.id.substr(6));
-    console.log(balise.id);
-    console.log(tmp);
+    // console.log(balise.id);
+    // console.log(tmp);
     choix.push(tmp);
+    dernierChoixRenduInerte = balise.parentNode.id ;
+    placement(0,0,0,tmp,dernierChoixRenduInerte)
     socket.emit('choisir',choix[choix.length - 1]);
     if(!premiertour){
       monTour = true;
