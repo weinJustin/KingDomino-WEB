@@ -158,7 +158,7 @@ io.sockets.on('connection', function (socket) {
         	else{
         		socket.emit('valide',false);
         	}
-        	verifPlac = false;
+        	salons[socket.salon].verifPlac = false;
         }
         if(verif==true){
         	if(salons[socket.salon].fin==true){
