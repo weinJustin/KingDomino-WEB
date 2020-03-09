@@ -53,7 +53,8 @@ function choisir(balise){
     // console.log(tmp);
     choix.push(tmp);
     dernierChoixRenduInerte = balise.parentNode.id ;
-    placement(0,0,0,tmp,dernierChoixRenduInerte)
+    // placement(0,0,0,tmp,dernierChoixRenduInerte)
+    balise.onclick = null
     socket.emit('choisir',choix[choix.length - 1]);
     if(!premiertour){
       monTour = true;

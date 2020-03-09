@@ -44,8 +44,8 @@ socket.on('valide',function(valide){
 });
 
 socket.on("selectionDomino",function(idDomino){
-  baliseParent = getElementById("domino"+idDomino).balise.parentNode.id;
-  placement(0,0,0,idDomino,baliseParent)
+  $("#domino"+idDomino).attr("onclick","");;
+  // placement(0,0,0,idDomino,baliseParent)
 });
 
 socket.on('envoyerNouveauxDominos',function(dominos){
