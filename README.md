@@ -2,7 +2,9 @@
 
 Pour faire fonctionner le projet, installez les modules *express, socket.io, twig* : ```npm install module```
 
-Puis lancer via ```nodemon testKD.js```
+Installez supervisor via ```npm install supervisor -g```
+
+Puis lancer via ```supervisor testKD.js```
 
 Allez sur une page internet, rentrez ```127.0.0.1:8080/jeu```
 
