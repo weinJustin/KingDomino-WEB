@@ -9,7 +9,7 @@ var salons = [] //On stock toutes les variables par salons
 
 
 
-var nombreSalons = 2;
+var nombreSalons = 5;
 
 for (var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
   salons.push({
@@ -29,7 +29,13 @@ for (var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
 
 app.use(express.static(__dirname));
 app.get('/', function(req, res) {
-    res.render(__dirname+'/template/index.html.twig',{message : "Hello world"}); //moteur de rendu twig
+    retour = []
+    for (var x in salons) {
+      if (salons[x].nbJoueurs<4) {
+        retour.push({num:x,place:salons[x].nbJoueurs})
+      }
+    }
+    res.render(__dirname+'/template/index.html.twig',{salons:retour}); //moteur de rendu twig
 });
 
 //Gestion de l'entrée dans le jeu
@@ -44,8 +50,14 @@ app.get('/jeu/:id', function(req, res) {
 
 var io = require('socket.io').listen(server);
 
+
+
 //Bienevenue dans le coeur du serveur
 io.sockets.on('connection', function (socket) {
+
+  socket.on('disconnect', function(){
+        // ajouter une sécurité pour que les autres joueurs puissent jouer
+    });
 
 	//Les évenements se produisant lors de la connexion d'un joueur
 	socket.on('connectionJoueur',function(data) {

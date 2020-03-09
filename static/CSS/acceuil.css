@@ -1,0 +1,13 @@
+body{
+  /* background-color: black; */
+  padding: 0px;
+  margin: 0px;
+
+  /*background-color: #3f522c /*#3d2c1c*/;
+  background-image: url(../texture.jpg);
+}
+
+li{
+  background-color:#e7d8cb;
+  display: block;
+}

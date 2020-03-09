@@ -2,10 +2,19 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <link rel="stylesheet" href="../static/CSS/acceuil.css">
+    <title>Kingdomino en ligne !</title>
   </head>
+  <script>
+    function redirect(num){
+      document.location.href= window.location.href+"jeu/"+num;
+    }
+  </script>
   <body>
-    index :D
-    {{message}}
+    <ul>
+      {% for salon in salons %}
+          <li>Salon numéro {{salon.num}}, place {{salon.place}}/4 <input type="button" value="rejoindre" onclick="redirect({{salon.num}})"></li>
+      {% endfor %}
+    </ul>
   </body>
 </html>
