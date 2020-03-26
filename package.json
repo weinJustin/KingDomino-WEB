@@ -1,0 +1,24 @@
+{
+  "name": "kingdomino-web",
+  "version": "1.0.0",
+  "description": "Pour faire fonctionner le projet, installez les modules *express, socket.io, twig* : ```npm install module```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nijtus/KingDomino-WEB.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nijtus/KingDomino-WEB/issues"
+  },
+  "homepage": "https://github.com/Nijtus/KingDomino-WEB#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0",
+    "twig": "^1.15.0"
+  }
+}

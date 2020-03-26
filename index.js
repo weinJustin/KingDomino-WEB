@@ -326,6 +326,7 @@ io.sockets.on('connection', function (socket) {
 	}
 
 	function verifPlacement(x,y,rotation,idDomino,idSalon){
+
 		//On vérifie si le domino ne dépasse pas de la zone
 		if((x>-1)&&(y>-1)&&(x<5)&&(y<5)){
 			//----- Lecture des dominos danss le fichier Dominos.json -----//
@@ -345,7 +346,7 @@ io.sockets.on('connection', function (socket) {
 					//Rotation : Haut
 					case 3:
 						if(((Number(y)-1)>-1)&&((Number(y)-1)<5)){
-							tabVerif.push(verifCases(x,Number(y)-1,case2));
+							tabVerif.push(verifCases(x,Number(y)-1,case2,idSalon));
 							//Si la deuxième case ne chevauche pas une autre case non-vide, on continue
 							if(tabVerif[1]!=-1){
 								//Si un des deux dominos est adjacent à un autre domino valide (ou à la case de départ), on continue
@@ -410,6 +411,7 @@ io.sockets.on('connection', function (socket) {
 
 	//Appelée par verifPlacement, vérifie le non-chevauchement et l'adjacence
 	function verifCases(x,y,caseVerif,idSalon){
+    // console.log("verifcase: "+x+" "+y+" "+caseVerif+" "+idSalon);
 		//On vérifie que la case ne chevauche pas une autre case non-vide
 		if(socket.zone[x][y].biome==-1){
 			if(salons[idSalon].verifPlac==true){
