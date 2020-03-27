@@ -3,28 +3,34 @@ var express = require('express');
 var app = express();
 var Twig = require("twig");
 var server = require('http').createServer(app);
+const parse = require('node-html-parser').parse;
 
 var salons = [] //On stock toutes les variables par salons
 
+
+
 var nombreSalons = 5;
 
-for(var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
+for (var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
   salons.push({
     dominos : [], //Stocke les dominos qui seront envoyés par la suite
     dominosPick : [], //Sert à garder en mémoire les dominos choisis par les joueurs
     fin : false, //Variable temporaire servant à forcer la fin d'une partie
-    joueurs : ["ordi1","ordi2"], //Stocke les pseudos des joueurs
-    identite : [["ordi1","ordi2"],["ordi","ordi"]], //Permet de savoir si un pseudonyme correspond à un joueur ou à un ordi
-    nbJoueurs : 2, //Le nombre de joueurs
+    joueurs : [], //Stocke les pseudos des joueurs
+    nbJoueurs : 0, //Le nombre de joueurs
     numTour : 1, //Le numéro du tour actuel
     points : [], //Stocke les points des différents joueurs, utilisé uniquement en fin de partie
     quiJoue : 0, //Détermine qui est/sera en train de joueur
     verifPlac : false, //Déclaré ici par besoin d'une variable globale
     zones : [] //Stocke les zones des joueurs, des tableaux à 2 dimensions de Cases.
+
   })
 }
 
 app.use(express.static(__dirname));
+
+
+
 app.get('/', function(req, res) {
     retour = []
     for (var x in salons) {
@@ -44,40 +50,44 @@ app.get('/jeu/:id', function(req, res) {
   }
 });
 
+
 var io = require('socket.io').listen(server);
+
+
+
+
+
 
 //Bienevenue dans le coeur du serveur
 io.sockets.on('connection', function (socket) {
-
+	
 	socket.on('message', function (message) {
         console.log('Un client me parle ! Il me dit : ' + message);
         nombreSalons++;
         salons.push({
-		    dominos : [], 
-		    dominosPick : [], 
-		    fin : false, 
-		    joueurs : [], 
-		    identite : [],
-		    nbJoueurs : 0,
-		    numTour : 1, 
-		    points : [], 
-		    quiJoue : 0,
-		    verifPlac : false, 
-		    zones : [] 
+		    dominos : [], //Stocke les dominos qui seront envoyés par la suite
+		    dominosPick : [], //Sert à garder en mémoire les dominos choisis par les joueurs
+		    fin : false, //Variable temporaire servant à forcer la fin d'une partie
+		    joueurs : [], //Stocke les pseudos des joueurs
+		    nbJoueurs : 0, //Le nombre de joueurs
+		    numTour : 1, //Le numéro du tour actuel
+		    points : [], //Stocke les points des différents joueurs, utilisé uniquement en fin de partie
+		    quiJoue : 0, //Détermine qui est/sera en train de joueur
+		    verifPlac : false, //Déclaré ici par besoin d'une variable globale
+		    zones : [] //Stocke les zones des joueurs, des tableaux à 2 dimensions de Cases.
 
   		})
     });	
-  	socket.on('disconnect', function(){
+  socket.on('disconnect', function(){
         // ajouter une sécurité pour que les autres joueurs puissent jouer
     });
 
 	//Les évenements se produisant lors de la connexion d'un joueur
 	socket.on('connectionJoueur',function(data) {
     	socket.pseudo = data.pseudo;
-      	socket.salon = Number(data.salon);
-      	salons[data.salon].nbJoueurs++;
+      socket.salon = Number(data.salon);
+      salons[data.salon].nbJoueurs++;
 	    salons[data.salon].joueurs.push(data.pseudo);
-	    salons[data.salon].identite.push([data.pseudo],["joueur"]);
 	    socket.dominoPick = 0;
 	    salons[data.salon].dominosPick.push(socket.dominoPick);
 	    //----- Initialisation de la zone -----//
@@ -103,7 +113,7 @@ io.sockets.on('connection', function (socket) {
 	    };
 	    socket.zone[2][2] = caseDepart;
 	    salons[socket.salon].zones.push(socket.zone);
-      	// console.log(salons);
+      // console.log(salons);
 	    // afficherZone(socket.zone,socket.salon);
 	    //----- Fin de l'initialisation de la zone -----//
 	    //console.log(socket.zone);
@@ -119,7 +129,7 @@ io.sockets.on('connection', function (socket) {
 	  	    }
 	  		shuffle(salons[socket.salon].dominos); //On mélange les identifiants des dominos
 	  		envoiDesNouveauxDominos(socket.salon); //On envoie les premiers dominos
-	  	  	socket.emit('actuTour',salons[socket.salon].numTour);
+	  	  socket.emit('actuTour',salons[socket.salon].numTour);
 	  		socket.broadcast.emit('actuTour',salons[socket.salon].numTour);
 	  		socket.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
 	  		socket.broadcast.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
@@ -294,7 +304,7 @@ io.sockets.on('connection', function (socket) {
     }
 
     function changementDeTour(idSalon){
-      	salons[idSalon].numTour++;
+      salons[idSalon].numTour++;
   		socket.emit('actuTour',salons[idSalon].numTour);
   		socket.broadcast.emit('actuTour',salons[idSalon].numTour);
     }
@@ -339,6 +349,7 @@ io.sockets.on('connection', function (socket) {
 	}
 
 	function verifPlacement(x,y,rotation,idDomino,idSalon){
+
 		//On vérifie si le domino ne dépasse pas de la zone
 		if((x>-1)&&(y>-1)&&(x<5)&&(y<5)){
 			//----- Lecture des dominos danss le fichier Dominos.json -----//
@@ -423,7 +434,7 @@ io.sockets.on('connection', function (socket) {
 
 	//Appelée par verifPlacement, vérifie le non-chevauchement et l'adjacence
 	function verifCases(x,y,caseVerif,idSalon){
-    	// console.log("verifcase: "+x+" "+y+" "+caseVerif+" "+idSalon);
+    // console.log("verifcase: "+x+" "+y+" "+caseVerif+" "+idSalon);
 		//On vérifie que la case ne chevauche pas une autre case non-vide
 		if(socket.zone[x][y].biome==-1){
 			if(salons[idSalon].verifPlac==true){
@@ -462,6 +473,7 @@ io.sockets.on('connection', function (socket) {
 		else{
 			return -1;
 		}
+
 	}
 
 	//Gère les évenements liés à la fin de partie, encore en TEST
@@ -495,16 +507,6 @@ io.sockets.on('connection', function (socket) {
 		console.log("Partie Terminée")
 	}
 
-	//Fonction utilisée par l'IA
-	function choixOrdi(){
-
-	}
-
-	//Fonction utilisée par l'IA
-	function placementOrdi(){
-
-	}
-
 	//Fonction de debug
 	function afficherTousLesJoueurs(idSalon){
 		for(var i=0;i<salons[idSalon].nbJoueurs;i++){
@@ -512,26 +514,14 @@ io.sockets.on('connection', function (socket) {
 	    }
 	}
 
-	//Fonction de debuge
+	//Fonction de debug
 	function afficherZone(zone,idSalon){
-    	console.log(salons);
-    	console.log(idSalon+": "+salons[idSalon]);
+    console.log(salons);
+    console.log(idSalon+": "+salons[idSalon]);
 		console.log("*--------------*");
 		for(var i=0;i<1;i++){
 			for(var j=0;j<5;j++){
 				console.log(salons[idSalon].zone[i][j].biome+""+""+salons[idSalon].zone[i+1][j].biome+""+""+salons[idSalon].zone[i+2][j].biome+""+""+salons[idSalon].zone[i+3][j].biome+""+""+salons[idSalon].zone[i+4][j].biome);
-			}
-		}
-	}
-
-	//Fonction de debug
-	function afficherIdentites(idSalon){
-		console.log(salons);
-    	console.log(idSalon+": "+salons[idSalon]);
-		console.log("*--------------*");
-		for(var i=0;i<salons[idSalon].identite[0].length;i++){
-			for(var j=0;j<salons[idSalon].identite[1].length;j++){
-				console.log(salons[idSalon].identite[0][i]+" est un : "+salons[idSalon].identite[0][i]);
 			}
 		}
 	}
