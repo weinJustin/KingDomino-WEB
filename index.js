@@ -494,7 +494,7 @@ io.sockets.on('connection', function (socket) {
 	    }
 	}
 
-	//Fonction de debug
+	//Fonction de debuge
 	function afficherZone(zone,idSalon){
     	console.log(salons);
     	console.log(idSalon+": "+salons[idSalon]);
