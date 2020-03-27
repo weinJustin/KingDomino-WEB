@@ -3,18 +3,51 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../static/CSS/acceuil.css">
+    
     <title>Kingdomino en ligne !</title>
   </head>
+
+  <body>
+  <h1 style="color: white">Voici la liste des salons du KingDomino</h1>
+  <div id="liste">
+    <ul>
+       
+            
+      {% for salon in salons %}
+          <li>Salon numéro {{salon.num}}, place {{salon.place}}/4 <input type="button" value="rejoindre" onclick="redirect({{salon.num}})"></li>
+          
+      {% endfor %}
+
+    
+    </ul>
+    </div>
+     <p><input type="button" value="Ajouter un salon" id="poke" /></p>
+     <p><input type="button" value="Refresh la liste des salons" id="poke2" onclick="updateDiv()" /></p>
+
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script>
+  
     function redirect(num){
       document.location.href= window.location.href+"jeu/"+num;
     }
+    var socket = io.connect('http://localhost:8080');
+            socket.on('message', function(message) {
+               tab = message;
+               console.log(tab);
+            })
+
+            $('#poke').click(function () {
+                socket.emit('message', 'On veut un nouveau salon !');
+                $( "#liste" ).load(window.location.href + " #liste" );
+                console.log('Et hop un nouveau salon');
+                
+            })
+    function updateDiv(){ 
+      $( "#liste" ).load(window.location.href + " #liste" );
+      console.log('Refresh de la liste des salons');
+    }
+          
   </script>
-  <body>
-    <ul>
-      {% for salon in salons %}
-          <li>Salon numéro {{salon.num}}, place {{salon.place}}/4 <input type="button" value="rejoindre" onclick="redirect({{salon.num}})"></li>
-      {% endfor %}
-    </ul>
   </body>
 </html>

@@ -49,6 +49,24 @@ var io = require('socket.io').listen(server);
 //Bienevenue dans le coeur du serveur
 io.sockets.on('connection', function (socket) {
 
+	socket.on('message', function (message) {
+        console.log('Un client me parle ! Il me dit : ' + message);
+        nombreSalons++;
+        salons.push({
+		    dominos : [], 
+		    dominosPick : [], 
+		    fin : false, 
+		    joueurs : [], 
+		    identite : [],
+		    nbJoueurs : 0,
+		    numTour : 1, 
+		    points : [], 
+		    quiJoue : 0,
+		    verifPlac : false, 
+		    zones : [] 
+
+  		})
+    });	
   	socket.on('disconnect', function(){
         // ajouter une sécurité pour que les autres joueurs puissent jouer
     });
