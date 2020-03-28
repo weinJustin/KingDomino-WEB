@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var Twig = require("twig");
 var server = require('http').createServer(app);
-const parse = require('node-html-parser').parse;
+
 
 var salons = [] //On stock toutes les variables par salons
 
@@ -77,16 +77,26 @@ io.sockets.on('connection', function (socket) {
 		    zones : [] //Stocke les zones des joueurs, des tableaux à 2 dimensions de Cases.
 
   		})
-    });	
-  socket.on('disconnect', function(){
-        // ajouter une sécurité pour que les autres joueurs puissent jouer
     });
-
+   	
+	socket.on('deconnexion', function(data){
+        // ajouter une sécurité pour que les autres joueurs puissent jouer
+        console.log(salons[data]);
+        salons[data].joueurs.pop();
+        salons[data].nbJoueurs--;
+        console.log(salons[data]);
+    });
+  socket.on('disconnect', function(data){
+        // ajouter une sécurité pour que les autres joueurs puissent jouer
+        console.log(data);
+        console.log(salons[data]);
+    });
+  	
 	//Les évenements se produisant lors de la connexion d'un joueur
 	socket.on('connectionJoueur',function(data) {
     	socket.pseudo = data.pseudo;
-      socket.salon = Number(data.salon);
-      salons[data.salon].nbJoueurs++;
+      	socket.salon = Number(data.salon);
+      	salons[data.salon].nbJoueurs++;
 	    salons[data.salon].joueurs.push(data.pseudo);
 	    socket.dominoPick = 0;
 	    salons[data.salon].dominosPick.push(socket.dominoPick);
