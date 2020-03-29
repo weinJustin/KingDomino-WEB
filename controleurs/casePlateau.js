@@ -16,7 +16,6 @@ function placerSurGrille(balise){
     var arrayBrut = dernierPlacement.id.split("");
     placement(Number(arrayBrut[4]),Number(arrayBrut[5]),orientation,choix[0],'adv1');
   }
-
 }
 
 function rotation(direction){
