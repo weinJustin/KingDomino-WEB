@@ -61,6 +61,7 @@ var io = require('socket.io').listen(server);
 
 //Bienevenue dans le coeur du serveur
 io.sockets.on('connection', function (socket) {
+
 	
 	socket.on('message', function (message) {
         console.log('Un client me parle ! Il me dit : ' + message);
@@ -79,7 +80,32 @@ io.sockets.on('connection', function (socket) {
 
   		})
     });
-   	
+
+	socket.on('defausse', function(){
+		console.log("rentre moi dedans");
+		socket.dominoPick = 0;
+
+		salons[socket.salon].quiJoue++;
+		if(salons[socket.salon].quiJoue>3){
+			salons[socket.salon].quiJoue = 0;
+			if(salons[socket.salon].numTour==11){
+				remaniementDesJoueurs(socket.salon);
+				changementDeTour(socket.salon);
+			}
+			else if(salons[socket.salon].numTour==12){
+				finDePartie(socket.salon);
+			}
+			else{
+				remaniementDesJoueurs(socket.salon);
+				envoiDesNouveauxDominos(socket.salon);
+				changementDeTour(socket.salon);
+			}
+		}
+		socket.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
+		socket.broadcast.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
+
+	});
+
 	socket.on('deconnexion', function(data){
         // ajouter une sécurité pour que les autres joueurs puissent jouer
         console.log(salons[data]);

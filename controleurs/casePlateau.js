@@ -19,6 +19,10 @@ function placerSurGrille(balise){
 
 }
 
+function defausse() {
+  socket.emit('defausse');
+}
+
 function rotation(direction){
   if(monTour){
     if (direction == 'h'){
