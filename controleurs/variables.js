@@ -13,13 +13,12 @@ var dernierChoixRenduInerte = 0;
 let largeurCanevas = null
 let hauteurCanevas = null
 
-let tailleCasePrincipal = null
-let positionCasePrincipal = null
-let intervalCasePrincipal = null
+let places = {}
+let col = {}
 
-let tailleCaseSecondaire = null
-let positionCaseSecondaire = null
-let intervalCaseSecondaire = null
+let hPourcent = null
+let lPourcent = null
+let marge = 5
 
 let images= {}
 

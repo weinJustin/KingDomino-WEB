@@ -3,50 +3,52 @@
 //     return elem.parentNode.removeChild(elem);
 // }
 //
- function placement(x,y,rot,id,place){
-//   //on cherche la présence d'un domino de même id pour le suprimer si il existe
-//   // console.log("x: "+x+"\ny: "+y+"\nrot: "+rot+"\nid: "+id+"\nplace: "+place);
-//   var tmp = arborecence["domino"+id];
-//   if (!tmp){
-//     arborecence["domino"+id]=place;
-//   }else {
-//     removeElement("domino"+id);
-//   }
 //
-//   var angle = 0;
-//   angle = (rot * 90) ;
-//   var c = document.getElementById(place);
-//   var img = "<img class='domino' src='../static/pieces/domino"+id+".png' "+fonctionSup+"id='domino"+id+"'>";
-//   $("#"+place).append(img);
-//
-  var xTemp = x;
-  var yTemp = y
-  if (angle == 90) {
-    xTemp = x+1
-  }else if (angle == 180) {
-    xTemp = x+1
-    yTemp = y+1
-  }else if (angle == 270) {
-    yTemp = y+1
-  }
-//
-$("#domino"+id).css({"left":xTemp*20+"%","top":yTemp*20+"%",'transform':"rotate("+angle+"deg)"});
+function changerFeedBack(message){
+  console.log(document.getElementById("feedback"));
+  document.getElementById("feedback").innerHTML = message;
 }
-//
-// function changerFeedBack(message){
-//   console.log(document.getElementById("feedback"));
-//   document.getElementById("feedback").innerHTML = message;
-// }
 
 
 
 function setup() {
   largeurCanevas = Math.floor(windowWidth-5)
   hauteurCanevas = Math.floor(windowHeight-4)
+
+  lPourcent = largeurCanevas/100
+  hPourcent = hauteurCanevas/100
+
   // largeurCanevas = 1000
   // hauteurCanevas = 500
-  tailleCasePrincipal = (hauteurCanevas/10)*3
-  positionCasePrincipal = {x:(largeurCanevas/100)*5,y:(hauteurCanevas/100)*5}
+  places['principal'] = {}
+  places['principal'].taille = hPourcent*50
+  places['principal'].x = lPourcent*marge
+  places['principal'].y = hPourcent*marge
+  places['principal'].taille1Case = (places['principal'].taille)/5
+  places['principal'].type = "jeu"
+
+  for (var i = 0; i < 3; i++) {
+    var nom = 'adv'+i
+    places[nom] = {}
+    places[nom].taille = hPourcent*35
+    places[nom].x =(30*lPourcent)*i + lPourcent*marge
+    places[nom].y = places['principal'].taille + (hPourcent*marge*2)
+    places[nom].taille1Case = (places[nom].taille)/5
+    places[nom].type = "jeu"
+  }
+
+    tab = ["domPris","domChoi"];
+    for (var i = 0; i < 2; i++) {
+      for (var j = 0; j < 4; j++) {
+        var id = tab[i]+(j+1);
+        places[id] = {}
+        places[id].taille = (hauteurCanevas/100)*10
+        places[id].x = (lPourcent* i*20 )+ (lPourcent*50)
+        places[id].y = (hPourcent* j*13) + (hPourcent*5)
+        places[id].taille1Case = (places[id].taille)
+        places[id].type = "col"
+      }
+    }
 
   angleMode(DEGREES);
   rectMode(CORNER);
@@ -58,25 +60,34 @@ function setup() {
 function draw() {
   background(220);
   fill(255);
-  square(positionCasePrincipal.x, positionCasePrincipal.y, tailleCasePrincipal);
-  if (intervalCase(mouseX,mouseY,positionCasePrincipal,tailleCasePrincipal)){
-    caseTMP = obtenirCoordonee(mouseX,mouseY,tailleCasePrincipal,positionCasePrincipal)
-    xCase = caseTMP.x * tailleCasePrincipal/5 + positionCasePrincipal.x
-    yCase = caseTMP.y * tailleCasePrincipal/5 + positionCasePrincipal.y
-
-    fill(100);
-    square(xCase, yCase, tailleCasePrincipal/5);
+  for (var x in places) {
+    if (places[x].type == "col"){
+      rect(places[x].x, places[x].y, places[x].taille*2,places[x].taille);
+    }else {
+      square(places[x].x, places[x].y, places[x].taille);
+    }
   }
+  // if (intervalCase(mouseX,mouseY,places['principal'])){
+  //   caseTMP = obtenirCoordonee(mouseX,mouseY,'principal')
+  //   caseTMP = obtenirPositionAvecCoordonee(caseTMP.x,caseTMP.y,'principal')
+  //
+  //
+  //   xCase = caseTMP.x
+  //   yCase = caseTMP.y
+  //
+  //   fill(100);
+  //   rect(xCase, yCase, places['principal'].taille1Case,(places['principal'].tailleUneCase)*2);
+  // }
 
   for (var x in images) {
-    loadImage(images[x].img, img => {
-      var tmp = resizeTo(img.height,img.width,125,250)
-      scale(tmp.h,tmp.l)
+      var taille1case = places[images[x].place].taille1Case
+      var facteurTaille = resizeTo(images[x].img.height,images[x].img.width,taille1case,taille1case*2)
+      push()
       translate(images[x].x, images[x].y)
+      scale(facteurTaille.h,facteurTaille.l)
       rotate(images[x].rot)
-      image(img, 0,0);
-      rotate(-images[x].rot)
-    });
+      image(images[x].img, 0,0);
+      pop()
   }
 
 }
@@ -85,21 +96,35 @@ function resizeTo(hauteur,largeur,hauteurCible,largeurCible){
   return {h:hauteurCible/hauteur,l:largeurCible/largeur}
 }
 
-function obtenirCoordonee(x,y,taille,coordonee,nbrCase=5){
-  let resultX = Math.floor((x-coordonee.x)/Math.floor(taille/nbrCase))
-  let resultY = Math.floor((y-coordonee.y)/Math.floor(taille/nbrCase))
-  return {x:resultX,y:resultY}
-}
+function placement(x,y,rot,id,place){
 
-function mousePressed() {
-  if (intervalCase(mouseX,mouseY,positionCasePrincipal,tailleCasePrincipal)){
-    var result = obtenirCoordonee(mouseX,mouseY,tailleCasePrincipal,positionCasePrincipal)
-    console.log(result);
+  var angle =  (rot * 90)
+
+  var xTemp = x
+  var yTemp = y
+
+  if (angle == 90) {
+    xTemp = xTemp+1
+  }else if (angle == 180) {
+    xTemp = xTemp+1
+    yTemp = yTemp+1
+  }else if (angle == 270) {
+    yTemp = yTemp+1
   }
-  redraw()
 
-}
+  var tmp = obtenirPositionAvecCoordonee(xTemp,yTemp,places[place])
+  xTemp = tmp.x
+  yTemp = tmp.y
 
-function intervalCase(x,y,coordonee,taille){
-  return x<coordonee.x+taille && y < coordonee.y+taille && x>coordonee.x && y > coordonee.y
+  if (images[id] !== undefined){
+    images[id] = {x:xTemp,y:yTemp,rot:angle,img:images[id].img,place:place}
+    redraw()
+  }else {
+    loadImage("../static/pieces/domino"+id+".png", img => {
+      images[id] = {x:xTemp,y:yTemp,rot:angle,img:img,place:place}
+      redraw()
+    })
+  }
+
+
 }

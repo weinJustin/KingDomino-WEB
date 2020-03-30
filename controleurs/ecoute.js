@@ -1,37 +1,37 @@
-// socket.on('joueAutreJoueur',function(domino){
-//   console.log(domino);
-//   placement(domino['x'],domino['y'],domino['o'],domino['id'],"caseJoueur"+domino['joueur']);
-// });
-//
-// socket.on('tonTour',function(moi){
-//   if(moi== nom){
-//       changerFeedBack("C'est votre tour. Choisisez un domino");
-//       faireChoix =true;
-//
-//   }else{
-//       changerFeedBack("C'est le tour de "+moi);
-//   }
-// });
-//
-// socket.on('joueurPresent',function(nomJoueur){
-//   var test = 2;
-//   for (var i = 0; i < nomJoueur.length; i++) {
-//     console.log(nomJoueur[i]);
-//     if (nomJoueur[i] != nom){
-//       console.log("#adv"+(test));
-//       $("#adv"+(test)).css({'background-color':couleur[i][0]});
-//       placement(2,2,0,"Depart"+couleur[i][2],"adv"+(test))
-//       $("#adv"+(test)).attr("id","caseJoueur"+nomJoueur[i]);
-//       test+=1;
-//       console.log(test);
-//     }else {
-//       $(".case").css({'background-color':couleur[i][0]});
-//       placement(2,2,0,"Depart"+couleur[i][2],"adv1");
-//       maCouleur = couleur[i][0];
-//       maCouleurClaire = couleur[i][1];
-//     }
-//   }
-// });
+socket.on('joueAutreJoueur',function(domino){
+  placement(domino['x'],domino['y'],domino['o'],domino['id'],domino['joueur']);
+
+});
+
+socket.on('tonTour',function(moi){
+  if(moi== nom){
+      changerFeedBack("C'est votre tour. Choisisez un domino");
+      faireChoix =true;
+
+  }else{
+      changerFeedBack("C'est le tour de "+moi);
+  }
+});
+
+socket.on('joueurPresent',function(nomJoueur){
+  var test = 2;
+  for (var i = 0; i < nomJoueur.length; i++) {
+    console.log(nomJoueur[i]);
+    if (nomJoueur[i] != nom){
+      console.log("#adv"+(test));
+      $("#adv"+(test)).css({'background-color':couleur[i][0]});
+      placement(2,2,0,"Depart"+couleur[i][2],"adv"+(test))
+      $("#adv"+(test)).attr("id","caseJoueur"+nomJoueur[i]);
+      test+=1;
+      console.log(test);
+    }else {
+      $(".case").css({'background-color':couleur[i][0]});
+      placement(2,2,0,"Depart"+couleur[i][2],"adv1");
+      maCouleur = couleur[i][0];
+      maCouleurClaire = couleur[i][1];
+    }
+  }
+});
 //
 // socket.on('valide',function(valide){
 //   if(valide){

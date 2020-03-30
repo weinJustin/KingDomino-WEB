@@ -65,33 +65,3 @@
 //   }
 // }
 //
-// function lumiereOn(balise){
-//     $(balise).css({'background-color':maCouleurClaire});
-// }
-//
-// function lumiereOff(balise){
-//     $(balise).css({'background-color':maCouleur});
-// }
-//
-// $( document ).ready(function(){
-//   for (var i = 0; i <5; i++){
-//     for (var j = 0; j <5; j++){
-//       var id = 'case'+i+j;
-//       var div = "<div class='case' id='"+id+"' onclick='placerSurGrille(this)' onmouseover='lumiereOn(this)' onmouseleave='lumiereOff(this)'><div>";
-//       $("div.plateauJoueur").append(div);
-//       $("#"+id).css({"left":i*20+"%","top":j*20+"%"});
-//     }
-//   }
-//
-//   //NE PAS CHANGER LA TAILLE DES MOTS
-//   tab = ["domPris","domChoi"];
-//   for (var i = 0; i < 2; i++) {
-//     for (var j = 0; j < 4; j++) {
-//       var id = tab[i]+(j+1);
-//       var div = "<div class='domino' id='"+id+"' '>";
-//       $("#domCol"+(i+1)).append(div);
-//       $("#"+id).css({"top":j*45+"%"});
-//
-//     }
-//   }
-// });
