@@ -93,10 +93,10 @@ io.sockets.on('connection', function (socket) {
 	    // afficherZone(socket.zone,socket.salon);
 	    //----- Fin de l'initialisation de la zone -----//
 	    //console.log(socket.zone);
-	    if(salons[socket.salon].nbJoueurs>2){
+	    if(salons[socket.salon].nbJoueurs>1){
 	    	salons[socket.salon].stockDomino = fs.readFileSync('Dominos.json');
 	    	creerOrdi(socket.salon);
-	    	//creerOrdi(socket.salon);
+	    	creerOrdi(socket.salon);
 	    	shuffleDoubleArray(salons[socket.salon].joueurs,salons[socket.salon].zones);
 	    	socket.emit('joueurPresent',salons[socket.salon].joueurs);
 	    	socket.broadcast.emit('joueurPresent',salons[socket.salon].joueurs);
@@ -350,9 +350,9 @@ io.sockets.on('connection', function (socket) {
 		salons[idSalon].joueurs = nouvelOrdre;
 		salons[idSalon].zones = nouvelOrdreZones;
         afficherTousLesJoueurs(socket.salon);
-        for(var i=0;i<salons[idSalon].zones.length;i++){
+        /*for(var i=0;i<salons[idSalon].zones.length;i++){
         	afficherZone(salons[idSalon].zones[i]);
-        }
+        }*/
 	}
 
 	function verifPlacement(x,y,rotation,idDomino,idSalon,zone,checkOnly){
@@ -570,12 +570,15 @@ io.sockets.on('connection', function (socket) {
 		var choix = 0;
 		var ordiCorrespondant = 0;
 		if(salons[idSalon].numTour!=1){
-			placementOrdi(idSalon,nom,salons[idSalon].dominosPickOrdis[parseInt(nom,4)]-1);
+			placementOrdi(idSalon,nom,salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1]);
 		}
 		if(salons[idSalon].numTour<13){
 			console.log(nom+" est en train de choisir son domino...");
 			do{
 				choix = Math.floor(Math.random() * 4);
+				if(choix==4){
+					choix = 3;
+				}
 			}while(salons[idSalon].dominosPick.includes(salons[idSalon].dominosActuels[choix]));
 		    salons[idSalon].dominosPick[salons[idSalon].quiJoue] = salons[idSalon].dominosActuels[choix];
 			console.log(nom+" à choisi le domino : "+salons[idSalon].dominosActuels[choix]);
@@ -596,14 +599,19 @@ io.sockets.on('connection', function (socket) {
 						var tab = [i,j,orientation];
 						listePlacementsValides.push(tab);
 					}
+					salons[idSalon].verifPlac = false;
 				}
 			}
 		}
 		if(listePlacementsValides.length>0){
-			var choix = Math.floor(Math.random() * listePlacementsValides.length-1);
+			var choix = Math.floor(Math.random() * listePlacementsValides.length);
+			if(choix==listePlacementsValides.length){
+				choix = listePlacementsValides.length-1;
+			}
 			var vraiChoix = listePlacementsValides[choix];
 	        var infos = [vraiChoix[0],vraiChoix[1],vraiChoix[2],idDomino,nom];
 	        verifPlacement(vraiChoix[0],vraiChoix[1],vraiChoix[2],idDomino,idSalon,salons[idSalon].zones[salons[idSalon].quiJoue],false);
+			salons[idSalon].verifPlac = false;
 	        socket.broadcast.emit('joueAutreJoueur',infos);
 			console.log(nom+" a placé son domino.");
 		}
