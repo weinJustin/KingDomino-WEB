@@ -14,7 +14,7 @@
        
             
       {% for salon in salons %}
-          <li>Salon numéro {{salon.num}}, place {{salon.place}}/4 <input type="button" value="rejoindre" onclick="redirect({{salon.num}})"></li>
+          <li>Salon numéro {{salon.num}}, place {{salon.place}}/4 <input type="button" value="rejoindre" onclick="redirect({{salon.num}});"></li>
           
       {% endfor %}
 
@@ -22,20 +22,24 @@
     </ul>
     </div>
      <p><input type="button" value="Ajouter un salon" id="poke" /></p>
-     <p><input type="button" value="Refresh la liste des salons" id="poke2" onclick="updateDiv()" /></p>
 
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="../controleurs/variables.js"></script>
   <script>
-  
-    function redirect(num){
-      document.location.href= window.location.href+"jeu/"+num;
-    }
+
     var socket = io.connect('http://localhost:8080');
             socket.on('message', function(message) {
                tab = message;
                console.log(tab);
             })
+
+    // inerval de refresh de la liste des serveurs
+    var interval = 500;
+
+    function redirect(num){
+      document.location.href= window.location.href+"jeu/"+num;
+    }
 
             $('#poke').click(function () {
                 socket.emit('message', 'On veut un nouveau salon !');
@@ -43,9 +47,22 @@
                 console.log('Et hop un nouveau salon');
                 
             })
-    function updateDiv(){ 
-      $( "#liste" ).load(window.location.href + " #liste" );
+
+    window.onload = function () {
+      needRefresh1();
+    };
+
+    function needRefresh1() {
+
       console.log('Refresh de la liste des salons');
+      $( "#liste" ).load(window.location.href + " #liste" );
+      setTimeout("needRefresh2()", interval);
+    }
+
+    function needRefresh2() {
+      console.log('Refresh de la liste des salons');
+      $( "#liste" ).load(window.location.href + " #liste" );
+      setTimeout("needRefresh1()", interval);
     }
           
   </script>

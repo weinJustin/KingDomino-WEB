@@ -2,6 +2,7 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 var Twig = require("twig");
+var http = require('http');
 var server = require('http').createServer(app);
 
 
@@ -82,8 +83,11 @@ io.sockets.on('connection', function (socket) {
 	socket.on('deconnexion', function(data){
         // ajouter une sécurité pour que les autres joueurs puissent jouer
         console.log(salons[data]);
-        salons[data].joueurs.pop();
-        salons[data].nbJoueurs--;
+        if (salons[data].nbJoueurs > 0) {
+			salons[data].joueurs.pop();
+			salons[data].nbJoueurs--;
+		}
+
         console.log(salons[data]);
     });
   socket.on('disconnect', function(data){
@@ -535,6 +539,14 @@ io.sockets.on('connection', function (socket) {
 			}
 		}
 	}
+});
+
+http.createServer(function (req, res) {
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+	res.end('Reloading clients\n');
+
+	io.sockets.emit('reload', {});
+	console.log('works')
 });
 
 server.listen(8080);
