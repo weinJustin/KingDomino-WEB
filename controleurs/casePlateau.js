@@ -42,7 +42,10 @@ function rotation(direction){
 
 function finDePartie() {
   socket.emit('finDePartie');
+}
 
+function defausse() {
+  socket.emit('defausse');
 }
 
 function choisir(balise){

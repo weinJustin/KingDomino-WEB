@@ -2,6 +2,7 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 var Twig = require("twig");
+var http = require('http');
 var server = require('http').createServer(app);
 
 
@@ -60,6 +61,7 @@ var io = require('socket.io').listen(server);
 
 //Bienevenue dans le coeur du serveur
 io.sockets.on('connection', function (socket) {
+
 	
 	socket.on('message', function (message) {
         console.log('Un client me parle ! Il me dit : ' + message);
@@ -78,14 +80,43 @@ io.sockets.on('connection', function (socket) {
 
   		})
     });
-   	
+
+	socket.on('defausse', function(){
+		console.log("Rentre moi dedans");
+		socket.dominoPick = 0;
+
+		salons[socket.salon].quiJoue++;
+		if(salons[socket.salon].quiJoue>3){
+			salons[socket.salon].quiJoue = 0;
+			if(salons[socket.salon].numTour==11){
+				remaniementDesJoueurs(socket.salon);
+				changementDeTour(socket.salon);
+			}
+			else if(salons[socket.salon].numTour==12){
+				finDePartie(socket.salon);
+			}
+			else{
+				remaniementDesJoueurs(socket.salon);
+				envoiDesNouveauxDominos(socket.salon);
+				changementDeTour(socket.salon);
+			}
+		}
+		socket.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
+		socket.broadcast.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
+
+	});
+
 	socket.on('deconnexion', function(data){
         // ajouter une sécurité pour que les autres joueurs puissent jouer
         console.log(salons[data]);
-        salons[data].joueurs.pop();
-        salons[data].nbJoueurs--;
+        if (salons[data].nbJoueurs > 0) {
+			salons[data].joueurs.pop();
+			salons[data].nbJoueurs--;
+		}
+
         console.log(salons[data]);
     });
+
   socket.on('disconnect', function(data){
         // ajouter une sécurité pour que les autres joueurs puissent jouer
         console.log(data);
@@ -198,7 +229,7 @@ io.sockets.on('connection', function (socket) {
         	verif = verifPlacement(x,y,rotation,idDomino,socket.salon);
         	if(verif==true){
         		socket.emit('valide',true); //Le domino sera placé sur l'interface
-        		socket.broadcast.emit('joueAutreJoueur',infos); //Le domino placé sera vissible sur l'écran des autres joueurs
+        		socket.broadcast.emit('joueAutreJoueur',infos); //Le domino placé sera visible sur l'écran des autres joueurs
         	}
         	else{
         		socket.emit('valide',false);
@@ -535,6 +566,14 @@ io.sockets.on('connection', function (socket) {
 			}
 		}
 	}
+});
+
+http.createServer(function (req, res) {
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+	res.end('Reloading clients\n');
+
+	io.sockets.emit('reload', {});
+	console.log('works')
 });
 
 server.listen(8080);
