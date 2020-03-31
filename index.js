@@ -190,8 +190,8 @@ io.sockets.on('connection', function (socket) {
     	}
     	if(verif==true){
     		//console.log('Domino selectionné')
-    		socket.emit('selectionDomino',idDomino,salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
-	    	socket.broadcast.emit('selectionDomino',idDomino,salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
+    		socket.emit('selectionDomino',{idDomino:idDomino,joueur:salons[socket.salon].joueurs[salons[socket.salon].quiJoue]});
+	    	socket.broadcast.emit('selectionDomino',{idDomino:idDomino,joueur:salons[socket.salon].joueurs[salons[socket.salon].quiJoue]});
 	    	//On stocke le domino selectionné dans dominoPick[], qui sera utilisé plus tard
 	    	salons[socket.salon].dominosPick[salons[socket.salon].quiJoue] = idDomino;
 			//---------- Cas particulier du premier tour ----------//
