@@ -25,7 +25,8 @@ for(var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
     quiJoue : 0, //Détermine qui est/sera en train de jouer
     verifPlac : false, //Déclaré ici par besoin d'une variable globale
     zones : [], //Stocke les zones des joueurs, des tableaux à 2 dimensions de Cases.
-    stockDomino : "" //Le contenu du fichier contenant les dominos et leurs attributs
+    stockDomino : "", //Le contenu du fichier contenant les dominos et leurs attributs
+    partieCommencee : false
   })
 }
 
@@ -72,7 +73,8 @@ io.sockets.on('connection', function (socket) {
 		    quiJoue : 0, //Détermine qui est/sera en train de jouer
 		    verifPlac : false, //Déclaré ici par besoin d'une variable globale
 		    zones : [], //Stocke les zones des joueurs, des tableaux à 2 dimensions de Cases.
-		    stockDomino : "" //Le contenu du fichier contenant les dominos et leurs attributs
+		    stockDomino : "", //Le contenu du fichier contenant les dominos et leurs attributs
+		    partieCommencee : false
   		})
     });
 
@@ -99,15 +101,36 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
 		socket.broadcast.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
 	});
-
 	socket.on('deconnexion', function(data){
         // ajouter une sécurité pour que les autres joueurs puissent jouer
         //console.log(salons[data]);
-        if (salons[data].nbJoueurs > 0) {
-            salons[data].joueurs.pop();
-            salons[data].nbJoueurs--;
+        var pos = salons[data].joueurs.indexOf(socket.pseudo);
+        if(salons[data].partieCommencee){
+        	partieCommencée = true;
+            salons[data].joueurs.splice(pos,1);
+            salons[data].nbOrdis++;
+            salons[data].identite[0][pos] = 'ordi'+salons[data].nbOrdis;
+            salons[data].identite[1][pos] = 'ordi';
+            creerOrdi(data);
+            return;
         }
-        //console.log(salons[data]);
+        if (salons[data].nbJoueurs < 4) {
+            salons[data].joueurs.splice(pos,1);
+            salons[data].identite[0].splice(pos,1);
+            salons[data].identite[1].splice(pos,1);
+            salons[data].nbJoueurs--;
+            return
+        }
+         if (salons[data].nbJoueurs == 4) {
+         	partieCommencée = true;
+            salons[data].joueurs.splice(pos,1);
+            salons[data].nbOrdis++;
+            creerOrdi(data);
+            return
+        }
+
+       
+        console.log(salons[data]);
     });
 
 	//Les évenements se produisant lors de la connexion d'un joueur
@@ -174,6 +197,7 @@ io.sockets.on('connection', function (socket) {
 	  		socket.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
 		  	socket.broadcast.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
 	    }
+	   
     });
 
 	//Gère la sélection du domino
@@ -270,6 +294,9 @@ io.sockets.on('connection', function (socket) {
 		//Il n'y a plus de nouveaux dominos à envoyer au tour 12
 		if(salons[idSalon].numTour==12){
 			remaniementDesJoueurs(idSalon);
+			var vide = [];
+			socket.emit('envoyerNouveauxDominos',vide);
+	    	socket.broadcast.emit('envoyerNouveauxDominos',vide);
 			changementDeTour(idSalon);
 		}
 		else if(salons[idSalon].numTour==13){
@@ -587,11 +614,13 @@ io.sockets.on('connection', function (socket) {
 	}
 
 	function creerOrdi(idSalon){
-		salons[idSalon].nbJoueurs++;
-		salons[idSalon].nbOrdis++;
+		//salons[idSalon].nbJoueurs++;
+		//salons[idSalon].nbOrdis++;
 	    salons[idSalon].joueurs.push("ordi"+salons[idSalon].nbOrdis);
 	    salons[idSalon].identite[0].push("ordi"+salons[idSalon].nbOrdis);
 	    salons[idSalon].identite[1].push("ordi");
+	    
+	    
 	    salons[idSalon].dominosPick.push(0);
 	    //----- Initialisation de la zone -----//
 	    var zone = [];
@@ -616,6 +645,8 @@ io.sockets.on('connection', function (socket) {
 	    };
 	    zone[2][2] = caseDepart;
 	    salons[idSalon].zones.push(zone);
+
+	    
 	}
 
 	//Fonction utilisée par l'IA uniquement
@@ -708,12 +739,6 @@ io.sockets.on('connection', function (socket) {
 	}
 });
 
-http.createServer(function (req, res) {
-	res.writeHead(200, {'Content-Type': 'text/plain'});
-	res.end('Reloading clients\n');
 
-	io.sockets.emit('reload', {});
-	console.log('works')
-});
 
 server.listen(8080);
