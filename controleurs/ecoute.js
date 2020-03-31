@@ -47,6 +47,7 @@ socket.on('valide',function(valide){
 
 socket.on("selectionDomino",function(data){
   placable["domino"+data.idDomino].choisi = true
+  placable["king"+listeJoueur[data.joueur].color].visible = true
   placementCentre("king"+listeJoueur[data.joueur].color,placable["domino"+data.idDomino].place)
 });
 

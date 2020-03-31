@@ -17,6 +17,14 @@ function setup() {
 
   lPourcent = largeurCanevas/100
   hPourcent = hauteurCanevas/100
+
+  for (var i = 0; i < 4; i++) {
+    placable["king"+couleur[i][2]] = new Affichable(0,0,0,0,1,1)
+    placable["king"+couleur[i][2]].visible = false
+    placable["king"+couleur[i][2]].id = "king"+couleur[i][2]
+    placable["king"+couleur[i][2]].img = loadImage("../static/pieces/"+"king"+couleur[i][2]+".png")
+    placable["king"+couleur[i][2]].place = "principal"
+  }
   //(x,y,o,taille,ratio,nbrCase)
 
   // largeurCanevas = 1000
@@ -57,7 +65,7 @@ function setup() {
 
 function draw() {
 
-  background(220);
+  // background(220);
   // if (intervalCase(mouseX,mouseY,places['principal'])){
   //   caseTMP = obtenirCoordonee(mouseX,mouseY,'principal')
   //   caseTMP = obtenirPositionAvecCoordonee(caseTMP.x,caseTMP.y,'principal')
@@ -70,7 +78,7 @@ function draw() {
   //   rect(xCase, yCase, places['principal'].taille1Case,(places['principal'].tailleUneCase)*2);
   // }
   for (x in placable){
-    if(placable[x].visible){
+    if(placable[x].visible && !x.startsWith("king")){
       push()
       if(placable[x].color!=null){
         fill(placable[x].color);
@@ -92,14 +100,16 @@ function draw() {
   for (var i = 0; i < 4; i++) {
     push()
     if (placable["king"+couleur[i][2]] !== undefined ){
-      x = "king"+couleur[i][2]
-      var taille1case = placable[placable[x].place].taille1Case
+      if (placable["king"+couleur[i][2]].visible){
+        x = "king"+couleur[i][2]
+        var taille1case = placable[placable[x].place].taille1Case
 
-      facteurTaille = resizeTo(placable[x].img.height,placable[x].img.width,taille1case,taille1case*placable[x].ratio)
-      translate(placable[x].x, placable[x].y)
-      scale(facteurTaille.h,facteurTaille.l)
-      rotate(placable[x].o)
-      image(placable[x].img, 0,0);
+        facteurTaille = resizeTo(placable[x].img.height,placable[x].img.width,taille1case,taille1case*placable[x].ratio)
+        translate(placable[x].x, placable[x].y)
+        scale(facteurTaille.h,facteurTaille.l)
+        rotate(placable[x].o)
+        image(placable[x].img, 0,0);
+      }
     }
     pop()
   }
