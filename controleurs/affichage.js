@@ -50,6 +50,8 @@ function setup() {
   rectMode(CORNER);
 
   createCanvas(largeurCanevas,hauteurCanevas);
+
+
   loop()
 }
 
@@ -89,7 +91,6 @@ function draw() {
 
   for (var i = 0; i < 4; i++) {
     push()
-    console.log(placable["king"+couleur[i][2]])
     if (placable["king"+couleur[i][2]] !== undefined ){
       x = "king"+couleur[i][2]
       var taille1case = placable[placable[x].place].taille1Case
@@ -110,8 +111,19 @@ function resizeTo(hauteur,largeur,hauteurCible,largeurCible){
 }
 
 function placement(x,y,rot,id,place,ratio=2){
+  var angle =  (rot * 90)
+  var xTemp = x
+  var yTemp = y
+  if (angle == 90) {
+    xTemp = x+1
+  }else if (angle == 180) {
+    xTemp = x+1
+    yTemp = y+1
+  }else if (angle == 270) {
+    yTemp = y+1
+  }
 
-  var tmp = obtenirPositionAvecCoordonee(x,y,placable[place])
+  var tmp = obtenirPositionAvecCoordonee(xTemp,yTemp,placable[place])
   var xTemp = tmp.x
   var yTemp = tmp.y
 
@@ -126,26 +138,14 @@ function placementCentre(imgNom,place,ratio=1){
 }
 
 function placementCore(x,y,rot,id,place,ratio){
-  var angle =  (rot * 90)
-
-  if (angle == 90) {
-    xTemp = xTemp+1
-  }else if (angle == 180) {
-    xTemp = xTemp+1
-    yTemp = yTemp+1
-  }else if (angle == 270) {
-    yTemp = yTemp+1
-  }
 
   if(!id.startsWith("king")){
     placable[place].dernierDomPlace = id
   }
   if (placable[id] !== undefined){
-    console.log("on y passe :"+id);
-    console.log(x+"||"+y+"||"+angle);
     placable[id].x = x
     placable[id].y = y
-    placable[id].o = angle
+    placable[id].o = rot*90
     placable[id].place = place
     redraw()
   }else {

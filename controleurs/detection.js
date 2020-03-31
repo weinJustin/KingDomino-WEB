@@ -16,6 +16,7 @@ function mousePressed() {
         orientation = 0
       }
       dernierPlacement =tmp
+      console.log(dernierPlacement);
       placement(dernierPlacement.x,dernierPlacement.y,orientation,choix[0],'principal');
   }
 

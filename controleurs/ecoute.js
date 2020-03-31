@@ -55,7 +55,6 @@ socket.on('envoyerNouveauxDominos',function(dominos){
   //on recupere les elements dans chaque emplacement pour les décaler
   for (var j = 0; j < 4; j++) {
     var tmp = placable["domChoi"+(j+1)].dernierDomPlace
-    console.log(tmp);
     if (placable["king"+couleur[j][2]] !== undefined ){
       placable["king"+couleur[j][2]].x = nouvX
     }
@@ -67,5 +66,4 @@ socket.on('envoyerNouveauxDominos',function(dominos){
     //on place les nouveaux dominos
     placement(0,0,0,"domino"+dominos[j],"domChoi"+(j+1));
   }
-  console.log(placable)
 });
