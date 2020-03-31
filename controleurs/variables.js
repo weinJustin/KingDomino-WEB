@@ -10,6 +10,8 @@ var dernierChoixRenduInerte = 0;
 var listeJoueur = {}
 
 
+
+
 // variable d'affichage
 let largeurCanevas = null
 let hauteurCanevas = null

@@ -29,6 +29,9 @@ socket.on('joueurPresent',function(nomJoueur){
       maCouleur = couleur[i][0];
       maCouleurClaire = couleur[i][1];
       places["principal"].color = maCouleur
+      listeJoueur[nom] = {}
+      listeJoueur[nom].nom = "principal"
+      listeJoueur[nom].color = couleur[i][2]
     }
   }
 });
@@ -44,18 +47,20 @@ socket.on('valide',function(valide){
 });
 
 socket.on("selectionDomino",function(data){
+
   images[data.idDomino].choisi = true
-  placementCentre("king"+listeJoueur[data.joueur].color)
+  placementCentre("king"+listeJoueur[data.joueur].color,images[data.idDomino].place)
 });
 
 socket.on('envoyerNouveauxDominos',function(dominos){
-  var nouvX = places["domPris1"].taille/4 + places["domPris1"].x
+  var nouvX = places["domPris1"].taille/2 + places["domPris1"].x
   //on recupere les elements dans chaque emplacement pour les décaler
   for (var j = 0; j < 4; j++) {
     var tmp = places["domChoi"+(j+1)].dernierDomPlace
-    if (images["king"+couleur[j][2]] !== undefined){
+    if (images["king"+couleur[j][2]] !== undefined ){
       images["king"+couleur[j][2]].x = nouvX
     }
+
 
     if(tmp != null){
       placement(0,0,0,tmp,"domPris"+(j+1));
@@ -64,4 +69,5 @@ socket.on('envoyerNouveauxDominos',function(dominos){
     //on place les nouveaux dominos
     placement(0,0,0,dominos[j],"domChoi"+(j+1));
   }
+
 });

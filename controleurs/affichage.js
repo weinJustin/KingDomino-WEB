@@ -29,6 +29,8 @@ function setup() {
   places['principal'].dernierDomPlace = null
   places['principal'].color = maCouleur
 
+  places['principal']= new Affichable(hPourcent*50)
+
   places['fini'] = {}
   places['fini'].taille = hPourcent*5
   places['fini'].x = lPourcent*marge + lPourcent*2 + places['principal'].taille
@@ -101,7 +103,7 @@ function draw() {
   for (var x in images) {
       var taille1case = places[images[x].place].taille1Case
       var facteurTaille= null
-      if(x.startsWith("Depart") || x.startsWith("Icone")){
+      if(x.startsWith("Depart") || x.startsWith("king")){
         facteurTaille = resizeTo(images[x].img.height,images[x].img.width,taille1case,taille1case)
       }else {
         facteurTaille = resizeTo(images[x].img.height,images[x].img.width,taille1case,taille1case*2)
@@ -156,15 +158,16 @@ function placement(x,y,rot,id,place){
 }
 
 function placementCentre(imgNom,place){
-    var xTemp = place.taille/4 + place.x
-    var yTemp =  place.y
-  
-    if (images[id] !== undefined){
-      images[id] = {x:xTemp,y:yTemp,rot:0,img:images[id].img,place:place,id:imgNom,choisi:true}
+    var xTemp = places[place].taille/2 + places[place].x
+    var yTemp =  places[place].y
+
+
+    if (images[imgNom] !== undefined){
+      images[imgNom] = {x:xTemp,y:yTemp,rot:0,img:images[imgNom].img,place:place,id:imgNom,choisi:true}
       redraw()
     }else {
       loadImage("../static/"+imgNom+".png", img => {
-        images[id] = {x:xTemp,y:yTemp,rot:0,img:img,place:place,id:imgNom,choisi:true}
+        images[imgNom] = {x:xTemp,y:yTemp,rot:0,img:img,place:place,id:imgNom,choisi:true}
         redraw()
       })
     }
