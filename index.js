@@ -168,9 +168,9 @@ io.sockets.on('connection', function (socket) {
 	    // afficherZone(socket.zone,socket.salon);
 	    //----- Fin de l'initialisation de la zone -----//
 	    //console.log(socket.zone);
-	    if(salons[socket.salon].nbJoueurs>3){
+	    if(salons[socket.salon].nbJoueurs>2){
 	    	salons[socket.salon].stockDomino = fs.readFileSync('Dominos.json');
-	    	//creerOrdi(socket.salon);
+	    	creerOrdi(socket.salon);
 	    	// creerOrdi(socket.salon);
 	    	shuffleDoubleArray(salons[socket.salon].joueurs,salons[socket.salon].zones);
 	    	socket.emit('joueurPresent',salons[socket.salon].joueurs);
@@ -700,6 +700,7 @@ io.sockets.on('connection', function (socket) {
 	        }
 	        verifPlacement(vraiChoix[0],vraiChoix[1],vraiChoix[2],idDomino,idSalon,salons[idSalon].zones[salons[idSalon].quiJoue],false);
 			salons[idSalon].verifPlac = false;
+			socket.emit('joueAutreJoueur',infos);
 	        socket.broadcast.emit('joueAutreJoueur',infos);
 			console.log(nom+" a placé son domino.");
 		}
