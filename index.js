@@ -643,9 +643,7 @@ io.sockets.on('connection', function (socket) {
 	    	isCounted: false
 	    };
 	    zone[2][2] = caseDepart;
-	    salons[idSalon].zones.push(zone);
-
-	    
+	    salons[idSalon].zones.push(zone);    
 	}
 
 	//Fonction utilisée par l'IA uniquement
@@ -693,7 +691,13 @@ io.sockets.on('connection', function (socket) {
 				choix = listePlacementsValides.length-1;
 			}
 			var vraiChoix = listePlacementsValides[choix];
-	        var infos = [vraiChoix[0],vraiChoix[1],vraiChoix[2],idDomino,nom];
+	        var infos = {
+	        	x : vraiChoix[0],
+		        y : vraiChoix[1],
+		        o : vraiChoix[2],
+		        id : idDomino,
+		        joueur : nom
+	        }
 	        verifPlacement(vraiChoix[0],vraiChoix[1],vraiChoix[2],idDomino,idSalon,salons[idSalon].zones[salons[idSalon].quiJoue],false);
 			salons[idSalon].verifPlac = false;
 	        socket.broadcast.emit('joueAutreJoueur',infos);
