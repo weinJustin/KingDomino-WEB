@@ -146,10 +146,10 @@ io.sockets.on('connection', function (socket) {
 	    // afficherZone(socket.zone,socket.salon);
 	    //----- Fin de l'initialisation de la zone -----//
 	    //console.log(socket.zone);
-	    if(salons[socket.salon].nbJoueurs>1){
+	    if(salons[socket.salon].nbJoueurs>3){
 	    	salons[socket.salon].stockDomino = fs.readFileSync('Dominos.json');
-	    	creerOrdi(socket.salon);
-	    	creerOrdi(socket.salon);
+	    	// creerOrdi(socket.salon);
+	    	// creerOrdi(socket.salon);
 	    	shuffleDoubleArray(salons[socket.salon].joueurs,salons[socket.salon].zones);
 	    	socket.emit('joueurPresent',salons[socket.salon].joueurs);
 	    	socket.broadcast.emit('joueurPresent',salons[socket.salon].joueurs);
@@ -635,8 +635,8 @@ io.sockets.on('connection', function (socket) {
 			}while(salons[idSalon].dominosPick.includes(salons[idSalon].dominosActuels[choix]));
 		    salons[idSalon].dominosPick[salons[idSalon].quiJoue] = salons[idSalon].dominosActuels[choix];
 			console.log(nom+" à choisi le domino : "+salons[idSalon].dominosActuels[choix]);
-		    socket.emit('selectionDomino',salons[idSalon].dominosActuels[choix],salons[idSalon].joueurs[salons[idSalon].quiJoue]);
-		    socket.broadcast.emit('selectionDomino',salons[idSalon].dominosActuels[choix],salons[idSalon].joueurs[salons[idSalon].quiJoue]);
+		    socket.emit('selectionDomino',{idDomino:idDomino,joueur:salons[socket.salon].joueurs[salons[socket.salon].quiJoue]});
+		    socket.broadcast.emit('selectionDomino',{idDomino:idDomino,joueur:salons[socket.salon].joueurs[salons[socket.salon].quiJoue]});
 		    salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1] = salons[idSalon].dominosActuels[choix];
 		}
 	}
