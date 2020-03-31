@@ -190,8 +190,8 @@ io.sockets.on('connection', function (socket) {
     	}
     	if(verif==true){
     		//console.log('Domino selectionné')
-    		socket.emit('selectionDomino',idDomino);
-	    	socket.broadcast.emit('selectionDomino',idDomino);
+    		socket.emit('selectionDomino',idDomino,salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
+	    	socket.broadcast.emit('selectionDomino',idDomino,salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
 	    	//On stocke le domino selectionné dans dominoPick[], qui sera utilisé plus tard
 	    	salons[socket.salon].dominosPick[salons[socket.salon].quiJoue] = idDomino;
 			//---------- Cas particulier du premier tour ----------//
@@ -635,8 +635,8 @@ io.sockets.on('connection', function (socket) {
 			}while(salons[idSalon].dominosPick.includes(salons[idSalon].dominosActuels[choix]));
 		    salons[idSalon].dominosPick[salons[idSalon].quiJoue] = salons[idSalon].dominosActuels[choix];
 			console.log(nom+" à choisi le domino : "+salons[idSalon].dominosActuels[choix]);
-		    socket.emit('selectionDomino',salons[idSalon].dominosActuels[choix]);
-		    socket.broadcast.emit('selectionDomino',salons[idSalon].dominosActuels[choix]);
+		    socket.emit('selectionDomino',salons[idSalon].dominosActuels[choix],salons[idSalon].joueurs[salons[idSalon].quiJoue]);
+		    socket.broadcast.emit('selectionDomino',salons[idSalon].dominosActuels[choix],salons[idSalon].joueurs[salons[idSalon].quiJoue]);
 		    salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1] = salons[idSalon].dominosActuels[choix];
 		}
 	}
