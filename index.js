@@ -106,7 +106,6 @@ io.sockets.on('connection', function (socket) {
         //console.log(salons[data]);
         var pos = salons[data].joueurs.indexOf(socket.pseudo);
         if(salons[data].partieCommencee){
-        	partieCommencée = true;
             salons[data].joueurs.splice(pos,1);
             salons[data].nbOrdis++;
             salons[data].identite[0][pos] = 'ordi'+salons[data].nbOrdis;
@@ -124,7 +123,7 @@ io.sockets.on('connection', function (socket) {
          if (salons[data].nbJoueurs == 4) {
          	partieCommencée = true;
             salons[data].joueurs.splice(pos,1);
-            salons[data].nbOrdis++;
+            salons[data].nbJoueurs--;
             creerOrdi(data);
             return
         }
@@ -614,8 +613,8 @@ io.sockets.on('connection', function (socket) {
 	}
 
 	function creerOrdi(idSalon){
-		//salons[idSalon].nbJoueurs++;
-		//salons[idSalon].nbOrdis++;
+		salons[idSalon].nbJoueurs++;
+		salons[idSalon].nbOrdis++;
 	    salons[idSalon].joueurs.push("ordi"+salons[idSalon].nbOrdis);
 	    salons[idSalon].identite[0].push("ordi"+salons[idSalon].nbOrdis);
 	    salons[idSalon].identite[1].push("ordi");
