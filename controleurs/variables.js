@@ -14,15 +14,11 @@ var listeJoueur = {}
 let largeurCanevas = null
 let hauteurCanevas = null
 
-let places = {}
-let col = {}
-
+let placable = {}
 
 let hPourcent = null
 let lPourcent = null
 let marge = 5
-
-let images= {}
 
 let xCase = null
 let yCase = null

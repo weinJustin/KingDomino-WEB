@@ -1,15 +1,19 @@
-let affichable = class Affichable {
-  constructor(x,y,o,taille,ratio,type,nbrCase,color=null,image=null,choisi=false) {
+let Affichable = class  {
+  constructor(x,y,o,taille,ratio,nbrCase) {
     this.x = x
     this.y = y
     this.o = o
     this.taille = taille
     this.taille1Case = taille/nbrCase
     this.ratio = ratio
-    this.type = type
     this.nbrCase = nbrCase
-    this.color = color
-    this.image = image
-    this.choisi = choisi
+    this.choisi = true
+    this.visible = true
+
+    this.color = null
+    this.img = null
+    this.place = null
+    this.dernierDomPlace = null
+    this.id = null
   }
 }

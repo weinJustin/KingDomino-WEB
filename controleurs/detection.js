@@ -1,14 +1,14 @@
 function mousePressed() {
   //fonction de validation, d'envoie et de placement
-  if(monTour && intervalCase(mouseX,mouseY,places["fini"])){
+  if(monTour && intervalCase(mouseX,mouseY,placable["fini"])){
       monTour = false;
       //format normalisé : {x,y,orientation,id domino,nom joueur}
-      var result = {'x':dernierPlacement.x,'y':dernierPlacement.y,'o':orientation,'id':choix[0],'joueur':nom};
+      var result = {'x':dernierPlacement.x,'y':dernierPlacement.y,'o':orientation,'id':choix[0].substr(6),'joueur':nom};
       dernierCoupEnvoyer = choix[0];
       choix.shift();
       socket.emit('jouer',result);
-  }else if(monTour){
-      var tmp = obtenirCoordonee(mouseX,mouseY,places['principal'])
+  }else if(monTour && intervalCase(mouseX,mouseY,placable["principal"])){
+      var tmp = obtenirCoordonee(mouseX,mouseY,placable['principal'])
       if(tmp.x == dernierPlacement.x && tmp.y == dernierPlacement.y){
         orientation++
       }
@@ -22,12 +22,13 @@ function mousePressed() {
  // choisi un domino
  if(faireChoix){
      for(var i =0;i<4;i++){
-       if (intervalCase(mouseX,mouseY,places["domChoi"+(i+1)]) && places["domChoi"+(i+1)].dernierDomPlace != null ){
-         if(!images[places["domChoi"+(i+1)].dernierDomPlace].choisi){
+       if (intervalCase(mouseX,mouseY,placable["domChoi"+(i+1)]) && placable["domChoi"+(i+1)].dernierDomPlace != null ){
+         if(!placable[placable["domChoi"+(i+1)].dernierDomPlace].choisi){
            faireChoix =false;
-           choix.push(places["domChoi"+(i+1)].dernierDomPlace);
-           images[places["domChoi"+(i+1)].dernierDomPlace].choisi = true
-           socket.emit('choisir',choix[choix.length - 1]);
+           choix.push(placable["domChoi"+(i+1)].dernierDomPlace);
+           placable[placable["domChoi"+(i+1)].dernierDomPlace].choisi = true
+
+           socket.emit('choisir',Number(choix[choix.length - 1].substr(6)));
            if(!premiertour){
              monTour = true;
              changerFeedBack("C'est votre tour. Placer votre domino");

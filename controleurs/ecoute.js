@@ -1,5 +1,5 @@
 socket.on('joueAutreJoueur',function(domino){
-  placement(domino['x'],domino['y'],domino['o'],domino['id'],listeJoueur[domino['joueur']].nom);
+  placement(domino['x'],domino['y'],domino['o'],"domino"+ domino['id'],listeJoueur[domino['joueur']].nom);
 
 });
 
@@ -16,19 +16,21 @@ socket.on('tonTour',function(moi){
 socket.on('joueurPresent',function(nomJoueur){
   var id = 0;
   for (var i = 0; i < nomJoueur.length; i++) {
-    console.log(nomJoueur[i]);
     if (nomJoueur[i] != nom){
-      placement(2,2,0,"Depart"+couleur[i][2],"adv"+(id))
-      places["adv"+(id)].color = couleur[i][0]
+      placement(2,2,0,"dominoDepart"+couleur[i][2],"adv"+(id),1)
+      placable["adv"+(id)].color = couleur[i][0]
       listeJoueur[nomJoueur[i]] = {}
       listeJoueur[nomJoueur[i]].nom = "adv"+(id)
       listeJoueur[nomJoueur[i]].color = couleur[i][2]
       id++;
     }else {
-      placement(2,2,0,"Depart"+couleur[i][2],"principal");
+      placement(2,2,0,"dominoDepart"+couleur[i][2],"principal",1);
       maCouleur = couleur[i][0];
       maCouleurClaire = couleur[i][1];
-      places["principal"].color = maCouleur
+      placable["principal"].color = maCouleur
+      listeJoueur[nom] = {}
+      listeJoueur[nom].nom = "principal"
+      listeJoueur[nom].color = couleur[i][2]
     }
   }
 });
@@ -44,17 +46,18 @@ socket.on('valide',function(valide){
 });
 
 socket.on("selectionDomino",function(data){
-  images[data.idDomino].choisi = true
-  placementCentre("king"+listeJoueur[data.joueur].color)
+  placable["domino"+data.idDomino].choisi = true
+  placementCentre("king"+listeJoueur[data.joueur].color,placable["domino"+data.idDomino].place)
 });
 
 socket.on('envoyerNouveauxDominos',function(dominos){
-  var nouvX = places["domPris1"].taille/4 + places["domPris1"].x
+  var nouvX = placable["domPris1"].taille/2 + placable["domPris1"].x
   //on recupere les elements dans chaque emplacement pour les décaler
   for (var j = 0; j < 4; j++) {
-    var tmp = places["domChoi"+(j+1)].dernierDomPlace
-    if (images["king"+couleur[j][2]] !== undefined){
-      images["king"+couleur[j][2]].x = nouvX
+    var tmp = placable["domChoi"+(j+1)].dernierDomPlace
+    console.log(tmp);
+    if (placable["king"+couleur[j][2]] !== undefined ){
+      placable["king"+couleur[j][2]].x = nouvX
     }
 
     if(tmp != null){
@@ -62,6 +65,7 @@ socket.on('envoyerNouveauxDominos',function(dominos){
     }
 
     //on place les nouveaux dominos
-    placement(0,0,0,dominos[j],"domChoi"+(j+1));
+    placement(0,0,0,"domino"+dominos[j],"domChoi"+(j+1));
   }
+  console.log(placable)
 });
