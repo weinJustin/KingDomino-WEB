@@ -80,7 +80,7 @@ function draw() {
 
         facteurTaille = resizeTo(placable[x].img.height,placable[x].img.width,taille1case,taille1case*placable[x].ratio)
         translate(placable[x].x, placable[x].y)
-        scale(facteurTaille.h,facteurTaille.l)
+        placable[x].img.resize(taille1case*placable[x].ratio,taille1case)
         rotate(placable[x].o)
         image(placable[x].img, 0,0);
       }
