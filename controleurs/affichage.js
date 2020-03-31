@@ -26,6 +26,18 @@ function setup() {
   places['principal'].y = hPourcent*marge
   places['principal'].taille1Case = (places['principal'].taille)/5
   places['principal'].type = "jeu"
+  places['principal'].dernierDomPlace = null
+  places['principal'].color = maCouleur
+
+  places['fini'] = {}
+  places['fini'].taille = hPourcent*5
+  places['fini'].x = lPourcent*marge + lPourcent*2 + places['principal'].taille
+  places['fini'].y = hPourcent*marge
+  places['fini'].taille1Case = places['fini'].taille
+  places['fini'].type = "fini"
+  places['fini'].dernierDomPlace = null
+  places['fini'].color = maCouleur
+
 
   for (var i = 0; i < 3; i++) {
     var nom = 'adv'+i
@@ -35,6 +47,9 @@ function setup() {
     places[nom].y = places['principal'].taille + (hPourcent*marge*2)
     places[nom].taille1Case = (places[nom].taille)/5
     places[nom].type = "jeu"
+    places[nom].dernierDomPlace = null
+    places[nom].color = maCouleur
+
   }
 
     tab = ["domPris","domChoi"];
@@ -42,11 +57,14 @@ function setup() {
       for (var j = 0; j < 4; j++) {
         var id = tab[i]+(j+1);
         places[id] = {}
-        places[id].taille = (hauteurCanevas/100)*10
+        places[id].taille = hPourcent*10
         places[id].x = (lPourcent* i*20 )+ (lPourcent*50)
         places[id].y = (hPourcent* j*13) + (hPourcent*5)
         places[id].taille1Case = (places[id].taille)
         places[id].type = "col"
+        places[id].dernierDomPlace = null
+        places[id].color = maCouleur
+
       }
     }
 
@@ -58,10 +76,11 @@ function setup() {
 }
 
 function draw() {
+
   background(220);
-  fill(255);
   for (var x in places) {
-    if (places[x].type == "col"){
+    fill(places[x].color);
+    if (places[x].type == "col" || places[x].type == "fini"){
       rect(places[x].x, places[x].y, places[x].taille*2,places[x].taille);
     }else {
       square(places[x].x, places[x].y, places[x].taille);
@@ -81,7 +100,12 @@ function draw() {
 
   for (var x in images) {
       var taille1case = places[images[x].place].taille1Case
-      var facteurTaille = resizeTo(images[x].img.height,images[x].img.width,taille1case,taille1case*2)
+      var facteurTaille= null
+      if(x.startsWith("Depart") || x.startsWith("Icone")){
+        facteurTaille = resizeTo(images[x].img.height,images[x].img.width,taille1case,taille1case)
+      }else {
+        facteurTaille = resizeTo(images[x].img.height,images[x].img.width,taille1case,taille1case*2)
+      }
       push()
       translate(images[x].x, images[x].y)
       scale(facteurTaille.h,facteurTaille.l)
@@ -117,14 +141,31 @@ function placement(x,y,rot,id,place){
   yTemp = tmp.y
 
   if (images[id] !== undefined){
-    images[id] = {x:xTemp,y:yTemp,rot:angle,img:images[id].img,place:place}
+    images[id] = {x:xTemp,y:yTemp,rot:angle,img:images[id].img,place:place,id:id,choisi:images[id].choisi}
+    places[place].dernierDomPlace = id
     redraw()
   }else {
     loadImage("../static/pieces/domino"+id+".png", img => {
-      images[id] = {x:xTemp,y:yTemp,rot:angle,img:img,place:place}
+      images[id] = {x:xTemp,y:yTemp,rot:angle,img:img,place:place,id:id,choisi:false}
+      places[place].dernierDomPlace = id
       redraw()
     })
   }
 
 
+}
+
+function placementCentre(imgNom,place){
+    var xTemp = place.taille/4 + place.x
+    var yTemp =  place.y
+  
+    if (images[id] !== undefined){
+      images[id] = {x:xTemp,y:yTemp,rot:0,img:images[id].img,place:place,id:imgNom,choisi:true}
+      redraw()
+    }else {
+      loadImage("../static/"+imgNom+".png", img => {
+        images[id] = {x:xTemp,y:yTemp,rot:0,img:img,place:place,id:imgNom,choisi:true}
+        redraw()
+      })
+    }
 }

@@ -3,11 +3,12 @@ var dernierCoupEnvoyer = -1;
 var dernierPlacement = 0;
 var choix =[];
 var faireChoix = false;
-var arborecence ={};
 var nom = null;
 var orientation = 0;
 var premiertour = true;
 var dernierChoixRenduInerte = 0;
+var listeJoueur = {}
+
 
 // variable d'affichage
 let largeurCanevas = null
@@ -15,6 +16,7 @@ let hauteurCanevas = null
 
 let places = {}
 let col = {}
+
 
 let hPourcent = null
 let lPourcent = null

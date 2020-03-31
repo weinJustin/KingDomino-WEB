@@ -13,5 +13,20 @@ function obtenirPositionAvecCoordonee(x,y,emplacement,nbrCase=5){
 }
 
 function intervalCase(x,y,emplacement){
-  return x<emplacement.x+emplacement.taille && y < emplacement.y+emplacement.taille && x > emplacement.x && y > emplacement.y
+  if(emplacement.type == "col" || emplacement.type == "fini"){
+    return x<emplacement.x+emplacement.taille*2 && y < emplacement.y+emplacement.taille && x > emplacement.x && y > emplacement.y
+  }else {
+    return x<emplacement.x+emplacement.taille && y < emplacement.y+emplacement.taille && x > emplacement.x && y > emplacement.y
+  }
+}
+
+function recupImageFromBalise(nom){
+  var tmp = null
+  for (var x in images) {
+    if (images[x].place == nom) {
+      tmp = images[x]
+      break;
+    }
+  }
+  return tmp
 }
