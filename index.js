@@ -270,6 +270,9 @@ io.sockets.on('connection', function (socket) {
 		//Il n'y a plus de nouveaux dominos à envoyer au tour 12
 		if(salons[idSalon].numTour==12){
 			remaniementDesJoueurs(idSalon);
+			var vide = [];
+			socket.emit('envoyerNouveauxDominos',vide);
+	    	socket.broadcast.emit('envoyerNouveauxDominos',vide);
 			changementDeTour(idSalon);
 		}
 		else if(salons[idSalon].numTour==13){
