@@ -32,8 +32,7 @@ function mousePressed() {
              monTour = true;
              changerFeedBack("C'est votre tour. Placer votre domino");
            }else{
-             premiertour=false
-
+             premiertour = false;
            }
          }
          break
