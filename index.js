@@ -113,7 +113,7 @@ io.sockets.on('connection', function (socket) {
             creerOrdi(data);
             return;
         }
-        if (salons[data].nbJoueurs < 4) {
+        if (salons[data].nbJoueurs < 4 && salons[data].nbJoueurs > 0) {
             salons[data].joueurs.splice(pos,1);
             salons[data].identite[0].splice(pos,1);
             salons[data].identite[1].splice(pos,1);
@@ -168,9 +168,9 @@ io.sockets.on('connection', function (socket) {
 	    // afficherZone(socket.zone,socket.salon);
 	    //----- Fin de l'initialisation de la zone -----//
 	    //console.log(socket.zone);
-	    if(salons[socket.salon].nbJoueurs>2){
+	    if(salons[socket.salon].nbJoueurs>3){
 	    	salons[socket.salon].stockDomino = fs.readFileSync('Dominos.json');
-	    	creerOrdi(socket.salon);
+	    	//creerOrdi(socket.salon);
 	    	// creerOrdi(socket.salon);
 	    	shuffleDoubleArray(salons[socket.salon].joueurs,salons[socket.salon].zones);
 	    	socket.emit('joueurPresent',salons[socket.salon].joueurs);
