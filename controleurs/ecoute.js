@@ -1,6 +1,6 @@
 socket.on('joueAutreJoueur',function(domino){
-  console.log(domino);
-  placement(domino['x'],domino['y'],domino['o'],domino['id'],"caseJoueur"+domino['joueur']);
+  placement(domino['x'],domino['y'],domino['o'],domino['id'],listeJoueur[domino['joueur']].nom);
+
 });
 
 socket.on('tonTour',function(moi){
@@ -14,21 +14,21 @@ socket.on('tonTour',function(moi){
 });
 
 socket.on('joueurPresent',function(nomJoueur){
-  var test = 2;
+  var id = 0;
   for (var i = 0; i < nomJoueur.length; i++) {
     console.log(nomJoueur[i]);
     if (nomJoueur[i] != nom){
-      console.log("#adv"+(test));
-      $("#adv"+(test)).css({'background-color':couleur[i][0]});
-      placement(2,2,0,"Depart"+couleur[i][2],"adv"+(test))
-      $("#adv"+(test)).attr("id","caseJoueur"+nomJoueur[i]);
-      test+=1;
-      console.log(test);
+      placement(2,2,0,"Depart"+couleur[i][2],"adv"+(id))
+      places["adv"+(id)].color = couleur[i][0]
+      listeJoueur[nomJoueur[i]] = {}
+      listeJoueur[nomJoueur[i]].nom = "adv"+(id)
+      listeJoueur[nomJoueur[i]].color = couleur[i][2]
+      id++;
     }else {
-      $(".case").css({'background-color':couleur[i][0]});
-      placement(2,2,0,"Depart"+couleur[i][2],"adv1");
+      placement(2,2,0,"Depart"+couleur[i][2],"principal");
       maCouleur = couleur[i][0];
       maCouleurClaire = couleur[i][1];
+      places["principal"].color = maCouleur
     }
   }
 });
@@ -43,24 +43,25 @@ socket.on('valide',function(valide){
   }
 });
 
-socket.on("selectionDomino",function(idDomino){
-  $("#domino"+idDomino).attr("onclick","");;
-  // placement(0,0,0,idDomino,baliseParent)
+socket.on("selectionDomino",function(data){
+  images[data.idDomino].choisi = true
+  placementCentre("king"+listeJoueur[data.joueur].color)
 });
 
 socket.on('envoyerNouveauxDominos',function(dominos){
+  var nouvX = places["domPris1"].taille/4 + places["domPris1"].x
+  //on recupere les elements dans chaque emplacement pour les décaler
   for (var j = 0; j < 4; j++) {
-    //on recupere les elements dans chaque emplacement pour les décaler
-
-    var tmp = document.getElementById("domChoi"+(j+1)).firstChild;
-    // console.log(tmp);
-
+    var tmp = places["domChoi"+(j+1)].dernierDomPlace
+    if (images["king"+couleur[j][2]] !== undefined){
+      images["king"+couleur[j][2]].x = nouvX
+    }
 
     if(tmp != null){
-      placement(0,0,0,tmp.id.substr(6),"domPris"+(j+1));
+      placement(0,0,0,tmp,"domPris"+(j+1));
     }
 
     //on place les nouveaux dominos
-    placement(0,0,0,dominos[j],"domChoi"+(j+1),"onclick='choisir(this)'");
+    placement(0,0,0,dominos[j],"domChoi"+(j+1));
   }
 });

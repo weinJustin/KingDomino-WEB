@@ -5,12 +5,15 @@
     <title>KingDomino en ligne !</title>
     <link rel="stylesheet" href="../static/CSS/jeu.css">
     <script src="/socket.io/socket.io.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script> var socket = io.connect('http://localhost:8080');</script>
+    <script>
+    var socket = io.connect('localhost:8080');
+    </script>
     <script src="../controleurs/jquery-3.4.1.js"></script>
+    <script src="../controleurs/p5.js"></script>
     <script src="../controleurs/variables.js"></script>
+    <script src="../controleurs/detection.js"></script>
+    <script src="../controleurs/coordonee.js"></script>
     <script src="../controleurs/affichage.js"></script>
-    <script src="../controleurs/casePlateau.js"></script>
     <script src="../controleurs/ecoute.js"></script>
     <script src="../controleurs/init.js"></script>
     <script type="text/javascript">
@@ -41,16 +44,7 @@
     </script>
   </head>
   <body>
-    <input type="button" value="anti-horaire" onclick="rotation('ah')">
-    <input type="button" value="horaire" onclick="rotation('h')">
-    <input type="button" value="valider placement" onclick="trowId()">
-    <div class="plateau plateauJoueur" id="adv1"></div>
-    <div class=col id="domCol1"></div>
-    <div class=col id="domCol2"></div>
-    <div class="plateau plateauAdversaire" id="adv2"></div>
-    <div class="plateau plateauAdversaire adv3" id="adv3"></div>
-    <div class="plateau plateauAdversaire adv4" id="adv4"></div>
-    <div class="feedback" id="feedback"></div>
-    <input type="button" class="defausse" id="domino1" onclick="defausse()" value="Defaussser un domino">
+    <div id="feedback" class="feedback">
+    </div>
   </body>
 </html>
