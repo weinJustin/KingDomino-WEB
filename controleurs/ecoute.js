@@ -65,12 +65,14 @@ socket.on('envoyerNouveauxDominos',function(dominos){
       placable["king"+couleur[j][2]].x = nouvX
     }
 
-    if(tmp != null){
-      placement(0,0,0,tmp,"domPris"+(j+1));
+    if (tmp !== undefined) {
+      if(tmp != null){
+        placement(0,0,0,tmp,"domPris"+(j+1));
+      }  
     }
 
     //on place les nouveaux dominos
-    if(dominos.length == 4){
+    if(dominos !== undefined){
       placement(0,0,0,"domino"+dominos[j],"domChoi"+(j+1));
     }else{
       dernierTour = true;
