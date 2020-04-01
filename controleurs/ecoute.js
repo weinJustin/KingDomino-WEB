@@ -68,7 +68,7 @@ socket.on('envoyerNouveauxDominos',function(dominos){
     if (tmp !== undefined) {
       if(tmp != null){
         placement(0,0,0,tmp,"domPris"+(j+1));
-      }  
+      }
     }
 
     //on place les nouveaux dominos
@@ -87,7 +87,7 @@ socket.on("defausse", function(idDomino){
 socket.on("resultatFinal",function (resultatFinal) {
   var retour = ""
   for (var i = 0; i < 4; i++) {
-    retour += i +" : "+resultatFinal[0][i]+", score: "+resultatFinal[1][i]+"\n"
+    retour += (i+1) +" : "+resultatFinal[0][i]+", score: "+resultatFinal[1][i]+"\n"
   }
   alert(retour)
 
