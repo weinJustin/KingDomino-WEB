@@ -36,8 +36,17 @@ function setup() {
   placable['fini'] = new Affichable(tmp,hPourcent*marge,0,hPourcent*5,2,1)
   placable['fini'].color = maCouleur
 
+  placable['typoFini']= new Affichable(placable['fini'].taille +placable['fini'].x,(placable['fini'].taille/2)+placable['fini'].y,0,hPourcent*5,2,1)
+  placable['typoFini'].text = "Valider"
+  placable['typoFini'].place = 'fini'
+
   placable['defausse'] = new Affichable(tmp,placable['fini'].taille +((hPourcent*marge)*2),0,hPourcent*5,2,1)
   placable['defausse'].color = maCouleur
+
+  placable['typoDefausse']= new Affichable(placable['defausse'].taille +placable['defausse'].x,(placable['defausse'].taille/2)+placable['defausse'].y,0,hPourcent*5,2,1)
+  placable['typoDefausse'].text = "Deffausser"
+  placable['typoDefausse'].place = 'defausse'
+
 
   for (var i = 0; i < 3; i++) {
     var nom = 'adv'+i
@@ -86,6 +95,11 @@ function draw() {
       if(placable[x].color!=null){
         fill(placable[x].color);
         rect(placable[x].x, placable[x].y, placable[x].taille*placable[x].ratio,placable[x].taille)
+      }else if (placable[x].text!=null) {
+        var width = placable[placable[x].place].taille
+        textSize(width / 3);
+        textAlign(CENTER,CENTER);
+        text(placable[x].text,placable[x].x, placable[x].y)
       }else{
         var taille1case = placable[placable[x].place].taille1Case
 

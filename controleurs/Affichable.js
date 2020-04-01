@@ -15,5 +15,6 @@ let Affichable = class  {
     this.place = null
     this.dernierDomPlace = null
     this.id = null
+    this.text = null
   }
 }
