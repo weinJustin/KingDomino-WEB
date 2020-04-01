@@ -38,7 +38,7 @@ function mousePressed() {
            socket.emit('choisir',Number(choix[choix.length - 1].substr(6)));
            if(!premiertour){
              monTour = true;
-             changerFeedBack("C'est votre tour. Placer votre domino");
+             changerFeedBack("C'est votre tour. Placez votre domino");
            }else{
              premiertour = false;
            }
