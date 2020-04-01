@@ -15,6 +15,7 @@ for(var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
     dominosActuels : [], //Stocke les dominos à chosir au tour actuel
     dominosPick : [], //Sert à garder en mémoire les dominos choisis par les joueurs
     dominosPickOrdis : [0,0,0,0], //Sert à garder en mémoire les dominos choisis par les ordis
+    dominosPickOrdisPrecedent : [0,0,0,0],
     joueurs : [], //Stocke les pseudos des joueurs
     identite : [[],[]], //Permet de savoir si un pseudonyme correspond à un joueur ou à un ordi
     nbJoueurs : 0, //Le nombre de joueurs
@@ -26,8 +27,7 @@ for(var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
     zones : [], //Stocke les zones des joueurs, des tableaux à 2 dimensions de Cases.
     stockDomino : "", //Le contenu du fichier contenant les dominos et leurs attributs
     partieCommencee : false,
-    partieTerminee : false,
-    attendre : false
+    partieTerminee : false
   })
 }
 
@@ -56,14 +56,14 @@ var io = require('socket.io').listen(server);
 //Bienevenue dans le coeur du serveur
 io.sockets.on('connection', function (socket) {
 
-	socket.on('message', function (message) {
-        console.log('Un client me parle ! Il me dit : ' + message);
+	socket.on('message', function (message){
         nombreSalons++;
         salons.push({
 		    dominos : [], //Stocke les dominos qui seront envoyés par la suite
 		    dominosActuels : [], //Stocke les dominos à chosir au tour actuel
 		    dominosPick : [], //Sert à garder en mémoire les dominos choisis par les joueurs
 		    dominosPickOrdis : [0,0,0,0], //Sert à garder en mémoire les dominos choisis par les ordis
+		    dominosPickOrdisPrecedent : [0,0,0,0],
 		    joueurs : [], //Stocke les pseudos des joueurs
 		    identite : [[],[]], //Permet de savoir si un pseudonyme correspond à un joueur ou à un ordi
 		    nbJoueurs : 0, //Le nombre de joueurs
@@ -630,28 +630,30 @@ io.sockets.on('connection', function (socket) {
 	//Fonction utilisée par l'IA uniquement
 	function choixOrdi(idSalon,nom){
 		var choix = 0;
-		var ordiCorrespondant = 0;
-		if(salons[idSalon].numTour!=1){
-			placementOrdi(idSalon,nom,salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1]);
+		var ordiCorrespondant = 0;	
+		if(salons[idSalon].numTour<12){
+			console.log(nom+" est en train de choisir son domino...");
+			do{
+				choix = Math.floor(Math.random() * 4);
+				if(choix==4){
+					choix = 3;
+				}
+			}while(salons[idSalon].dominosPick.includes(salons[idSalon].dominosActuels[choix]));
+		    salons[idSalon].dominosPick[salons[idSalon].quiJoue] = salons[idSalon].dominosActuels[choix];
+			console.log(nom+" à choisi le domino : "+salons[idSalon].dominosActuels[choix]);
+			socket.emit('selectionDomino',{idDomino:salons[idSalon].dominosActuels[choix],joueur:salons[socket.salon].joueurs[salons[socket.salon].quiJoue]});
+			socket.broadcast.emit('selectionDomino',{idDomino:salons[idSalon].dominosActuels[choix],joueur:salons[socket.salon].joueurs[salons[socket.salon].quiJoue]});
+			salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1] = salons[idSalon].dominosActuels[choix];
 		}
-		if(salons[idSalon].numTour<13){
-			salons[idSalon].attendre = true;
-			setTimeout(function(){
-				console.log(nom+" est en train de choisir son domino...");
-				do{
-					choix = Math.floor(Math.random() * 4);
-					if(choix==4){
-						choix = 3;
-					}
-				}while(salons[idSalon].dominosPick.includes(salons[idSalon].dominosActuels[choix]));
-			    salons[idSalon].dominosPick[salons[idSalon].quiJoue] = salons[idSalon].dominosActuels[choix];
-				console.log(nom+" à choisi le domino : "+salons[idSalon].dominosActuels[choix]);
-			    socket.emit('selectionDomino',{idDomino:salons[idSalon].dominosActuels[choix],joueur:salons[socket.salon].joueurs[salons[socket.salon].quiJoue]});
-			    socket.broadcast.emit('selectionDomino',{idDomino:salons[idSalon].dominosActuels[choix],joueur:salons[socket.salon].joueurs[salons[socket.salon].quiJoue]});
-			    salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1] = salons[idSalon].dominosActuels[choix];
-				salons[idSalon].attendre = false;
-			},100);
-			//while(salons[idSalon].attendre){}
+		else{
+			salons[idSalon].dominosPickOrdisPrecedent[parseInt(nom,4)-1] = salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1];
+		}
+		if(salons[idSalon].numTour==1){
+			salons[idSalon].dominosPickOrdisPrecedent[parseInt(nom,4)-1] = salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1];
+		}
+		else{
+			placementOrdi(idSalon,nom,salons[idSalon].dominosPickOrdisPrecedent[parseInt(nom,4)-1]);
+			salons[idSalon].dominosPickOrdisPrecedent[parseInt(nom,4)-1] = salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1];
 		}
 	}
 
