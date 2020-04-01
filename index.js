@@ -285,18 +285,18 @@ io.sockets.on('connection', function (socket) {
     	salons[idSalon].quiJoue = 0;
 		// ---------- Fin de partie ---------- //
 		//Il n'y a plus de nouveaux dominos à envoyer au tour 12
-		if(salons[idSalon].numTour==12){
+		if(salons[idSalon].numTour==11){
 			remaniementDesJoueurs(idSalon);
 			var vide = [];
 			socket.emit('envoyerNouveauxDominos',vide);
 	    	socket.broadcast.emit('envoyerNouveauxDominos',vide);
 			changementDeTour(idSalon);
 		}
-		else if(salons[idSalon].numTour==13){
-			finDePartie(idSalon);
+		else if(salons[idSalon].numTour==12){
+			var resul = finDePartie(idSalon);
 			//Gestion de l'envoi des résultats à COMPLETER
-			/*socket.emit('resultatFinal',?);
-			socket.broadcast.emit('resultatFinal',?);*/
+			socket.emit('resultatFinal',result);
+			socket.broadcast.emit('resultatFinal',result);
 		}
 		else{
 			remaniementDesJoueurs(idSalon);
@@ -588,7 +588,9 @@ io.sockets.on('connection', function (socket) {
 		for(var i=0;i<4;i++){
 			console.log(ordreGagnant[i]+" : "+ordrePoints[i]+"pts.");
 		}
-		console.log("Partie Terminée")
+		console.log("Partie Terminée");
+		var recap = [ordreGagnant,ordrePoints];
+		return recap;
 	}
 
 	function verifIdentite(idSalon,nom){
@@ -613,8 +615,6 @@ io.sockets.on('connection', function (socket) {
 	    salons[idSalon].joueurs.push("ordi"+salons[idSalon].nbOrdis);
 	    salons[idSalon].identite[0].push("ordi"+salons[idSalon].nbOrdis);
 	    salons[idSalon].identite[1].push("ordi");
-
-
 	    salons[idSalon].dominosPick.push(0);
 	    //----- Initialisation de la zone -----//
 	    var zone = [];
@@ -648,7 +648,7 @@ io.sockets.on('connection', function (socket) {
 		if(salons[idSalon].numTour!=1){
 			placementOrdi(idSalon,nom,salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1]);
 		}
-		if(salons[idSalon].numTour<13){
+		if(salons[idSalon].numTour<12){
 			salons[idSalon].attendre = true;
 			setTimeout(function(){
 				console.log(nom+" est en train de choisir son domino...");
