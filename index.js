@@ -125,6 +125,12 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
+	socket.on('remplissage',function(data){
+		for(var i=salons[data].nbJoueurs;i<4;i++){
+			creerOrdi();
+		}
+	});
+
 	//Les évenements se produisant lors de la connexion d'un joueur
 	socket.on('connectionJoueur',function(data){
     	socket.pseudo = data.pseudo;
