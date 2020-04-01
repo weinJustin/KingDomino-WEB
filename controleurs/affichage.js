@@ -10,17 +10,58 @@ function changerFeedBack(message){
   // document.getElementById("feedback").innerHTML = message;
 }
 
-function calculEnv() {
-  lPourcent = largeurCanevas/100
-  hPourcent = hauteurCanevas/100
+function calculEnvMobile(){
+    hauteurCanevas = largeurCanevas*2
+    hPourcent = hauteurCanevas/100
 
-  for (var i = 0; i < 4; i++) {
-    placable["king"+couleur[i][2]] = new Affichable(0,0,0,0,1,1)
-    placable["king"+couleur[i][2]].visible = false
-    placable["king"+couleur[i][2]].id = "king"+couleur[i][2]
-    placable["king"+couleur[i][2]].img = loadImage("../static/pieces/"+"king"+couleur[i][2]+".png")
-    placable["king"+couleur[i][2]].place = "principal"
-  }
+    //(x,y,o,taille,ratio,nbrCase)
+    placable['principal'] = new Affichable(largeurCanevas/2-lPourcent*40,hPourcent*marge,0,lPourcent*80,1,5)
+    placable['principal'].color = maCouleur
+
+    var tmp = hPourcent*marge + hPourcent*2 + placable['principal'].taille
+    placable['fini'] = new Affichable(placable['principal'].x,tmp,0,hPourcent*5,2,1)
+    placable['fini'].color = maCouleur
+
+    placable['defausse'] = new Affichable(placable['principal'].x + placable['principal'].taille  - hPourcent*10,tmp,0,hPourcent*5,2,1)
+    placable['defausse'].color = maCouleur
+
+    for (var i = 0; i < 3; i++) {
+      var nom = 'adv'+i
+      placable[nom] = new Affichable(placable['principal'].x,placable['principal'].y,0,hPourcent*40,1,5)
+      placable[nom].color = maCouleur
+      placable[nom].visible = false
+
+    }
+
+    tab = ["domPris","domChoi"];
+    tmp = placable['principal'].x + placable['principal'].taille  - hPourcent*16
+    for (var i = 0; i < 2; i++) {
+      for (var j = 0; j < 4; j++) {
+        var id = tab[i]+(j+1);
+        placable[id] = new Affichable((lPourcent* i*20 )+ placable['principal'].x,(hPourcent* j*10) + (hPourcent*marge*2)+placable['principal'].taille+placable['fini'].taille ,0,hPourcent*8,2,1)
+        placable[id].color = maCouleur
+        if(i==1){
+          placable[id].x= tmp
+        }
+      }
+
+    }
+
+
+    placable['feedback'] = new Affichable(placable['principal'].x + placable['fini'].taille*2 + marge*lPourcent ,placable['fini'].y,0,hPourcent*5,3,1)
+    placable['feedback'].color = maCouleur
+
+    placable['typoDeFeedback']= new Affichable(placable['feedback'].taille*1.5 +placable['feedback'].x,(placable['feedback'].taille/2)+placable['feedback'].y,0,hPourcent*5,2,1)
+    placable['typoDeFeedback'].text = "Bienvenue"
+    placable['typoDeFeedback'].place = 'feedback'
+    console.log(placable);
+
+}
+
+function calculEnv() {
+
+
+
   //(x,y,o,taille,ratio,nbrCase)
 
   // largeurCanevas = 1000
@@ -32,16 +73,12 @@ function calculEnv() {
   placable['fini'] = new Affichable(tmp,hPourcent*marge,0,hPourcent*5,2,1)
   placable['fini'].color = maCouleur
 
-  placable['typoFini']= new Affichable(placable['fini'].taille +placable['fini'].x,(placable['fini'].taille/2)+placable['fini'].y,0,hPourcent*5,2,1)
-  placable['typoFini'].text = "Valider"
-  placable['typoFini'].place = 'fini'
+
 
   placable['defausse'] = new Affichable(tmp,placable['fini'].taille +((hPourcent*marge)*2),0,hPourcent*5,2,1)
   placable['defausse'].color = maCouleur
 
-  placable['typoDefausse']= new Affichable(placable['defausse'].taille +placable['defausse'].x,(placable['defausse'].taille/2)+placable['defausse'].y,0,hPourcent*5,2,1)
-  placable['typoDefausse'].text = "Deffausser"
-  placable['typoDefausse'].place = 'defausse'
+
 
 
   tmp = placable['principal'].taille + (hPourcent*marge*2)
@@ -65,9 +102,9 @@ function calculEnv() {
   tmp = hPourcent*marge*3 + placable['principal'].taille +placable['adv1'].taille
   placable['feedback'] = new Affichable(lPourcent*marge,tmp,0,hPourcent*5,20,1)
   placable['feedback'].color = maCouleur
-  console.log(placable['feedback']);
+
   placable['typoDeFeedback']= new Affichable(placable['feedback'].taille*10 +placable['feedback'].x,(placable['feedback'].taille/2)+placable['feedback'].y,0,hPourcent*5,2,1)
-  placable['typoDeFeedback'].text = "Bienevenue"
+  placable['typoDeFeedback'].text = "Bienvenue"
   placable['typoDeFeedback'].place = 'feedback'
 }
 
@@ -76,8 +113,36 @@ function calculEnv() {
 function setup() {
   largeurCanevas = Math.floor(windowWidth-5)
   hauteurCanevas = Math.floor(windowHeight-4)
+  lPourcent = largeurCanevas/100
+  hPourcent = hauteurCanevas/100
 
-  calculEnv()
+  if(largeurCanevas/hauteurCanevas < 1.5){
+    modeMobile = true
+  }
+
+  for (var i = 0; i < 4; i++) {
+    placable["king"+couleur[i][2]] = new Affichable(0,0,0,0,1,1)
+    placable["king"+couleur[i][2]].visible = false
+    placable["king"+couleur[i][2]].id = "king"+couleur[i][2]
+    placable["king"+couleur[i][2]].img = loadImage("../static/pieces/"+"king"+couleur[i][2]+".png")
+    placable["king"+couleur[i][2]].place = "principal"
+  }
+  if(modeMobile){
+    calculEnvMobile()
+  }else{
+    calculEnv()
+  }
+
+  placable['typoFini']= new Affichable(placable['fini'].taille +placable['fini'].x,(placable['fini'].taille/2)+placable['fini'].y,0,hPourcent*5,2,1)
+  placable['typoFini'].text = "Valider"
+  placable['typoFini'].place = 'fini'
+
+  placable['typoDefausse']= new Affichable(placable['defausse'].taille +placable['defausse'].x,(placable['defausse'].taille/2)+placable['defausse'].y,0,hPourcent*5,2,1)
+  placable['typoDefausse'].text = "Defausser"
+  placable['typoDefausse'].place = 'defausse'
+
+
+
 
   angleMode(DEGREES);
   rectMode(CORNER);
@@ -96,18 +161,6 @@ function setup() {
 
 function draw() {
   clear()
-  // background(220);
-  // if (intervalCase(mouseX,mouseY,places['principal'])){
-  //   caseTMP = obtenirCoordonee(mouseX,mouseY,'principal')
-  //   caseTMP = obtenirPositionAvecCoordonee(caseTMP.x,caseTMP.y,'principal')
-  //
-  //
-  //   xCase = caseTMP.x
-  //   yCase = caseTMP.y
-  //
-  //   fill(100);
-  //   rect(xCase, yCase, places['principal'].taille1Case,(places['principal'].tailleUneCase)*2);
-  // }
   for (x in placable){
     if(placable[x].visible && !x.startsWith("king")){
       push()
@@ -116,7 +169,12 @@ function draw() {
         rect(placable[x].x, placable[x].y, placable[x].taille*placable[x].ratio,placable[x].taille)
       }else if (placable[x].text!=null) {
         var width = placable[placable[x].place].taille
-        textSize(width / 3);
+        if(text.length>20 && modeMobile){
+            textSize(width / 5);
+        }else {
+
+          textSize(width / 3);
+        }
         textAlign(CENTER,CENTER);
         text(placable[x].text,placable[x].x, placable[x].y)
       }else{
@@ -139,10 +197,8 @@ function draw() {
       if (placable["king"+couleur[i][2]].visible){
         x = "king"+couleur[i][2]
         var taille1case = placable[placable[x].place].taille1Case
-
-        facteurTaille = resizeTo(placable[x].img.height,placable[x].img.width,taille1case,taille1case*placable[x].ratio)
         translate(placable[x].x, placable[x].y)
-        scale(facteurTaille.h,facteurTaille.l)
+        placable[x].img.resize(taille1case*placable[x].ratio,taille1case)
         rotate(placable[x].o)
         image(placable[x].img, 0,0);
       }
@@ -152,8 +208,47 @@ function draw() {
 
 }
 
-function resizeTo(hauteur,largeur,hauteurCible,largeurCible){
-  return {h:hauteurCible/hauteur,l:largeurCible/largeur}
+function joueurSuivant(){
+  if(!modeMobile){return 0}
+  if(joueurSuivantActif){
+    enAttente++
+  }else{
+    console.log(tourJoueur);
+    joueurSuivantActif= true
+    setTimeout(function(){
+      for (var x in placable) {
+        var place = placable[x].place
+        // console.log("on observe: ")
+        // console.log(x);
+        // console.log(place);
+        if (place!= null) {
+          if(place.startsWith("adv") || place == "principal"){
+            if (placable[x].place == tourJoueur[0]) {
+              // console.log("on rend visible ")
+              placable[x].visible = true
+              placable[place].visible = true
+            }else {
+              // console.log("on rend invisible ")
+              placable[x].visible = false
+              placable[place].visible = false
+            }
+          }else {
+            // console.log("on ne fait rien");
+          }
+        }else {
+          // console.log("on ne fait rien");
+        }
+      }
+      redraw();
+      tourJoueur.shift()
+      if (enAttente > 0 ) {
+        enAttente--
+        joueurSuivant()
+      }
+      joueurSuivantActif= false
+
+    }, 3000);
+  }
 }
 
 function placement(x,y,rot,id,place,ratio=2){

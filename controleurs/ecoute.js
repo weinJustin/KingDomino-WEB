@@ -1,15 +1,15 @@
 socket.on('joueAutreJoueur',function(domino){
   placement(domino['x'],domino['y'],domino['o'],"domino"+ domino['id'],listeJoueur[domino['joueur']].nom);
-
+  joueurSuivant()
 });
 
 socket.on('tonTour',function(moi){
   if(moi== nom){
       if(dernierTour){
-        changerFeedBack("C'est votre tour. Placez votre domino");
+        changerFeedBack("C'est votre tour.\n Placez votre domino");
         monTour = true
       }else{
-        changerFeedBack("C'est votre tour. Choisisez un domino");
+        changerFeedBack("C'est votre tour.\n Choisisez un domino");
         faireChoix =true;
       }
 
@@ -91,4 +91,15 @@ socket.on("resultatFinal",function (resultatFinal) {
   }
   alert(retour)
 
+})
+
+socket.on('actuTour',function (tab){
+  if (tab[0]!=1) {
+    for (var x in tab[1]) {
+      console.log(tab[0]);
+      console.log(tab[1]);
+      tourJoueur.push(listeJoueur[tab[1][x]].nom)
+    }
+    joueurSuivant()
+  }
 })

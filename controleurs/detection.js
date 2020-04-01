@@ -7,6 +7,7 @@ function mousePressed() {
       dernierCoupEnvoyer = choix[0];
       choix.shift();
       socket.emit('jouer',result);
+      joueurSuivant()
   }else if(monTour && intervalCase(mouseX,mouseY,placable["principal"])){
       var tmp = obtenirCoordonee(mouseX,mouseY,placable['principal'])
       if(tmp.x == dernierPlacement.x && tmp.y == dernierPlacement.y){

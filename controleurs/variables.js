@@ -9,7 +9,11 @@ var orientation = 0;
 var premiertour = true;
 var dernierChoixRenduInerte = 0;
 var listeJoueur = {}
+var modeMobile = false
 
+var tourJoueur = []
+var joueurSuivantActif= false
+var enAttente =0
 
 // variable d'affichage
 let largeurCanevas = null
