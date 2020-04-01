@@ -9,7 +9,7 @@ socket.on('tonTour',function(moi){
         changerFeedBack("C'est votre tour.\n Placez votre domino");
         monTour = true
       }else{
-        changerFeedBack("C'est votre tour.\n Choisisez un domino");
+        changerFeedBack("C'est votre tour.\n Choisissez un domino");
         faireChoix =true;
       }
 
@@ -44,7 +44,7 @@ socket.on('valide',function(valide){
   if(valide){
     dernierCoupEnvoyer = -1;
   }else{
-    changerFeedBack("Placement invalide. Replacer votre domino");
+    changerFeedBack("Placement invalide. Replacez votre domino");
     choix.unshift(dernierCoupEnvoyer);
     monTour =true;
   }
