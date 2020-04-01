@@ -3,6 +3,7 @@ var dernierCoupEnvoyer = -1;
 var dernierPlacement = 0;
 var choix =[];
 var faireChoix = false;
+var dernierTour = false;
 var nom = null;
 var orientation = 0;
 var premiertour = true;

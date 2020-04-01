@@ -9,12 +9,7 @@ function changerFeedBack(message){
   document.getElementById("feedback").innerHTML = message;
 }
 
-
-
-function setup() {
-  largeurCanevas = Math.floor(windowWidth-5)
-  hauteurCanevas = Math.floor(windowHeight-4)
-
+function calculEnv() {
   lPourcent = largeurCanevas/100
   hPourcent = hauteurCanevas/100
 
@@ -65,15 +60,28 @@ function setup() {
 
     }
   }
+}
+
+function setup() {
+  largeurCanevas = Math.floor(windowWidth-5)
+  hauteurCanevas = Math.floor(windowHeight-4)
+
+  calculEnv()
 
   angleMode(DEGREES);
   rectMode(CORNER);
 
   createCanvas(largeurCanevas,hauteurCanevas);
 
-
   loop()
 }
+
+// function windowResized() {
+//   largeurCanevas = Math.floor(windowWidth-5)
+//   hauteurCanevas = Math.floor(windowHeight-4)
+//   calculEnv()
+//   resizeCanvas(largeurCanevas,hauteurCanevas);
+// }
 
 function draw() {
   clear()

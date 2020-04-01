@@ -5,8 +5,13 @@ socket.on('joueAutreJoueur',function(domino){
 
 socket.on('tonTour',function(moi){
   if(moi== nom){
-      changerFeedBack("C'est votre tour. Choisisez un domino");
-      faireChoix =true;
+      if(dernierTour){
+        changerFeedBack("C'est votre tour. Placez votre domino");
+        monTour = true
+      }else{
+        changerFeedBack("C'est votre tour. Choisisez un domino");
+        faireChoix =true;
+      }
 
   }else{
       changerFeedBack("C'est le tour de "+moi);
@@ -65,10 +70,23 @@ socket.on('envoyerNouveauxDominos',function(dominos){
     }
 
     //on place les nouveaux dominos
-    placement(0,0,0,"domino"+dominos[j],"domChoi"+(j+1));
+    if(dominos.length == 4){
+      placement(0,0,0,"domino"+dominos[j],"domChoi"+(j+1));
+    }else{
+      dernierTour = true;
+    }
   }
 });
 
 socket.on("defausse", function(idDomino){
   placable[idDomino].visible = false
+})
+
+socket.on("resultatFinal",function (resultatFinal) {
+  var retour = ""
+  for (var i = 0; i < 4; i++) {
+    retour += i +" : "+resultatFinal[0][i]+", score: "+resultatFinal[1][i]+"\n"
+  }
+  alert(retour)
+
 })
