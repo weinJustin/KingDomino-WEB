@@ -5,8 +5,9 @@
 //
 //
 function changerFeedBack(message){
-  console.log(document.getElementById("feedback"));
-  document.getElementById("feedback").innerHTML = message;
+  placable['typoDeFeedback'].text = message
+  // console.log(document.getElementById("feedback"));
+  // document.getElementById("feedback").innerHTML = message;
 }
 
 function calculEnv() {
@@ -24,7 +25,7 @@ function calculEnv() {
 
   // largeurCanevas = 1000
   // hauteurCanevas = 500
-  placable['principal'] = new Affichable(lPourcent*marge,hPourcent*marge,0,hPourcent*50,1,5)
+  placable['principal'] = new Affichable(lPourcent*marge,hPourcent*marge,0,hPourcent*40,1,5)
   placable['principal'].color = maCouleur
 
   var tmp = lPourcent*marge + lPourcent*2 + placable['principal'].taille
@@ -43,9 +44,9 @@ function calculEnv() {
   placable['typoDefausse'].place = 'defausse'
 
 
+  tmp = placable['principal'].taille + (hPourcent*marge*2)
   for (var i = 0; i < 3; i++) {
     var nom = 'adv'+i
-    tmp = placable['principal'].taille + (hPourcent*marge*2)
     placable[nom] = new Affichable((30*lPourcent)*i + lPourcent*marge,tmp,0,hPourcent*35,1,5)
     placable[nom].color = maCouleur
 
@@ -55,12 +56,22 @@ function calculEnv() {
   for (var i = 0; i < 2; i++) {
     for (var j = 0; j < 4; j++) {
       var id = tab[i]+(j+1);
-      placable[id] = new Affichable((lPourcent* i*20 )+ (lPourcent*50),(hPourcent* j*13) + (hPourcent*5),0,hPourcent*10,2,1)
+      placable[id] = new Affichable((lPourcent* i*20 )+ (lPourcent*40),(hPourcent* j*10) + (hPourcent*5),0,hPourcent*8,2,1)
       placable[id].color = maCouleur
 
     }
   }
+
+  tmp = hPourcent*marge*3 + placable['principal'].taille +placable['adv1'].taille
+  placable['feedback'] = new Affichable(lPourcent*marge,tmp,0,hPourcent*5,20,1)
+  placable['feedback'].color = maCouleur
+  console.log(placable['feedback']);
+  placable['typoDeFeedback']= new Affichable(placable['feedback'].taille*10 +placable['feedback'].x,(placable['feedback'].taille/2)+placable['feedback'].y,0,hPourcent*5,2,1)
+  placable['typoDeFeedback'].text = "Bienevenue"
+  placable['typoDeFeedback'].place = 'feedback'
 }
+
+
 
 function setup() {
   largeurCanevas = Math.floor(windowWidth-5)
