@@ -26,6 +26,7 @@ for(var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
     zones : [], //Stocke les zones des joueurs, des tableaux à 2 dimensions de Cases.
     stockDomino : "", //Le contenu du fichier contenant les dominos et leurs attributs
     partieCommencee : false,
+    partieTerminee : false,
     attendre : false
   })
 }
@@ -98,31 +99,30 @@ io.sockets.on('connection', function (socket) {
         // ajouter une sécurité pour que les autres joueurs puissent jouer
         //console.log(salons[data]);
         var pos = salons[data].joueurs.indexOf(socket.pseudo);
-        if(salons[data].partieCommencee){
-            salons[data].joueurs.splice(pos,1);
-            salons[data].nbOrdis++;
-            salons[data].identite[0][pos] = 'ordi'+salons[data].nbOrdis;
-            salons[data].identite[1][pos] = 'ordi';
-            creerOrdi(data);
-            return;
+        if(!salons[data].partieTerminee){
+        	if(salons[data].partieCommencee){
+	            salons[data].joueurs.splice(pos,1);
+	            salons[data].nbOrdis++;
+	            salons[data].identite[0][pos] = 'ordi'+salons[data].nbOrdis;
+	            salons[data].identite[1][pos] = 'ordi';
+	            creerOrdi(data);
+	            return;
+	        }
+	        if (salons[data].nbJoueurs < 4 && salons[data].nbJoueurs > 0) {
+	            salons[data].joueurs.splice(pos,1);
+	            salons[data].identite[0].splice(pos,1);
+	            salons[data].identite[1].splice(pos,1);
+	            salons[data].nbJoueurs--;
+	            return
+	        }
+	        if (salons[data].nbJoueurs == 4) {
+	         	partieCommencée = true;
+	            salons[data].joueurs.splice(pos,1);
+	            salons[data].nbJoueurs--;
+	            creerOrdi(data);
+	            return
+	        }
         }
-        if (salons[data].nbJoueurs < 4 && salons[data].nbJoueurs > 0) {
-            salons[data].joueurs.splice(pos,1);
-            salons[data].identite[0].splice(pos,1);
-            salons[data].identite[1].splice(pos,1);
-            salons[data].nbJoueurs--;
-            return
-        }
-         if (salons[data].nbJoueurs == 4) {
-         	partieCommencée = true;
-            salons[data].joueurs.splice(pos,1);
-            salons[data].nbJoueurs--;
-            creerOrdi(data);
-            return
-        }
-
-
-        console.log(salons[data]);
     });
 
 	//Les évenements se produisant lors de la connexion d'un joueur
@@ -193,7 +193,6 @@ io.sockets.on('connection', function (socket) {
 
 	//Gère la sélection du domino
     socket.on('choisir',function(idDomino) {
-    	console.log(socket.pseudo+" a choisi : "+idDomino);
     	var verif = true;
     	//On vérifie si le domino selectionné n'a pas déjà été choisi par un autre joueur
     	for(var i=0;i<4;i++){
@@ -250,7 +249,6 @@ io.sockets.on('connection', function (socket) {
         	salons[socket.salon].verifPlac = false;
         }
         if(verif==true){
-        	afficherZone(salons[socket.salon].zones[salons[socket.salon].quiJoue]);
         	//salons[socket.salon].dominosPick[salons[socket.salon].quiJoue] = 0;
         	salons[socket.salon].quiJoue++;
 	        if(salons[socket.salon].quiJoue>3){
@@ -576,6 +574,7 @@ io.sockets.on('connection', function (socket) {
 			console.log(ordreGagnant[i]+" : "+ordrePoints[i]+"pts.");
 		}
 		console.log("Partie Terminée");
+		salons[idSalon].partieTerminee = true;
 		var recap = [ordreGagnant,ordrePoints];
 		return recap;
 	}
