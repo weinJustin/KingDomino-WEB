@@ -176,8 +176,8 @@ io.sockets.on('connection', function (socket) {
 	  	    }
 	  		shuffle(salons[socket.salon].dominos); //On mélange les identifiants des dominos
 	  		envoiDesNouveauxDominos(socket.salon); //On envoie les premiers dominos
-	  	  	socket.emit('actuTour',salons[socket.salon].numTour);
-	  		socket.broadcast.emit('actuTour',salons[socket.salon].numTour);
+	  	  	socket.emit('actuTour',salons[socket.salon].numTour,salons[socket.salon].joueurs);
+	  		socket.broadcast.emit('actuTour',salons[socket.salon].numTour,salons[socket.salon].joueurs);
 	  		afficherIdentites(socket.salon);
 		  	while(verifIdentite(socket.salon,salons[socket.salon].joueurs[salons[socket.salon].quiJoue])=="ordi"){
 		  		choixOrdi(socket.salon,salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
@@ -362,8 +362,8 @@ io.sockets.on('connection', function (socket) {
 
     function changementDeTour(idSalon){
       	salons[idSalon].numTour++;
-  		socket.emit('actuTour',salons[idSalon].numTour);
-  		socket.broadcast.emit('actuTour',salons[idSalon].numTour);
+  		socket.emit('actuTour',salons[idSalon].numTour,salons[idSalon].joueurs);
+  		socket.broadcast.emit('actuTour',salons[idSalon].numTour,salons[idSalon].joueurs);
     }
 
     //Utilisé au début de partie pour mélanger le tableau dominos[]
