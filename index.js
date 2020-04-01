@@ -15,7 +15,6 @@ for(var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
     dominosActuels : [], //Stocke les dominos à chosir au tour actuel
     dominosPick : [], //Sert à garder en mémoire les dominos choisis par les joueurs
     dominosPickOrdis : [0,0,0,0], //Sert à garder en mémoire les dominos choisis par les ordis
-    fin : false, //Variable temporaire servant à forcer la fin d'une partie
     joueurs : [], //Stocke les pseudos des joueurs
     identite : [[],[]], //Permet de savoir si un pseudonyme correspond à un joueur ou à un ordi
     nbJoueurs : 0, //Le nombre de joueurs
@@ -64,7 +63,6 @@ io.sockets.on('connection', function (socket) {
 		    dominosActuels : [], //Stocke les dominos à chosir au tour actuel
 		    dominosPick : [], //Sert à garder en mémoire les dominos choisis par les joueurs
 		    dominosPickOrdis : [0,0,0,0], //Sert à garder en mémoire les dominos choisis par les ordis
-		    fin : false, //Variable temporaire servant à forcer la fin d'une partie
 		    joueurs : [], //Stocke les pseudos des joueurs
 		    identite : [[],[]], //Permet de savoir si un pseudonyme correspond à un joueur ou à un ordi
 		    nbJoueurs : 0, //Le nombre de joueurs
@@ -252,13 +250,7 @@ io.sockets.on('connection', function (socket) {
         	salons[socket.salon].verifPlac = false;
         }
         if(verif==true){
-        	if(salons[socket.salon].fin==true){
-        		//TEMPORAIRE
-        		for(var i=0;i<4;i++){
-        			afficherZone(salons[socket.salon].zones[i],socket.salon);
-        		}
-        		finDePartie(socket.salon);
-        	}
+        	afficherZone(salons[socket.salon].zones[salons[socket.salon].quiJoue]);
         	//salons[socket.salon].dominosPick[salons[socket.salon].quiJoue] = 0;
         	salons[socket.salon].quiJoue++;
 	        if(salons[socket.salon].quiJoue>3){
@@ -276,11 +268,6 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
-    //Temporaire, force la partie à se terminer
-    socket.on('finDePartie', function(idSalon){
-    	salons[idSalon].fin = true;
-    });
-
     function gestionEnFonctionDuTour(idSalon){
     	salons[idSalon].quiJoue = 0;
 		// ---------- Fin de partie ---------- //
@@ -293,7 +280,7 @@ io.sockets.on('connection', function (socket) {
 			changementDeTour(idSalon);
 		}
 		else if(salons[idSalon].numTour==13){
-			var resul = finDePartie(idSalon);
+			var result = finDePartie(idSalon);
 			//Gestion de l'envoi des résultats à COMPLETER
 			socket.emit('resultatFinal',result);
 			socket.broadcast.emit('resultatFinal',result);
@@ -308,14 +295,14 @@ io.sockets.on('connection', function (socket) {
     //Fonction servant à calculer le score total
 	function totallyBoardScore(board) {
 	    let total = 0;
-	    for (let i = 0; i < 4 ; i++) {
+	    for (let i = 0; i < 5 ; i++) {
 	        for (let j = 0; j < 5; j++) {
 		        var count = 0;
 		        var nbCouronnes = 0;
 	            var actualBiome = board[i][j].biome;
 	            if (!board[i][j].isCounted && board[i][j].biome !== 0) checkPiece(i,j);
-	            console.log(i,j);
-	            console.log('Count : ',count,', NbCouronnes : ', nbCouronnes);
+	            //console.log(i,j);
+	            //console.log('Count : ',count,', NbCouronnes : ', nbCouronnes);
 	            total += (count * nbCouronnes);
 	        }
 	    }
@@ -329,28 +316,28 @@ io.sockets.on('connection', function (socket) {
 		    //Down
 		    if (num+1<5 && !board[num+1][num2].isCounted) {
 		        if (board[num+1][num2].biome === board[num][num2].biome) {
-		            console.log('Cas 1, Co :',num+2,num2+1);
+		            //console.log('Cas 1, Co :',num+2,num2+1);
 		            checkPiece(num+1,num2);
 		        }
 		    }
 		    //Up
 		    if (num-1>=0 && !board[num-1][num2].isCounted) {
 		        if (board[num-1][num2].biome === board[num][num2].biome) {
-		            console.log('Cas 2, Co :',num,num2+1);
+		            //console.log('Cas 2, Co :',num,num2+1);
 		            checkPiece(num-1,num2);
 		        }
 		    }
 		    //Left
 		    if (num2-1>=0 && !board[num][num2-1].isCounted) {
 		        if (board[num][num2-1].biome === board[num][num2].biome) {
-		            console.log('Cas 3, Co :',num+1,num2);
+		            //console.log('Cas 3, Co :',num+1,num2);
 		            checkPiece(num,num2-1);
 		        }
 		    }
 		    //Right
 		    if (num2+1<5 && !board[num][num2+1].isCounted) {
 		        if (board[num][num2+1].biome === board[num][num2].biome) {
-		            console.log('Cas 4, Co :',num+1,num2+2);
+		            //console.log('Cas 4, Co :',num+1,num2+2);
 		            checkPiece(num,num2+1);
 		        }
 		    }
@@ -578,8 +565,8 @@ io.sockets.on('connection', function (socket) {
 			}
 			for(var k=0;k<4;k++){
 				if(salons[idSalon].points[k]==vMax){
-					ordreGagnant.push(joueurs[k]);
-					ordrePoints.push(points[k])
+					ordreGagnant.push(salons[idSalon].joueurs[k]);
+					ordrePoints.push(salons[idSalon].points[k])
 					delete salons[idSalon].points[k];
 				}
 			}
