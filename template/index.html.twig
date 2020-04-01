@@ -9,6 +9,7 @@
     <div id="acceuil">
       <!-- <h1 id="title">Bienvenue !</h1> -->
       <img id="Kingdomino" src="../static/Kingdomino.jpg" alt="Kingdomino">
+      <p><input type="button" value="Ajouter un salon" id="poke" /></p>
       <div id="listeSalons">      
         {% for salon in salons %}
           <div class="salon">
@@ -18,7 +19,6 @@
           </div>
         {% endfor %}
       </div>
-      <p><input type="button" value="Ajouter un salon" id="poke" /></p>
       <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
       <script src="/socket.io/socket.io.js"></script>
       <script src="../controleurs/variables.js"></script>
