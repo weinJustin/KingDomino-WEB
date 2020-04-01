@@ -7,15 +7,18 @@
   </head>
   <body>
     <div id="acceuil">
-      <h1 id="title">Bienvenue !</h1>
-      <div id="liste">      
+      <!-- <h1 id="title">Bienvenue !</h1> -->
+      <img id="Kingdomino" src="../static/Kingdomino.jpg" alt="Kingdomino">
+      <div id="listeSalons">      
         {% for salon in salons %}
           <div class="salon">
-            Salon numéro {{salon.num}}, place {{salon.place}}/4 <input type="button" value="Rejoindre" onclick="redirect({{salon.num}});">
+              <p>
+                Salon numéro {{salon.num}}, place {{salon.place}}/4 <input id="rejoindre" type="button" value="Rejoindre" onclick="redirect({{salon.num}});">
+              </p>
           </div>
         {% endfor %}
       </div>
-      <p><input type="button" value="Ajouter un salon" id="poke" /></p>
+      <p><input id="ajout" type="button" value="Ajouter un salon" id="poke" /></p>
       <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
       <script src="/socket.io/socket.io.js"></script>
       <script src="../controleurs/variables.js"></script>
@@ -35,7 +38,7 @@
         }
                 $('#poke').click(function () {
                     socket.emit('message', 'On veut un nouveau salon !');
-                    $( "#liste" ).load(window.location.href + " #liste" );
+                    $( "#listeSalons" ).load(window.location.href + " #listeSalons" );
                     console.log('Et hop un nouveau salon');
                     
                 })
@@ -46,13 +49,13 @@
 
         function needRefresh1() {
           console.log('Refresh de la liste des salons');
-          $( "#liste" ).load(window.location.href + " #liste" );
+          $( "#listeSalons" ).load(window.location.href + " #listeSalons" );
           setTimeout("needRefresh2()", interval);
         }
 
         function needRefresh2() {
           console.log('Refresh de la liste des salons');
-          $( "#liste" ).load(window.location.href + " #liste" );
+          $( "#listeSalons" ).load(window.location.href + " #listeSalons" );
           setTimeout("needRefresh1()", interval);
         }
               

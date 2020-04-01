@@ -7,14 +7,62 @@ body{
   background-image: url(../texture.jpg);
 }
 
+#rejoindre{
+	font-family: sans-serif;
+	border-color:black;
+	border-radius:5px;
+	margin-left:15px;
+	color:white;
+	background-color:rgba(0,0,0,0.6);
+	padding:5px;
+}
+
+#ajout{
+	font-family: sans-serif;
+	border-color:black;
+	border-radius:5px;
+	margin-left:15px;
+	color:white;
+	background-color:rgba(0,0,0,0.6);
+	padding:5px;
+}
+
 #acceuil{
 	display:flex;
 	flex-direction: column;
 	justify-content: center;
+	align-content:center;
 	text-align:center;
 }
 
-#salon{
+#Kingdomino{
+	width:500px;
+	height:200px;
+	margin-top:10px;
+	margin-bottom:10px;
+	margin-left: auto;
+  	margin-right: auto;
+	border:solid 2px;
+	border-radius:5px;
+	border-color:black;
+}
+
+.salon{
+	font-family: sans-serif;
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align:center;
+	width:350px;
+	height:50px;
+	margin-top:10px;
+	margin-bottom:10px;
+	margin-left: auto;
+  	margin-right: auto;
+	background-color:rgba(231,216,203,0.5);
+	border:solid 2px;
+	border-radius:5px;
+	border-color:#c66c1c;
 }
 
 #title{
