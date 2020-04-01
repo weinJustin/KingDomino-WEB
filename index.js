@@ -79,7 +79,7 @@ io.sockets.on('connection', function (socket) {
   		})
     });
 
-   socket.on('defausse', function(idDomino){
+    socket.on('defausse', function(idDomino){
      socket.broadcast.emit('defausse',idDomino)
 		salons[socket.salon].quiJoue++;
 		if(salons[socket.salon].quiJoue>3){
@@ -285,14 +285,14 @@ io.sockets.on('connection', function (socket) {
     	salons[idSalon].quiJoue = 0;
 		// ---------- Fin de partie ---------- //
 		//Il n'y a plus de nouveaux dominos à envoyer au tour 12
-		if(salons[idSalon].numTour==11){
+		if(salons[idSalon].numTour==12){
 			remaniementDesJoueurs(idSalon);
 			var vide = [];
-			socket.emit('envoyerNouveauxDominos',vide);
-	    	socket.broadcast.emit('envoyerNouveauxDominos',vide);
+			socket.emit('envoyerNouveauxDominos');
+	    	socket.broadcast.emit('envoyerNouveauxDominos');
 			changementDeTour(idSalon);
 		}
-		else if(salons[idSalon].numTour==12){
+		else if(salons[idSalon].numTour==13){
 			var resul = finDePartie(idSalon);
 			//Gestion de l'envoi des résultats à COMPLETER
 			socket.emit('resultatFinal',result);
@@ -648,7 +648,7 @@ io.sockets.on('connection', function (socket) {
 		if(salons[idSalon].numTour!=1){
 			placementOrdi(idSalon,nom,salons[idSalon].dominosPickOrdis[parseInt(nom,4)-1]);
 		}
-		if(salons[idSalon].numTour<12){
+		if(salons[idSalon].numTour<13){
 			salons[idSalon].attendre = true;
 			setTimeout(function(){
 				console.log(nom+" est en train de choisir son domino...");

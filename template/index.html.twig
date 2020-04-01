@@ -2,69 +2,61 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../static/CSS/acceuil.css">
-    
+    <link rel="stylesheet" href="../static/CSS/acceuil.css">   
     <title>Kingdomino en ligne !</title>
   </head>
-
   <body>
-  <h1 style="color: white">Voici la liste des salons du KingDomino</h1>
-  <div id="liste">
-    <ul>
-       
-            
-      {% for salon in salons %}
-          <li>Salon numéro {{salon.num}}, place {{salon.place}}/4 <input type="button" value="rejoindre" onclick="redirect({{salon.num}});"></li>
-          
-      {% endfor %}
+    <div id="acceuil">
+      <h1 id="title">Bienvenue !</h1>
+      <div id="liste">      
+        {% for salon in salons %}
+          <div class="salon">
+            Salon numéro {{salon.num}}, place {{salon.place}}/4 <input type="button" value="Rejoindre" onclick="redirect({{salon.num}});">
+          </div>
+        {% endfor %}
+      </div>
+      <p><input type="button" value="Ajouter un salon" id="poke" /></p>
+      <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="../controleurs/variables.js"></script>
+      <script>
 
-    
-    </ul>
+        var socket = io.connect('http://localhost:8080');
+                socket.on('message', function(message) {
+                   tab = message;
+                   console.log(tab);
+                })
+
+        // inerval de refresh de la liste des serveurs
+        var interval = 500;
+
+        function redirect(num){
+          document.location.href= window.location.href+"jeu/"+num;
+        }
+                $('#poke').click(function () {
+                    socket.emit('message', 'On veut un nouveau salon !');
+                    $( "#liste" ).load(window.location.href + " #liste" );
+                    console.log('Et hop un nouveau salon');
+                    
+                })
+
+        window.onload = function () {
+          needRefresh1();
+        };
+
+        function needRefresh1() {
+          console.log('Refresh de la liste des salons');
+          $( "#liste" ).load(window.location.href + " #liste" );
+          setTimeout("needRefresh2()", interval);
+        }
+
+        function needRefresh2() {
+          console.log('Refresh de la liste des salons');
+          $( "#liste" ).load(window.location.href + " #liste" );
+          setTimeout("needRefresh1()", interval);
+        }
+              
+      </script>
     </div>
-     <p><input type="button" value="Ajouter un salon" id="poke" /></p>
-
-  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="../controleurs/variables.js"></script>
-  <script>
-
-    var socket = io.connect('http://localhost:8080');
-            socket.on('message', function(message) {
-               tab = message;
-               console.log(tab);
-            })
-
-    // inerval de refresh de la liste des serveurs
-    var interval = 500;
-
-    function redirect(num){
-      document.location.href= window.location.href+"jeu/"+num;
-    }
-
-            $('#poke').click(function () {
-                socket.emit('message', 'On veut un nouveau salon !');
-                $( "#liste" ).load(window.location.href + " #liste" );
-                console.log('Et hop un nouveau salon');
-                
-            })
-
-    window.onload = function () {
-      needRefresh1();
-    };
-
-    function needRefresh1() {
-
-      console.log('Refresh de la liste des salons');
-      $( "#liste" ).load(window.location.href + " #liste" );
-      setTimeout("needRefresh2()", interval);
-    }
-
-    function needRefresh2() {
-      console.log('Refresh de la liste des salons');
-      $( "#liste" ).load(window.location.href + " #liste" );
-      setTimeout("needRefresh1()", interval);
-    }
-          
-  </script>
   </body>
 </html>

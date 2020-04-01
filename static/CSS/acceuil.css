@@ -7,7 +7,22 @@ body{
   background-image: url(../texture.jpg);
 }
 
-li{
+#acceuil{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align:center;
+}
+
+#salon{
+}
+
+#title{
+	color:white;
+	font-family: sans-serif;
+}
+
+/*li{
   background-color:#e7d8cb;
   display: block;
-}
+}*/
