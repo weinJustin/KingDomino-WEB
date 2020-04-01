@@ -68,3 +68,7 @@ socket.on('envoyerNouveauxDominos',function(dominos){
     placement(0,0,0,"domino"+dominos[j],"domChoi"+(j+1));
   }
 });
+
+socket.on("defausse", function(idDomino){
+  placable[idDomino].visible = false
+})

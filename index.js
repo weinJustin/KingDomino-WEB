@@ -79,7 +79,8 @@ io.sockets.on('connection', function (socket) {
   		})
     });
 
-  	socket.on('defausse', function(){
+   socket.on('defausse', function(idDomino){
+     socket.broadcast.emit('defausse',idDomino)
 		salons[socket.salon].quiJoue++;
 		if(salons[socket.salon].quiJoue>3){
 			gestionEnFonctionDuTour(socket.salon);
@@ -122,7 +123,7 @@ io.sockets.on('connection', function (socket) {
             return
         }
 
-       
+
         console.log(salons[data]);
     });
 
@@ -189,7 +190,7 @@ io.sockets.on('connection', function (socket) {
 		  	}
 		  	socket.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
 			socket.broadcast.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
-	    }   
+	    }
     });
 
 	//Gère la sélection du domino
@@ -612,8 +613,8 @@ io.sockets.on('connection', function (socket) {
 	    salons[idSalon].joueurs.push("ordi"+salons[idSalon].nbOrdis);
 	    salons[idSalon].identite[0].push("ordi"+salons[idSalon].nbOrdis);
 	    salons[idSalon].identite[1].push("ordi");
-	    
-	    
+
+
 	    salons[idSalon].dominosPick.push(0);
 	    //----- Initialisation de la zone -----//
 	    var zone = [];
@@ -637,7 +638,7 @@ io.sockets.on('connection', function (socket) {
 	    	isCounted: false
 	    };
 	    zone[2][2] = caseDepart;
-	    salons[idSalon].zones.push(zone);    
+	    salons[idSalon].zones.push(zone);
 	}
 
 	//Fonction utilisée par l'IA uniquement

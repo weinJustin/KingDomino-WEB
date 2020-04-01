@@ -18,6 +18,11 @@ function mousePressed() {
       dernierPlacement =tmp
       console.log(dernierPlacement);
       placement(dernierPlacement.x,dernierPlacement.y,orientation,choix[0],'principal');
+  }else if(monTour && intervalCase(mouseX,mouseY,placable["defausse"])){
+    monTour = false;
+    placable[choix[0]].visible = false
+    socket.emit('defausse',choix[0]);
+    choix.shift();
   }
 
  // choisi un domino

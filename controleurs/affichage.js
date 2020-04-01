@@ -36,6 +36,9 @@ function setup() {
   placable['fini'] = new Affichable(tmp,hPourcent*marge,0,hPourcent*5,2,1)
   placable['fini'].color = maCouleur
 
+  placable['defausse'] = new Affichable(tmp,placable['fini'].taille +((hPourcent*marge)*2),0,hPourcent*5,2,1)
+  placable['defausse'].color = maCouleur
+
   for (var i = 0; i < 3; i++) {
     var nom = 'adv'+i
     tmp = placable['principal'].taille + (hPourcent*marge*2)
@@ -64,7 +67,7 @@ function setup() {
 }
 
 function draw() {
-
+  clear()
   // background(220);
   // if (intervalCase(mouseX,mouseY,places['principal'])){
   //   caseTMP = obtenirCoordonee(mouseX,mouseY,'principal')
