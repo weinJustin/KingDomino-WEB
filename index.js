@@ -126,9 +126,31 @@ io.sockets.on('connection', function (socket) {
     });
 
 	socket.on('remplissage',function(data){
-		for(var i=salons[data].nbJoueurs;i<4;i++){
-			creerOrdi();
+		socket.salon = Number(data.salon);
+		salons[socket.salon].stockDomino = fs.readFileSync('Dominos.json');
+	    shuffleDoubleArray(salons[socket.salon].joueurs,salons[socket.salon].zones);
+		for(var i=salons[socket.salon].nbJoueurs;i<4;i++){
+			creerOrdi(socket.salon);
 		}
+		socket.emit('joueurPresent',salons[socket.salon].joueurs);
+	    socket.broadcast.emit('joueurPresent',salons[socket.salon].joueurs);
+	    for(var i=0;i<48;i++){
+	  		salons[socket.salon].dominos[i] = Number(i)+1;
+	  	}
+	  	shuffle(salons[socket.salon].dominos); //On mélange les identifiants des dominos
+	  	envoiDesNouveauxDominos(socket.salon); //On envoie les premiers dominos
+	  	socket.emit('actuTour',[salons[socket.salon].numTour,salons[socket.salon].joueurs]);
+	  	socket.broadcast.emit('actuTour',[salons[socket.salon].numTour,salons[socket.salon].joueurs]);
+	  	afficherIdentites(socket.salon);
+	  	while(verifIdentite(socket.salon,salons[socket.salon].joueurs[salons[socket.salon].quiJoue])=="ordi"){
+		  	choixOrdi(socket.salon,salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
+	 		salons[socket.salon].quiJoue++;
+		  	if(salons[socket.salon].quiJoue>3){
+		  		gestionEnFonctionDuTour(socket.salon);
+	  		}
+	  	}
+	  	socket.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
+		socket.broadcast.emit('tonTour',salons[socket.salon].joueurs[salons[socket.salon].quiJoue]);
 	});
 
 	//Les évenements se produisant lors de la connexion d'un joueur

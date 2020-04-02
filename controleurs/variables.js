@@ -11,7 +11,7 @@ var dernierChoixRenduInerte = 0;
 var listeJoueur = {}
 var modeMobile = false
 var partieLancee = false
-
+var pourRemplissage = 0;
 var tourJoueur = []
 var joueurSuivantActif= false
 var enAttente =0

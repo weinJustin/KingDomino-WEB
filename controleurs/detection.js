@@ -25,7 +25,7 @@ function mousePressed() {
     socket.emit('defausse',choix[0]);
     choix.shift();
   }else if(!partieLancee && intervalCase(mouseX,mouseY,placable["fini"])){
-    socket.emit("remplissage")
+    socket.emit("remplissage",{salon:pourRemplissage[pourRemplissage.length-1]})
   }
 
  // choisi un domino
