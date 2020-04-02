@@ -53,7 +53,7 @@ app.get('/jeu/:id', function(req, res) {
 
 var io = require('socket.io').listen(server);
 
-//Bienevenue dans le coeur du serveur
+//Bienvenue dans le coeur du serveur
 io.sockets.on('connection', function (socket) {
 
 	socket.on('message', function (message){

@@ -27,6 +27,16 @@ body{
 	padding:5px;
 }
 
+#regles{
+	font-family: sans-serif;
+	border-color:black;
+	border-radius:5px;
+	margin-left:15px;
+	color:white;
+	background-color:rgba(0,0,0,0.6);
+	padding:5px;
+}
+
 #acceuil{
 	display:flex;
 	flex-direction: column;
