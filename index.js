@@ -9,7 +9,7 @@ var salons = [] //On stocke toutes les variables par salons
 
 var nombreSalons = 5;
 
-for(var i = 0; i <nombreSalons; i++) { //on génére des instances de salon
+for(var i = 0; i <nombreSalons; i++) { //on genere des instances de salon
   salons.push({
     dominos : [], //Stocke les dominos qui seront envoyés par la suite
     dominosActuels : [], //Stocke les dominos à chosir au tour actuel
