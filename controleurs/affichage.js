@@ -134,7 +134,7 @@ function setup() {
   }
 
   placable['typoFini']= new Affichable(placable['fini'].taille +placable['fini'].x,(placable['fini'].taille/2)+placable['fini'].y,0,hPourcent*5,2,1)
-  placable['typoFini'].text = "Valider"
+  placable['typoFini'].text = "Commencer "
   placable['typoFini'].place = 'fini'
 
   placable['typoDefausse']= new Affichable(placable['defausse'].taille +placable['defausse'].x,(placable['defausse'].taille/2)+placable['defausse'].y,0,hPourcent*5,2,1)

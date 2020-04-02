@@ -20,6 +20,8 @@ socket.on('tonTour',function(moi){
 
 socket.on('joueurPresent',function(nomJoueur){
   var id = 0;
+  placable['typoFini'].text = "Finir"
+  partieLancee = true
   for (var i = 0; i < nomJoueur.length; i++) {
     if (nomJoueur[i] != nom){
       placement(2,2,0,"dominoDepart"+couleur[i][2],"adv"+(id),1)

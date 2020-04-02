@@ -10,6 +10,7 @@ var premiertour = true;
 var dernierChoixRenduInerte = 0;
 var listeJoueur = {}
 var modeMobile = false
+var partieLancee = false
 
 var tourJoueur = []
 var joueurSuivantActif= false
