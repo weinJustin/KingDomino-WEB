@@ -19,7 +19,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "node-html-parser": "^1.2.13",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "twig": "^1.15.0"
   }
 }
