@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Nijtus/KingDomino-WEB#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "node-html-parser": "^1.2.13",
     "socket.io": "^2.3.0",
     "twig": "^1.15.0"
